@@ -1,0 +1,172 @@
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+html {
+    position: relative;
+    margin: 0px;
+    font-size: 10px;
+}
+
+body {
+    margin: 0px;
+}
+
+header {
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    background-color: #008DC9;
+}
+
+header h2 {
+    margin: 0px;
+    padding-top: 1rem;
+    font-size: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+}
+
+header nav ul {
+    margin: 0px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+header nav ul {
+    padding: 1rem;
+}
+
+header nav ul li {
+    padding: 5px;
+    border: 1px solid aqua;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+header nav ul li a:link {
+    color: white;
+}
+
+header nav ul li a:visited {
+    color: white;
+}
+
+header nav ul li a:hover {
+    
+}
+
+header nav ul li a:active {
+    
+}
+
+main article {
+    display: grid;
+    grid-template-areas: "main-article"
+                        "aside";
+}
+
+main article .content {
+    grid-area: main-article;
+}
+
+main article section {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+main article p {
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+
+main article aside {
+    grid-area: aside;
+    background-color: #008DC9;
+}
+
+main article aside ul {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+main article aside ul li {
+    background-color: aqua;
+    width: 90%;
+    padding: 0.6rem;
+    margin: 1rem;
+    text-align: center;
+}
+
+main article aside ul li a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+main article aside ul li a:link {
+}
+
+main article aside ul li a:visited {
+}
+
+main article aside ul li a:hover {
+    
+}
+
+main article aside ul li a:active {
+    
+}
+
+footer {
+    width: 100%;
+    background-color: darkcyan;
+    display: grid;
+    grid-template-areas:"logo" 
+                        "links"
+                        "copyright";
+}
+
+footer .logo {
+    grid-area: logo;
+    width: 20%;
+    margin: 1rem auto;
+}
+
+footer .links-container {
+    
+}
+
+footer .links {
+    grid-area: links;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+footer .icon {
+    width: 10%;
+}
+
+footer .copyright {
+    grid-area: copyright;
+    text-align: center;
+    font-size: 1.2rem;
+}
