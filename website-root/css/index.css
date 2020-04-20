@@ -1,4 +1,30 @@
+@font-face {
+    font-family: 'Open-sans';
+    src: url('../fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('../fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/raleway-regular-webfont.woff2') format('woff2'),
+         url('../fonts/raleway-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, serif;
+}
+
 * {
+    font-family: Open-sans, serif;
     box-sizing: border-box;
 }
 
@@ -8,8 +34,6 @@ ul {
 }
 
 html {
-    position: relative;
-    margin: 0px;
     font-size: 10px;
 }
 
@@ -18,17 +42,18 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
     position: sticky;
     top: 0px;
-    width: 100%;
-    background-color: #008DC9;
+    background-color: #294d73;
 }
 
 header h2 {
-    margin: 0px;
-    padding-top: 1rem;
+    margin: auto 0;
     font-size: 3rem;
-    text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: white;
@@ -36,19 +61,22 @@ header h2 {
 
 header nav ul {
     margin: 0px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-}
-
-header nav ul {
-    padding: 1rem;
 }
 
 header nav ul li {
     padding: 5px;
     border: 1px solid aqua;
+    margin: auto 0;
+}
+
+header nav .nav-button-list {
+    display: none;
+}
+
+header nav .nav-dropmenu {
+    background-color: #294d73;
+    border: 0px;
+    padding: 0px;
 }
 
 header nav ul li a {
@@ -56,20 +84,13 @@ header nav ul li a {
     text-transform: uppercase;
 }
 
-header nav ul li a:link {
+header nav .nav-button {
+    transition: opacity 0.3s;
     color: white;
 }
 
-header nav ul li a:visited {
-    color: white;
-}
-
-header nav ul li a:hover {
-    
-}
-
-header nav ul li a:active {
-    
+header nav .nav-button-list:hover .nav-button:not(:hover) {
+    opacity: 0.5;
 }
 
 main article {
@@ -82,38 +103,52 @@ main article .content {
     grid-area: main-article;
 }
 
-main article section {
-    margin-top: 1.5rem;
+main article h3 {
     text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 0px;
 }
 
-main article p {
+main article .content p {
     margin: 1rem;
     font-size: 1.5rem;
+    text-indent: 2rem;
 }
 
-main article aside {
+main article .aside-container {
     grid-area: aside;
-    background-color: #008DC9;
+    background-color: #294d73;
+    display: flex;
+    flex-direction: column;
+/*    justify-content: space-evenly;*/
+}
+
+main article .aside-container .aside-p {
+    color: #e3e3e3;
+    text-align: center;
+    font-size: 1.75rem;
+    margin: 1rem 0 0 0;
 }
 
 main article aside ul {
     display: flex;
-    flex-flow: column wrap;
+    flex-direction: column;
     align-items: center;
+/*    justify-content: space-evenly;*/
 }
 
 main article aside ul li {
-    background-color: aqua;
-    width: 90%;
-    padding: 0.6rem;
+    display: inline-block;
+    background-color: #ffd524;
+    border-radius: .3rem;
+    width: 75vw;
+    padding: .5rem 0;
     margin: 1rem;
     text-align: center;
 }
 
 main article aside ul li a {
+    display: inline-block;
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
@@ -121,9 +156,11 @@ main article aside ul li a {
 }
 
 main article aside ul li a:link {
+    color: black;
 }
 
 main article aside ul li a:visited {
+    color: black;
 }
 
 main article aside ul li a:hover {
@@ -135,38 +172,158 @@ main article aside ul li a:active {
 }
 
 footer {
-    width: 100%;
-    background-color: darkcyan;
+    padding: 1rem;
+    background-color: #192e45;
+    color: #e3e3e3;
+    font-weight: bold;
     display: grid;
-    grid-template-areas:"logo" 
+    grid-template-areas:"logos" 
                         "links"
-                        "copyright";
+                        "bottom-footer";
 }
 
-footer .logo {
-    grid-area: logo;
-    width: 20%;
-    margin: 1rem auto;
-}
-
-footer .links-container {
+footer .links-container a:link {
     
+}
+
+footer .links-container a:visited {
+}
+
+footer .links-container a:hover {
+}
+
+footer .links-container a:active {
+    
+}
+
+footer .logos {
+    grid-area: logos;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 1rem 0;
+}
+
+footer .logos .logo {
+    margin: .25rem auto;
+    width: 20%;
+}
+
+footer .logos .logo[src*="fii"] {
+    object-fit: contain;
+    width: 50%;
 }
 
 footer .links {
     grid-area: links;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-evenly;
 }
 
 footer .icon {
-    width: 10%;
+    width: 12.5%;
 }
 
-footer .copyright {
-    grid-area: copyright;
-    text-align: center;
-    font-size: 1.2rem;
+footer .bottom-footer {
+    grid-area: bottom-footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .bottom-footer .copyright {
+    margin: 0px;
+}
+
+@media screen and (min-width: 768px) {
+    
+    html {
+        font-size: 11px;
+    }
+    
+    header h2 {
+        margin: 1rem;
+        font-size: 3rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: white;
+    }
+
+    header nav ul {
+        display: flex;
+    }
+    
+    header nav ul li {
+        border: 0px;
+        font-size: 1.5rem;
+    }
+    
+    header nav .nav-button-list {
+        display: flex;
+        margin: auto 1rem;
+    }
+    
+    header nav .nav-button {
+        padding: 0 .75rem;
+    }
+    
+    header nav .nav-dropmenu {
+        display: none;
+    }
+    
+    main article {
+        grid-template-areas: "aside main-article"
+                            "aside main-article";
+        grid-template-columns: 1fr 3fr;
+    }
+    
+    main article .content {
+        margin: 0 1vw;
+    }
+        
+    main article .aside-container {
+        background-color: white;
+    }
+    
+    main article .aside-container .aside-p {
+        color: black;
+    }
+    
+    main article .aside-container ul li {
+        width: 25vw;
+    }
+    
+    footer {
+        grid-template-areas: "logos links"
+                            "bottom-footer bottom-footer";
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 5rem;
+        padding: 2.5rem;
+    }
+  
+    footer .logos {
+        grid-area: logos;
+        display: flex;
+        flex-flow: column wrap;
+        align-content: center;
+    }
+    
+    footer .links-container {
+        grid-area: links;
+        margin: auto 0;
+    }
+    
+    footer .links {
+        display: flex;
+        flex-flow: column wrap;
+        align-content: center;
+    }
+    
+    footer .bottom-footer {
+        grid-area: bottom-footer;
+        justify-content: space-evenly;
+    }
+    
 }
