@@ -87,83 +87,53 @@ header nav .nav-button-list:hover .nav-button:not(:hover) {
 }
 
 main {
-    position: relative;
+    margin: 2rem 0;
     display: grid;
-    grid-template-areas: "main-article"
-                        "aside";
-    padding: 2rem 0 0 0;
+    grid-template-areas: "title"
+                        "descriptions";
 }
 
-main article .content {
-    grid-area: main-article;
+main .title {
+    grid-area: title;
 }
 
-main article h3 {
-    text-align: center;
-    font-size: 3rem;
+main .descriptions {
+    grid-area: descriptions;
+}
+
+main .descriptions section {
+    margin: 3rem 0;
+}
+
+main h2:first-child {
     margin-bottom: 0px;
-}
-
-main article .content section:first-child h3 {
-    margin-top: 0px;
-}
-
-main article .content p {
-    margin: 1rem;
-    font-size: 1.5rem;
-    text-indent: 2rem;
-}
-
-main .aside-container {
-    grid-area: aside;
-    background-color: #294d73;
-    display: flex;
-    flex-direction: column;
-}
-
-main .aside-container .aside-p {
-    color: #e3e3e3;
+    font-size: 4rem;
     text-align: center;
-    font-size: 1.75rem;
-    margin: 1rem 0 0 0;
-}
-
-main aside ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-main aside ul li {
-    background-color: #ffd524;
-    border-radius: .3rem;
-    width: 75vw;
-    padding: .5rem 0;
-    margin: 1rem;
-    text-align: center;
-}
-
-main aside ul li a {
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
     text-transform: uppercase;
 }
 
-main aside ul li a:link {
-    color: black;
+main h2:first-child + p {
+    margin-top: 0px;
+    font-size: 2rem;
+    text-align: center;
 }
 
-main aside ul li a:visited {
-    color: black;
+main article section img:first-of-type {
+    max-width: 20%;
+    float: left;
+    margin: 0 1rem;
 }
 
-main aside ul li a:hover {
-    
+main article section h3:first-of-type {
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin: 0px;
 }
 
-main aside ul li a:active {
-    
+main section p {
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    margin-top: 0px;
 }
 
 footer {
@@ -259,29 +229,11 @@ footer .bottom-footer .copyright {
     main {
         margin: 0 auto;
         max-width: 1400px;
-        padding: 4rem 0;
-        grid-template-areas: "aside main-article"
-                            ". main-article";
-        grid-template-columns: 1fr 3fr;
-        grid-gap: 2.5rem;
     }
     
-    main article .content {
+    main .descriptions {
+        margin: 0 auto;
         max-width: 70rem;
-    }
-        
-    main .aside-container {
-        max-height: min-content;
-        background-color: white;
-    }
-    
-    main .aside-container .aside-p {
-        color: black;
-    }
-    
-    main .aside-container ul li {
-        min-width: 10vw;
-        max-width: 20vw;
     }
     
     footer {
@@ -314,25 +266,5 @@ footer .bottom-footer .copyright {
         grid-area: bottom-footer;
         justify-content: space-evenly;
     }
-    
-}
-
-@media screen and (max-width: 1052px) {
-    
-    main {
-        grid-template-areas: "main-article"
-                            "aside";
-        grid-template-columns: 1fr;
-    }
-    
-    main article .content {
-        margin: 0 auto;
-    } 
-    
-    main .aside-container ul li {
-        min-width: 30vw;
-        max-width: 45vw;
-    }
-    
     
 }
