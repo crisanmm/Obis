@@ -86,6 +86,10 @@ header nav .nav-button-list:hover .nav-button:not(:hover) {
     opacity: 0.5;
 }
 
+header .auth {
+    display: none;
+}
+
 main {
     margin: 2rem 0;
     display: grid;
@@ -147,20 +151,6 @@ footer {
                         "bottom-footer";
 }
 
-footer .links-container a:link {
-    
-}
-
-footer .links-container a:visited {
-}
-
-footer .links-container a:hover {
-}
-
-footer .links-container a:active {
-    
-}
-
 footer .logos {
     grid-area: logos;
     display: flex;
@@ -169,9 +159,11 @@ footer .logos {
     margin: 1rem 0;
 }
 
-footer .logos .logo {
-    margin: .25rem auto;
-    width: 20%;
+footer .logos a {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 footer .logos .logo[src*="fii"] {
@@ -224,6 +216,29 @@ footer .bottom-footer .copyright {
     
     header nav .nav-dropmenu {
         display: none;
+    }
+    
+        header .auth {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(255, 213, 36, 1);
+        height: 4rem;
+        width: 8rem;
+        border-radius: 3px;
+        color: black;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    header .auth:hover {
+        background-color: rgba(255, 213, 36, .9);
+    }
+
+    header .auth:active {
+        background-color: rgba(255, 213, 36, .75);
     }
     
     main {

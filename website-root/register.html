@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <title>Obis</title>
+        <meta charset="utf-8">
+<!--        <meta content>-->
+<!--       <meta title>-->
+<!--       <meta description>-->
+<!--       <meta language>-->
+       <meta name="robots" content="noindex">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="css/register.css">
+        <script src="js/scripts.js"></script>
+    </head>
+    
+    <body>
+        
+    <div class="page-container">
+        <header>
+            <a href="index.html" ><img src="images/obis-logo.svg" alt="obis logo"></a>
+            <nav>
+                <ul class="nav-button-list">
+                    <li><a href="index.html" class="nav-button" >Home</a></li>
+                    <li><a href="#" class="nav-button">Pag1</a></li>
+                    <li><a href="#" class="nav-button">Pag2</a></li>
+                    <li><a href="about-us.html" class="nav-button">About us</a></li>
+                    <li><a href="contact.html" class="nav-button">Contact</a></li>
+                </ul>
+                <button onclick="dropMenu()" class="nav-dropmenu"><img src="images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
+            </nav>
+<!--               php here-->
+            <a href="register.html" class="auth">
+                sign in
+            </a>
+        </header>
+        
+        <main>
+            
+            <div class="form-container">
+                <form action="" method="post">
+                    <label for="firstname" class="sr-only">Enter first name</label>
+                    <input id="firstname" name="firstname" type="text" placeholder="First name" required>
+                    
+                    <label for="lastname" class="sr-only">Enter last name</label>
+                    <input id="lastname" name="lastname" type="text" placeholder="Last name" required>
+                    
+                    <label for="username" class="sr-only">Enter username</label>
+                    <input id="username" name="username" type="text" placeholder="Username" required>
+                    
+                    <label for="password" class="sr-only">Enter password</label>
+                    <input id="password" name="password" type="text" placeholder="Password" required>
+                    
+                    <label for="confirm-password" class="sr-only">Confirm password</label>
+                    <input id="confirm-password" name="confirm-password" type="text" placeholder="Confirm password" required>
+                    
+                    <button type="submit">send message</button>
+                </form>
+            </div>
+            
+        </main>
+        
+        <footer>
+           <div class="logos">
+               <a href="https://info.uaic.ro"><img class="logo" src="images/fii-logo.png"></a>
+            </div>
+            
+            <div class="links-container">
+                <ul class="links">
+                    <li class="icon"><a href="https://github.com/hristodormihai/Obis"><img src="images/github-white.svg"></a>
+                </ul>
+            </div>
+            
+            <div class="bottom-footer">
+                <p class="copyright">Copyright © 2020 Crisan Mihai</p>
+                <div class="select-language">
+                    <label for="language-select">Language:</label>
+                    <select name="language" id="language-select">
+                        <option value="romanian">Romanian</option>
+                        <option value="english">English</option>
+                        <option value="french">French</option>
+                    </select>
+                </div>
+            </div> 
+        </footer>
+    </div>
+    
+    </body>
+    
+</html>

@@ -86,6 +86,10 @@ header nav .nav-button-list:hover .nav-button:not(:hover) {
     opacity: 0.5;
 }
 
+header .auth {
+    display: none;
+}
+
 main .form-container {
     display: flex;
     justify-content: space-around;
@@ -108,6 +112,26 @@ main .form-container form [id] {
     border: 0;
     border-radius: 0.25rem;
     background-color: rgba(41, 77, 115, .075);
+}
+
+main .form-container form button[type="submit"] {
+    width: 35%;
+    height: 15%;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem auto 0 auto;
+    background-color: rgba(255, 213, 36, 1);
+    border: 0px;
+    border-radius: 3px;
+}
+
+main .form-container form button[type="submit"]:hover {
+    background-color: rgba(255, 213, 36, .9);
+}
+
+main .form-container form button[type="submit"]:active {
+    background-color: rgba(255, 213, 36, .75);
 }
 
 main .sr-only {
@@ -198,20 +222,6 @@ footer {
                         "bottom-footer";
 }
 
-footer .links-container a:link {
-    
-}
-
-footer .links-container a:visited {
-}
-
-footer .links-container a:hover {
-}
-
-footer .links-container a:active {
-    
-}
-
 footer .logos {
     grid-area: logos;
     display: flex;
@@ -220,9 +230,11 @@ footer .logos {
     margin: 1rem 0;
 }
 
-footer .logos .logo {
-    margin: .25rem auto;
-    width: 20%;
+footer .logos a {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 footer .logos .logo[src*="fii"] {
@@ -287,6 +299,29 @@ footer .bottom-footer .copyright {
     
     header nav .nav-dropmenu {
         display: none;
+    }
+    
+    header .auth {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(255, 213, 36, 1);
+        height: 4rem;
+        width: 8rem;
+        border-radius: 3px;
+        color: black;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    header .auth:hover {
+        background-color: rgba(255, 213, 36, .9);
+    }
+
+    header .auth:active {
+        background-color: rgba(255, 213, 36, .75);
     }
     
     main .table-container table th,
