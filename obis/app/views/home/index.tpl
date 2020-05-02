@@ -16,14 +16,15 @@
         
         <header>
             <a href="/obis/home/index" ><img src="/obis/images/obis-logo.svg" alt="obis logo"></a>
-            <nav>
-                <ul class="nav-button-list">
+            <nav class="dropdown">
+                <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
+                <ul class="nav-button-list" id="headDrop">
                     <li><a href="/obis/home/index" class="nav-button" style="color: #ffd524; font-weight: bolder">Home</a></li>
                     <li><a href="/obis/statistics/index" class="nav-button">STATISTICS</a></li>
                     <li><a href="/obis/home/aboutus" class="nav-button">About us</a></li>
                     <li><a href="/obis/home/contact" class="nav-button">Contact</a></li>
                 </ul>
-                <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
+                
             </nav>
 <!--               php here-->
             <a href="/obis/account/register" class="auth">

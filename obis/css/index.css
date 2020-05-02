@@ -69,9 +69,9 @@ header nav ul li {
     margin: auto 0;
 }
 
-header nav .nav-button-list {
+/*header nav .nav-button-list {
     display: none;
-}
+}*/
 
 header nav .nav-dropmenu {
     background-color: rgba(0,0,0,0);
@@ -353,4 +353,27 @@ footer .bottom-footer .copyright {
     }
     
     
+}
+
+@media screen and (max-width: 768px){
+
+    .nav-button-list
+    {
+        display: none;
+        position: absolute;
+        font-size: x-large;
+        margin-top: 5px;
+        margin-left: -74px;
+        background-color: #294d73;
+        text-align: center;
+    }
+
+    .nav-button
+    {
+        color:black;
+    }
+
+
+    .show {display:block;}
+
 }
