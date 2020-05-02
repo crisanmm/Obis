@@ -39,15 +39,12 @@ html {
 
 body {
     margin: 0px;
-}
-
-body .page-container {
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-body .page-container main {
+body main {
     flex: auto;
 }
 
