@@ -1,10 +1,9 @@
-
 function dropMenu() {
   document.getElementById("drop").classList.toggle("show");
 }
 
 window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
+  if (!event.target.matches('.nav-button')) {
     var dropdowns = document.getElementsByClassName("drop-menu");
     var i;
     for (i = 0; i < dropdowns.length; i++) {

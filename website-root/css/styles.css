@@ -1,3 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -5,52 +13,69 @@ html, body {
 
 body
 {
-    width: 100%;
-    height: 100vh;
-    display: table;
-
+    width: 100vw;
     font-family: Montserrat;
 }
 
-header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
+header {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0vh;
     width: 100%;
-    height: 88px;
+    height: 10vh;
     border-bottom: 5px solid lightblue;
     background-color: #008DC9;
     color: white;
 }
 
-header h1{
+header h1 {
+    justify-self: flex-start;
     letter-spacing: 1px;
-    float: left;
-    color: #FFF;
-    font-size: 22px;
+    color: white;
+    font-size: 2.5rem;
+    background-image: url('images/placeholders/logo.png');
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 100%;
     line-height: 60px;
     padding: 0 1em;
     font-weight: normal;
 }
 
-nav{
-    float: right;
-    line-height: 60px;
-    margin:0 1em;
+header .wrapper-nav {
+    justify-self: flex-end;
 }
 
-nav ul{
+nav ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0px;
+}
+
+nav ul li {
+    padding: 0px 2.2rem;
+    font-size: 1.8rem;
+    color: white;
+}
+
+header .wrapper-nav button {
+    display: none;
+}
+
+/*
+nav ul {
     list-style: none;
 }
 
-nav ul li{
+nav ul li {
     display: inline-block;
 }
 
-nav ul li a
-{
+nav ul li a {
     text-decoration: none;
     font-size: 16px;
     color:white;
@@ -58,30 +83,40 @@ nav ul li a
     padding: 0 20px;
 }
 
-nav ul li a:hover
-{
+nav ul li a:hover {
     color:black;
 }
 
-nav ul li:hover
-{
+nav ul li:hover {
     background-color: lightblue;
 }
+*/
 
-header img
-{
+/*
+header img {
     float:left;
     width: 75px;
     height: 75px;
     padding-left: 60px;
     padding-top: 5px;
 }
+*/
 
-header button
-{
-    display:none;
+/*
+header button {
+    display: none;
+}
+*/
+
+@media screen and (min-width: ) {
+    
+    header .wrapper-nav button {
+        
+    }
+    
 }
 
+/*
 @media screen and (max-width: 800px){
 
     nav
@@ -140,3 +175,4 @@ header button
     }
 
 }
+*/
