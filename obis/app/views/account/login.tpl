@@ -35,20 +35,12 @@
             
             <div class="form-container">
                 <form action="" method="post">
-                    <label for="firstname" class="sr-only">Enter first name</label>
-                    <input id="firstname" name="firstname" type="text" placeholder="First name" required>
-                    
-                    <label for="lastname" class="sr-only">Enter last name</label>
-                    <input id="lastname" name="lastname" type="text" placeholder="Last name" required>
-                    
-                    <label for="email" class="sr-only">Enter email</label>
+
+                    <label for="email" class="sr-only">Enter Email</label>
                     <input id="email" name="email" type="text" placeholder="Email" required>
                     
                     <label for="password" class="sr-only">Enter password</label>
                     <input id="password" name="password" type="text" placeholder="Password" required>
-                    
-                    <label for="confirm-password" class="sr-only">Confirm password</label>
-                    <input id="confirm-password" name="confirm-password" type="text" placeholder="Confirm password" required>
                     
                     <button type="submit">send message</button>
                 </form>
@@ -68,7 +60,7 @@
             </div>
             
             <div class="bottom-footer">
-                <p class="copyright">Copyright © 2020 Crisan Mihai</p>
+                <p class="copyright">Copyright © 2020 Hristodor Minu-Mihail</p>
                 <div class="select-language">
                     <label for="language-select">Language:</label>
                     <select name="language" id="language-select">
