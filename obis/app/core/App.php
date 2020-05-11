@@ -14,7 +14,6 @@
         }
         
         public function __construct() {
-            
             // process URL
             $url = $this->parseUrl();
 
@@ -28,7 +27,7 @@
             }
             $this->controller = new $this->controller;
             
-            // set method
+            // if method has been specified then set it
             if(isset($url[1])) {
                 if(method_exists($this->controller, $url[1])) {
                     $this->method = $url[1];
@@ -38,9 +37,8 @@
             
             // set parameters
             $this->params = $url ? array_values($url) : [];
-            // $this->controller->{$this->method}($this->params);
-            call_user_func_array(array($this->controller, $this->method), $this->params);
-
+            // $this->controller->{$this->method}($this->params); 
+            call_user_func_array([$this->controller, $this->method], $this->params);
         }
         
     }

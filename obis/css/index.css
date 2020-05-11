@@ -361,19 +361,21 @@ footer .bottom-footer .copyright {
     {
         display: none;
         position: absolute;
-        font-size: x-large;
-        margin-top: 5px;
-        margin-left: -74px;
+        font-size: 2.5em;
+        top: 64px;
+        left: 0px;
+        right: 0px;
         background-color: #294d73;
         text-align: center;
     }
 
     .nav-button
     {
-        color:black;
+        color: black;
     }
 
-
-    .show {display:block;}
+    .show {
+        display: block;
+    }
 
 }

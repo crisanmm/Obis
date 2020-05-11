@@ -3,27 +3,26 @@
     class HomeController extends Controller {
 
         /**
-         * "Home" page
+         * Render default page
          */
         public function index() {
             // $user = $this->model('User');
             // $user->name = 'john';
-
             $this->view('home' . DIRECTORY_SEPARATOR . 'index', array('no' => 'yes'));
         }
         
         /**
-         * "About us" page  
+         * Render about us page  
          */
         public function aboutus() {
-            $this->view('home' . DIRECTORY_SEPARATOR . 'aboutus', []);
+            $this->view('home' . DIRECTORY_SEPARATOR . 'aboutus');
         }
         
         /**
-         * "Contact" page
+         * Render contact page
          */
         public function contact() {
-            $this->view('home' . DIRECTORY_SEPARATOR . 'contact', []);
+            $this->view('home' . DIRECTORY_SEPARATOR . 'contact');
         }
 
     }

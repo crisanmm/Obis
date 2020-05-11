@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <title>Obis</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Visualise BRFSS adult obesity statistics and access our REST API.">
+        <meta name="robots" content="noindex">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/obis/css/register.css">
+        <script src="/obis/js/scripts.js"></script>
+    </head>
+    
+    <body>
+        
+        <header>
+            <a href="/obis/home/index" ><img src="/obis/images/obis-logo.svg" alt="obis logo"></a>
+            <nav>
+                <ul class="nav-button-list">
+                    <li><a href="/obis/home/index" class="nav-button" >Home</a></li>
+                    <li><a href="/obis/statistics/index" class="nav-button">STATISTICS</a></li>
+                    <li><a href="/obis/home/aboutus" class="nav-button">About us</a></li>
+                    <li><a href="/obis/home/contact" class="nav-button">Contact</a></li>
+                </ul>
+                <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
+            </nav>
+<!--               php here-->
+            <a href="/obis/account/login" class="auth">
+                sign in
+            </a>
+        </header>
+        
+        <main>
+            
+            <div class="form-container">
+                <form action="/obis/account/registerAction" method="post">
+                    <label for="firstname" class="sr-only">Enter first name</label>
+                    <input id="firstname" name="firstname" type="text" placeholder="First name" required>
+                    
+                    <label for="lastname" class="sr-only">Enter last name</label>
+                    <input id="lastname" name="lastname" type="text" placeholder="Last name" required>
+                    
+                    <label for="email" class="sr-only">Enter email</label>
+                    <input id="email" name="email" type="email" placeholder="Email" required>
+                    
+                    <label for="password" class="sr-only">Enter password</label>
+                    <input id="password" name="password" type="password" placeholder="Password" required>
+                    
+                    <label for="confirm-password" class="sr-only">Confirm password</label>
+                    <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm password" required>
+                    
+                    <button type="submit">register</button>
+                </form>
+            </div>
+            
+            <?php
+                if(isset($userExists))
+                    if($userExists)
+                        echo "<p>user already exists</p>";
+                    else
+                        echo "<p>user created</p>";
+            ?>
+            
+        </main>
+        
+        <footer>
+           <div class="logos">
+               <a href="https://info.uaic.ro"><img class="logo" src="/obis/images/fii-logo.png" alt="UAIC FII logo"></a>
+            </div>
+            
+            <div class="links-container">
+                <ul class="links">
+                    <li class="icon"><a href="https://github.com/hristodormihai/Obis"><img src="/obis/images/github-white.svg" alt="github logo"></a>
+                </ul>
+            </div>
+            
+            <div class="bottom-footer">
+                <p class="copyright">Copyright © 2020 Crisan Mihai</p>
+                <div class="select-language">
+                    <label for="language-select">Language:</label>
+                    <select name="language" id="language-select">
+                        <option value="english">English</option>
+                        <option value="romanian">Romanian</option>
+                        <option value="french">French</option>
+                    </select>
+                </div>
+            </div> 
+        </footer>
+    
+    </body>
+    
+</html>

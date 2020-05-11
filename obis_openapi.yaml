@@ -1,0 +1,524 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: "Obis REST API Specification"
+  description: >
+    Obis is a application that let's you view and access statistics
+    about obesity in the United States.
+    Data is collected by telephone surveys, the data is provided by 
+    Behavioral Risk Factor Surveillance System (**BRFSS**), it is publicly accesible 
+    [here](https://www.cdc.gov/brfss/annual_data/annual_data.htm).
+    
+servers:
+  - url: http://localhost:8081/api
+    description: non-secure (HTTP)
+
+components:
+  schemas:
+
+    Answer:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 101138
+        location:
+          type: string
+          example: 'CA'
+        year:
+          type: integer
+          example: 2012
+        sample_size:
+          type: integer
+          example: 2527
+        data_value_percentage:
+          type: number
+          example: 40.9
+        confidence_limit_low:
+          type: number
+          example: 39.1
+        confidence_limit_high:
+          type: number
+          example: 42.6
+        response:
+          type: object
+          properties:
+            id: 
+              type: string
+              example: "RESP040"
+            value:
+              type: string
+              example: "Overweight (BMI 25.0-29.9)"
+            href:
+              type: string
+              example: "localhost:8081/api/responses/RESP040"
+        break_out:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "SEX1"
+            value:
+              type: string
+              example: "Male"
+            href:
+              type: string
+              example: "localhost:8081/api/breakouts/SEX1"
+        break_out_category:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "CAT2"
+            value:
+              type: string
+              example: "Gender"
+            href:
+              type: string
+              example: "localhost:8081/api/breakout-categories/CAT2"
+    Answers:
+      type: array
+      items:
+        $ref: "#/components/schemas/Answer"
+
+    Location:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "CA"
+        value:
+          type: string
+          example: "California"
+    Locations:
+      type: array
+      items:
+        $ref: "#/components/schemas/Location"
+
+    Response:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "RESP039"
+        value:
+          type: string
+          example: "Obese (BMI 30.0 - 99.8)"
+    Responses:
+
+      type: array
+      items:
+        $ref: "#/components/schemas/Response"
+
+    Breakout:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "INCOME4"
+        value:
+          type: string
+          example: "$35,000-$49,999"
+    Breakouts:
+      type: array
+      items:
+        $ref: "#/components/schemas/Breakout"
+
+    BreakoutCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "CAT6"
+        value:
+          type: string
+          example: "Household income"
+    BreakoutCategories:
+      type: array
+      items:
+        $ref: "#/components/schemas/BreakoutCategory"
+    
+paths:
+  /answers:
+    get:
+      parameters:
+        - in: query
+          required: false
+          name: location
+          schema:
+            type: string
+            example: "CA"
+        - in: query
+          required: false
+          name: year
+          schema:
+            type: integer
+            example: 2012
+      description: Get list of answers.
+      responses:
+        "200":
+          description: OK. List successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answers"
+        "404":
+          description: Not found. No entries found in collection.
+    post:
+      description: Add a new answer to the collection.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Answer"
+      responses:
+        "201":
+          description: Created. New answer successfully added.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/answers/678354"
+        "400":
+          description: Bad request. Request body is malformed.
+  /answers/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          example: 101138
+    get:
+      description: Get information based on answer with specific ID.
+      responses:
+        "200":
+          description: OK. Answer with specific ID retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "400":
+          description: Bad request. Possibly malformed parameter, is ID an integer?
+        "404":
+          description: Not found. Answer with specific ID not found.
+    put:
+      description: Create or update answer with specific ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Answer"
+      responses:
+        "201":
+          description: Created. Answer with specific ID successfully created.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/answers/497853"
+        "204":
+          description: No content. Answer with specific ID successfully updated.
+    delete:
+      description: Delete answer with specific ID.
+      responses:
+        "204":
+          description: No content. Answer with specific ID successfully deleted.
+
+  /locations:
+    get:
+      description: Get list of **State abbreviation** -> **Full name** pairs.
+      responses:
+        "200":
+          description: OK. List successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Locations"
+        "404":
+          description: Not found. No entries found in collection.
+    post:
+      description: Add a new **State abbreviation** -> **Full name** pair.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+      responses:
+        "201":
+          description: Created. New **State abbreviation** -> **Full name** pair successfully added.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/locations/NY"
+        "400":
+          description: Bad request. Request body is malformed.
+  /locations/{location}:
+    parameters:
+      - in: path
+        name: location
+        required: true
+        schema:
+          type: string
+          example: "CA"
+    get:
+      description: Get information based on location with specific **location abbreviation**.
+      responses:
+        "200":
+          description: OK. Location with specific **location abbreviation** retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+        "400":
+          description: Bad request. Possibly malformed parameter, is the **location abbreviation** a string?
+        "404":
+          description: Not found. Location with specific **location abbreviation** not found.
+    put:
+      description: Create or update **State abbreviation** -> **Full name** pair with specific **State abbreviation**.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+      responses:
+        "201":
+          description: Created. Location with specific **location abbreviation** successfully created.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/locations/CA"
+        "204":
+          description: No content. Location with specific **location abbreviation** successfully updated.
+    delete:
+      description: Delete location with specific **location abbreviation**.
+      responses:
+        "204":
+          description: No content. Location with specific **location abbreviation** successfully deleted.
+
+  /responses:
+    get:
+      description: Get list of **Response ID** -> **Response value** pairs.
+      responses:
+        "200":
+          description: OK. List successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Responses"
+        "404":
+          description: Not found. No entries found in collection.
+    post:
+      description: Add a new **Response ID** -> **Response value** pair.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Response"
+      responses:
+        "201":
+          description: Created. New **Response ID** -> **Response value** pair successfully added.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/responses/RESP05"
+        "400":
+          description: Bad request. Request body is malformed.
+  /responses/{response}:
+    parameters:
+        - in: path
+          name: response
+          required: true
+          schema:
+            type: string
+            example: "RESP041"
+    get:
+      description: Get information based on response with specific **response id**.
+      responses:
+        "200":
+          description: OK. Response with specific **response id** retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "400":
+          description: Bad request. Possibly malformed parameter, is the **response id** a string?
+        "404":
+          description: Not found. Response with specific **response id** not found.
+    put:
+      description: Create or update **Response ID** -> **Response value** pair with specific **response id**.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Response"
+      responses:
+        "201":
+          description: Created. Response with specific **response id** successfully created.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/response/RESP02"
+        "204":
+          description: No content. Response with specific **response id** successfully updated.
+    delete:
+      description: Delete response with specific **response id**.
+      responses:
+        "204":
+          description: No content. Response with specific **response id** successfully deleted.
+
+  /breakouts:
+    get:
+      description: Get list of **Break out ID** -> **Break out value** pairs.
+      responses:
+        "200":
+          description: OK. List successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Breakouts"
+        "404":
+          description: Not found. No entries found in collection.
+    post:
+      description: Add a new **Break out ID** -> **Break out value** pair.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Breakout"
+      responses:
+        "201":
+          description: Created. New **Break out ID** -> **Break out value** pair successfully added.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/breakouts/AGE02"
+        "400":
+          description: Bad request. Request body is malformed.
+  /breakouts/{breakout}:
+    parameters:
+        - in: path
+          name: breakout
+          required: true
+          schema:
+            type: string
+            example: "EDUCA3"
+    get:
+      description: Get information based on break out with specific **break out id**.
+      responses:
+        "200":
+          description: OK. Response with specific **break out id** retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Breakout"
+        "400":
+          description: Bad request. Possibly malformed parameter, is the **break out id** a string?
+        "404":
+          description: Not found. Break out with specific **break out id** not found.
+    put:
+      description: Create or update **Break out ID** -> **Break out value** pair with specific **break out id**.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Breakout"
+      responses:
+        "201":
+          description: Created. Break out with specific **break out id** successfully created.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/response/EDUCA3"
+        "204":
+          description: No content. Break out with specific **break out id** successfully updated.
+    delete:
+      description: Delete break out with specific **break out id**.
+      responses:
+        "204":
+          description: No content. Break out with specific **break out id** successfully deleted.
+
+  /breakout-categories:
+    get:
+      description: Get list of **Break out category ID** -> **Break out category value** pairs.
+      responses:
+        "200":
+          description: OK. List successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BreakoutCategories"
+        "404":
+          description: Not found. No entries found in collection.
+    post:
+      description: Add a new **Break out category ID** -> **Break out category value** pair.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BreakoutCategory"
+      responses:
+        "201":
+          description: Created. New **Break out category ID** -> **Break out category value** pair successfully added.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/breakouts-categories/CAT2"
+        "400":
+          description: Bad request. Request body is malformed.
+  /breakout-categories/{category}:
+    parameters:
+        - in: path
+          name: category
+          required: true
+          schema:
+            type: string
+            example: "CAT3"
+    get:
+      description: Get information based on break out category with specific **break out category id**.
+      responses:
+        "200":
+          description: OK. Break out category with specific **break out category id** retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BreakoutCategory"
+        "400":
+          description: Bad request. Possibly malformed parameter, is the **break out category id** a string?
+        "404":
+          description: Not found. Break out category with specific **break out category id** not found.
+    put:
+      description: Create or update **Break out category ID** -> **Break out category value** pair with specific **break out category id**.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BreakoutCategory"
+      responses:
+        "201":
+          description: Created. Break out category with specific **break out category id** successfully created.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "localhost:8081/response/CAT3"
+        "204":
+          description: No content. Break out category with specific **break out category id** successfully updated.
+    delete:
+      description: Delete break out category with specific **break out category id**.
+      responses:
+        "204":
+          description: No content. Break out category with specific **break out category id** successfully deleted.

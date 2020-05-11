@@ -1,0 +1,338 @@
+@font-face {
+    font-family: 'Open-sans';
+    src: url('../fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('../fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/raleway-regular-webfont.woff2') format('woff2'),
+         url('../fonts/raleway-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, serif;
+}
+
+* {
+    font-family: Open-sans, serif;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+html {
+    font-size: 11px;
+}
+
+body {
+    margin: 0px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body main {
+    flex: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    position: sticky;
+    top: 0px;
+    background-color: #294d73;
+    z-index: 1;
+}
+
+header nav ul {
+    margin: 0px;
+}
+
+header nav ul li {
+    padding: 5px;
+    border: 1px solid aqua;
+    margin: auto 0;
+}
+
+header nav .nav-button-list {
+    display: none;
+}
+
+header nav .nav-dropmenu {
+    background-color: rgba(0,0,0,0);
+    border: 0px;
+    padding: 0px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+header nav .nav-button {
+    transition: opacity 0.3s;
+    color: white;
+}
+
+header nav .nav-button-list:hover .nav-button:not(:hover) {
+    opacity: 0.5;
+}
+
+header .auth {
+    display: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main .form-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+main .form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+main .form-container form :nth-child(even) {
+    margin: .75rem 0;
+}
+
+main .form-container form [id] {
+    min-width: 50ch;
+    width: 100%;
+    padding: 0.05rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background-color: rgba(41, 77, 115, .075);
+}
+
+main .sr-only {
+    position: fixed;
+    left: -999999px;
+    height: 1px;
+    width: 1px;
+}
+
+main .form-container form button[type="submit"] {
+    width: 35%;
+    height: 44px;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem auto 0 auto;
+    background-color: rgba(255, 213, 36, 1);
+    border: 0px;
+    border-radius: 3px;
+}
+
+main .form-container form button[type="submit"]:hover {
+    background-color: rgba(255, 213, 36, .9);
+}
+
+main .form-container form button[type="submit"]:active {
+    background-color: rgba(255, 213, 36, .75);
+}
+
+main .register-container {
+    margin-top: 2rem;
+}
+
+main .register-container a[href*="register"] {
+    color: white;
+    font-weight: bold;
+    font-size: 1.25em;
+    text-align: center;
+    text-decoration: none;    
+    text-transform: uppercase;
+}
+
+main .register-container a[href*="register"] div {
+    padding: 1rem;
+    background-color: rgba(41, 77, 115, 1);
+    border-radius: 3px;
+}
+
+main .register-container a[href*="register"] div:hover {
+    background: rgba(41, 77, 115, 0.75) linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+}
+
+footer {
+    padding: 1rem;
+    background-color: #192e45;
+    color: #e3e3e3;
+    font-weight: bold;
+    display: grid;
+    grid-template-areas:"logos" 
+                        "links"
+                        "bottom-footer";
+}
+
+footer .logos {
+    grid-area: logos;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 1rem 0;
+}
+
+footer .logos a {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+footer .logos .logo[src*="fii"] {
+    object-fit: contain;
+    width: 50%;
+}
+
+footer .links {
+    grid-area: links;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+footer .icon {
+    width: 12.5%;
+}
+
+footer .bottom-footer {
+    grid-area: bottom-footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .bottom-footer .copyright {
+    margin: 0px;
+}
+
+@media screen and (min-width: 450px) {
+    main .table-container table th,
+    main .table-container table td {
+        padding: .5rem;
+    }
+    
+    main .form-container form [id] {
+        min-width: 70ch;
+        padding: .5rem;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    
+    header nav ul {
+        display: flex;
+    }
+    
+    header nav ul li {
+        border: 0px;
+        font-size: 1.5rem;
+    }
+    
+    header nav .nav-button-list {
+        display: flex;
+        margin: auto 1rem;
+    }
+    
+    header nav .nav-button {
+        padding: 0 .75rem;
+    }
+    
+    header nav .nav-dropmenu {
+        display: none;
+    }
+    
+    header .auth {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(255, 213, 36, 1);
+        height: 4rem;
+        width: 8rem;
+        border-radius: 3px;
+        color: black;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    header .auth:hover {
+        background-color: rgba(255, 213, 36, .9);
+    }
+
+    header .auth:active {
+        background-color: rgba(255, 213, 36, .75);
+    }
+    
+    main .form-container form [id] {
+        min-width: 100ch;
+        padding: 1rem;
+    }
+    
+    footer {
+        grid-template-areas: "logos links"
+                            "bottom-footer bottom-footer";
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 5rem;
+        padding: 2.5rem;
+    }
+  
+    footer .logos {
+        grid-area: logos;
+        display: flex;
+        flex-flow: column wrap;
+        align-content: center;
+    }
+    
+    footer .links-container {
+        grid-area: links;
+        margin: auto 0;
+    }
+    
+    footer .links {
+        display: flex;
+        flex-flow: column wrap;
+        align-content: center;
+    }
+    
+    footer .bottom-footer {
+        grid-area: bottom-footer;
+        justify-content: space-evenly;
+    }
+    
+}
+
+@media screen and (min-width: 1052px) {
+
+    main .form-container form [id] {
+        min-width: 100ch;
+        padding: 1.5rem;
+    }
+    
+}
