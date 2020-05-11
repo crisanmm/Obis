@@ -79,12 +79,15 @@
 
             if($stmt->rowCount() != 0) {
                 $row = $stmt->fetch();
-                return new User($row['firstname'],
-                                $row['lastname'],
-                                $row['email'],
-                                $row['password']);
+                if(password_verify($password, $row['password']))
+                    return new User($row['firstname'],
+                                    $row['lastname'],
+                                    $row['email'],
+                                    $row['password']);
+                else
+                    return false; // failed password authentication
             } else {
-                return false;
+                return false; // user with specified does not exist
             }
         }
 
