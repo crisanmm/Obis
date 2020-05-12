@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.0.0
+  version: 1.1.0
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -145,16 +145,22 @@ paths:
       parameters:
         - in: query
           required: false
-          name: location
+          name: response
           schema:
             type: string
-            example: "CA"
+            example: "RESP039"
         - in: query
           required: false
-          name: year
+          name: breakout
           schema:
-            type: integer
-            example: 2012
+            type: string
+            example: "AGE05"
+        - in: query
+          required: false
+          name: breakoutcat
+          schema:
+            type: string
+            example: "CAT1"
       description: Get list of answers.
       responses:
         "200":
@@ -226,6 +232,127 @@ paths:
       responses:
         "204":
           description: No content. Answer with specific ID successfully deleted.
+  /answers/location/{location}:
+    get:
+      parameters:
+        - in: path
+          required: true
+          name: location
+          schema:
+            type: string
+            example: "CA"
+        - in: query
+          required: false
+          name: response
+          schema:
+            type: string
+            example: "RESP039"
+        - in: query
+          required: false
+          name: breakout
+          schema:
+            type: string
+            example: "AGE05"
+        - in: query
+          required: false
+          name: breakoutcat
+          schema:
+            type: string
+            example: "CAT1"
+      responses:
+        "200":
+          description: OK. List with answers from specific location successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "400":
+          description: Bad request. Path parameter is malformed.
+        "404":
+          description: Not found. No list with answers with specific location exists.
+  /answers/year/{year}:
+    get:
+      parameters:
+        - in: path
+          required: true
+          name: year
+          schema:
+            type: integer
+            example: 2012
+        - in: query
+          required: false
+          name: response
+          schema:
+            type: string
+            example: "RESP039"
+        - in: query
+          required: false
+          name: breakout
+          schema:
+            type: string
+            example: "AGE05"
+        - in: query
+          required: false
+          name: breakoutcat
+          schema:
+            type: string
+            example: "CAT1"
+      responses:
+        "200":
+          description: OK. List with answers from specific year successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "400":
+          description: Bad request. Path parameter is malformed.
+        "404":
+          description: Not found. No list with answers with specific year exists.
+  /answers/location/{location}/year/{year}:
+    get:
+      parameters:
+        - in: path
+          required: true
+          name: location
+          schema:
+            type: string
+            example: "CA"
+        - in: path
+          required: true
+          name: year
+          schema:
+            type: integer
+            example: 2012
+        - in: query
+          required: false
+          name: response
+          schema:
+            type: string
+            example: "RESP039"
+        - in: query
+          required: false
+          name: breakout
+          schema:
+            type: string
+            example: "AGE05"
+        - in: query
+          required: false
+          name: breakoutcat
+          schema:
+            type: string
+            example: "CAT1"
+      description: Get list of answers that match specified location and year values.
+      responses:
+        "200":
+          description: OK. List with answers that match specified location and year values successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+        "400":
+          description: Bad request. Path parameters are malformed.
+        "404":
+          description: Not found. No list with answers with specific year exists.
 
   /locations:
     get:
