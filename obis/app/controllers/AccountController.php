@@ -1,5 +1,7 @@
 <?php
 
+    use \Firebase\JWT\JWT;
+
     class AccountController extends Controller {
 
         /**
@@ -55,8 +57,41 @@
             if($user === false)
                 $userIsLoggedIn = false;
 
+            if($user == true)
+            {
+                $secret_key = "test_key";
+                $issuer_claim = "obis"; 
+                $audience_claim = "test_audience";
+                $issuedat_claim = time(); 
+                $notbefore_claim = $issuedat_claim + 10; 
+                $expire_claim = $issuedat_claim + 60; 
+                
+                $token = array(
+                    "iss" => $issuer_claim,
+                    "aud" => $audience_claim,
+                    "iat" => $issuedat_claim,
+                    "nbf" => $notbefore_claim,
+                    "exp" => $expire_claim,
+                    "data" => array(
+                        "firstname" => $user -> getFirstname(),
+                        "lastname" => $user -> getLastname(),
+                        "email" => $user -> getEmail()
+                ));
+
+                $jwt = JWT::encode($token, $secret_key);
+
+                $unencodedArray = ['jwt' => $jwt];
+                echo json_encode($unencodedArray);
+                
+
+                header("Location: http://localhost/obis/home/index");
+            #$this->view('account' . DIRECTORY_SEPARATOR . 'login', ["user" => $user,"userIsLoggedIn" => $userIsLoggedIn]);
+
+            
+            }else
+
             $this->view('account' . DIRECTORY_SEPARATOR . 'login', ["user" => $user,
-                                                                    "userIsLoggedIn" => $userIsLoggedIn]);
+                                                                   "userIsLoggedIn" => $userIsLoggedIn]);
         }
 
     }

@@ -52,7 +52,9 @@
             <?php 
                 if(isset($userIsLoggedIn))
                     if($userIsLoggedIn === true)
+                    {
                         echo "<p>welcome {$user->getFirstname()}</p>";
+                    }
                     else 
                         echo "failed login";
             ?>
