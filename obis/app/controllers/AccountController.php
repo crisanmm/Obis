@@ -57,8 +57,7 @@
             if($user === false)
                 $userIsLoggedIn = false;
 
-            if($user == true)
-            {
+            if($userIsLoggedIn) {
                 $secret_key = "test_key";
                 $issuer_claim = "obis"; 
                 $audience_claim = "test_audience";
@@ -79,19 +78,11 @@
                 ));
 
                 $jwt = JWT::encode($token, $secret_key);
-
-                $unencodedArray = ['jwt' => $jwt];
-                echo json_encode($unencodedArray);
-                
-
-                header("Location: http://localhost/obis/home/index");
-            #$this->view('account' . DIRECTORY_SEPARATOR . 'login', ["user" => $user,"userIsLoggedIn" => $userIsLoggedIn]);
-
+            }
             
-            }else
-
-            $this->view('account' . DIRECTORY_SEPARATOR . 'login', ["user" => $user,
-                                                                   "userIsLoggedIn" => $userIsLoggedIn]);
+            $this->view('home' . DIRECTORY_SEPARATOR . 'index', ["user" => $user,
+                                                                "userIsLoggedIn" => $userIsLoggedIn,
+                                                                "jwt" => $jwt]);
         }
 
     }
