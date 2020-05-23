@@ -63,7 +63,7 @@
                 $audience_claim = "test_audience";
                 $issuedat_claim = time(); 
                 $notbefore_claim = $issuedat_claim + 10; 
-                $expire_claim = $issuedat_claim + 60; 
+                $expire_claim = $issuedat_claim + 600000000; 
                 
                 $token = array(
                     "iss" => $issuer_claim,
@@ -79,6 +79,7 @@
 
                 $jwt = JWT::encode($token, $secret_key);
             }
+            echo $jwt;
             
             $this->view('home' . DIRECTORY_SEPARATOR . 'index', ["user" => $user,
                                                                 "userIsLoggedIn" => $userIsLoggedIn,
