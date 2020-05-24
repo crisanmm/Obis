@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.0
+  version: 1.1.1
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -76,7 +76,7 @@ components:
               example: "Gender"
             href:
               type: string
-              example: "localhost:8081/api/breakout-categories/CAT2"
+              example: "localhost:8081/api/breakout_categories/CAT2"
     Answers:
       type: array
       items:
@@ -227,6 +227,8 @@ paths:
                 example: "localhost:8081/answers/497853"
         "204":
           description: No content. Answer with specific ID successfully updated.
+        "400":
+          description: Bad request. Request body is malformed.
     delete:
       description: Delete answer with specific ID.
       responses:
@@ -576,7 +578,7 @@ paths:
         "204":
           description: No content. Break out with specific **break out id** successfully deleted.
 
-  /breakout-categories:
+  /breakout_categories:
     get:
       description: Get list of **Break out category ID** -> **Break out category value** pairs.
       responses:
@@ -605,7 +607,7 @@ paths:
                 example: "localhost:8081/breakouts-categories/CAT2"
         "400":
           description: Bad request. Request body is malformed.
-  /breakout-categories/{category}:
+  /breakout_categories/{category}:
     parameters:
         - in: path
           name: category

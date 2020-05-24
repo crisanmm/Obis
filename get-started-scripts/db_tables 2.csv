@@ -1,0 +1,5 @@
+id,locationabbr,sample_size,data_value_percentage,confidence_limit_low,confidence_limit_high,response_id,break_out_id,break_out_category_id
+locationabbr,locationdesc
+response_id,response
+break_out_id,break_out
+break_out_category_id,break_out_category
