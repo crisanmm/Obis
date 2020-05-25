@@ -68,7 +68,6 @@ ALTER TABLE `break_outs`
 ALTER TABLE `break_outs_category`
   ADD PRIMARY KEY (`break_out_category_id`);
 
-
 ALTER TABLE `contactmessages`
   ADD PRIMARY KEY (`id`);
 

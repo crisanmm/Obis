@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.1
+  version: 1.1.2
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -11,7 +11,7 @@ info:
     [here](https://www.cdc.gov/brfss/annual_data/annual_data.htm).
     
 servers:
-  - url: http://localhost:8081/api
+  - url: http://localhost:8080/api
     description: non-secure (HTTP)
 
 components:
@@ -52,7 +52,7 @@ components:
               example: "Overweight (BMI 25.0-29.9)"
             href:
               type: string
-              example: "localhost:8081/api/responses/RESP040"
+              example: "localhost:8080/api/responses/RESP040"
         break_out:
           type: object
           properties:
@@ -64,7 +64,7 @@ components:
               example: "Male"
             href:
               type: string
-              example: "localhost:8081/api/breakouts/SEX1"
+              example: "localhost:8080/api/breakouts/SEX1"
         break_out_category:
           type: object
           properties:
@@ -76,7 +76,7 @@ components:
               example: "Gender"
             href:
               type: string
-              example: "localhost:8081/api/breakout_categories/CAT2"
+              example: "localhost:8080/api/breakout_categories/CAT2"
     Answers:
       type: array
       items:
@@ -142,6 +142,8 @@ components:
 paths:
   /answers:
     get:
+      tags:
+        - answers
       parameters:
         - in: query
           required: false
@@ -172,6 +174,8 @@ paths:
         "404":
           description: Not found. No entries found in collection.
     post:
+      tags:
+        - answers
       description: Add a new answer to the collection.
       requestBody:
         content:
@@ -185,7 +189,7 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/answers/678354"
+                example: "localhost:8080/answers/678354"
         "400":
           description: Bad request. Request body is malformed.
   /answers/{id}:
@@ -197,6 +201,8 @@ paths:
           type: integer
           example: 101138
     get:
+      tags:
+        - answers
       description: Get information based on answer with specific ID.
       responses:
         "200":
@@ -210,6 +216,8 @@ paths:
         "404":
           description: Not found. Answer with specific ID not found.
     put:
+      tags:
+        - answers
       description: Create or update answer with specific ID.
       requestBody:
         required: true
@@ -224,18 +232,22 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/answers/497853"
+                example: "localhost:8080/answers/497853"
         "204":
           description: No content. Answer with specific ID successfully updated.
         "400":
           description: Bad request. Request body is malformed.
     delete:
+      tags:
+        - answers
       description: Delete answer with specific ID.
       responses:
         "204":
           description: No content. Answer with specific ID successfully deleted.
   /answers/location/{location}:
     get:
+      tags:
+        - answers
       parameters:
         - in: path
           required: true
@@ -274,6 +286,8 @@ paths:
           description: Not found. No list with answers with specific location exists.
   /answers/year/{year}:
     get:
+      tags:
+        - answers
       parameters:
         - in: path
           required: true
@@ -312,6 +326,8 @@ paths:
           description: Not found. No list with answers with specific year exists.
   /answers/location/{location}/year/{year}:
     get:
+      tags:
+        - answers
       parameters:
         - in: path
           required: true
@@ -358,6 +374,8 @@ paths:
 
   /locations:
     get:
+      tags:
+        - location
       description: Get list of **State abbreviation** -> **Full name** pairs.
       responses:
         "200":
@@ -369,6 +387,8 @@ paths:
         "404":
           description: Not found. No entries found in collection.
     post:
+      tags:
+        - location
       description: Add a new **State abbreviation** -> **Full name** pair.
       requestBody:
         content:
@@ -382,7 +402,7 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/locations/NY"
+                example: "localhost:8080/locations/NY"
         "400":
           description: Bad request. Request body is malformed.
   /locations/{location}:
@@ -394,6 +414,8 @@ paths:
           type: string
           example: "CA"
     get:
+      tags:
+        - location
       description: Get information based on location with specific **location abbreviation**.
       responses:
         "200":
@@ -407,6 +429,8 @@ paths:
         "404":
           description: Not found. Location with specific **location abbreviation** not found.
     put:
+      tags:
+        - location
       description: Create or update **State abbreviation** -> **Full name** pair with specific **State abbreviation**.
       requestBody:
         required: true
@@ -421,10 +445,12 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/locations/CA"
+                example: "localhost:8080/locations/CA"
         "204":
           description: No content. Location with specific **location abbreviation** successfully updated.
     delete:
+      tags:
+        - location
       description: Delete location with specific **location abbreviation**.
       responses:
         "204":
@@ -432,6 +458,8 @@ paths:
 
   /responses:
     get:
+      tags:
+        - responses
       description: Get list of **Response ID** -> **Response value** pairs.
       responses:
         "200":
@@ -443,6 +471,8 @@ paths:
         "404":
           description: Not found. No entries found in collection.
     post:
+      tags:
+        - responses
       description: Add a new **Response ID** -> **Response value** pair.
       requestBody:
         content:
@@ -456,7 +486,7 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/responses/RESP05"
+                example: "localhost:8080/responses/RESP05"
         "400":
           description: Bad request. Request body is malformed.
   /responses/{response}:
@@ -468,6 +498,8 @@ paths:
             type: string
             example: "RESP041"
     get:
+      tags:
+        - responses
       description: Get information based on response with specific **response id**.
       responses:
         "200":
@@ -481,6 +513,8 @@ paths:
         "404":
           description: Not found. Response with specific **response id** not found.
     put:
+      tags:
+        - responses
       description: Create or update **Response ID** -> **Response value** pair with specific **response id**.
       requestBody:
         required: true
@@ -495,10 +529,12 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/response/RESP02"
+                example: "localhost:8080/response/RESP02"
         "204":
           description: No content. Response with specific **response id** successfully updated.
     delete:
+      tags:
+        - responses
       description: Delete response with specific **response id**.
       responses:
         "204":
@@ -506,6 +542,8 @@ paths:
 
   /breakouts:
     get:
+      tags:
+        - breakouts
       description: Get list of **Break out ID** -> **Break out value** pairs.
       responses:
         "200":
@@ -517,6 +555,8 @@ paths:
         "404":
           description: Not found. No entries found in collection.
     post:
+      tags:
+        - breakouts
       description: Add a new **Break out ID** -> **Break out value** pair.
       requestBody:
         content:
@@ -530,7 +570,7 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/breakouts/AGE02"
+                example: "localhost:8080/breakouts/AGE02"
         "400":
           description: Bad request. Request body is malformed.
   /breakouts/{breakout}:
@@ -542,6 +582,8 @@ paths:
             type: string
             example: "EDUCA3"
     get:
+      tags:
+        - breakouts
       description: Get information based on break out with specific **break out id**.
       responses:
         "200":
@@ -555,6 +597,8 @@ paths:
         "404":
           description: Not found. Break out with specific **break out id** not found.
     put:
+      tags:
+        - breakouts
       description: Create or update **Break out ID** -> **Break out value** pair with specific **break out id**.
       requestBody:
         required: true
@@ -569,10 +613,12 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/response/EDUCA3"
+                example: "localhost:8080/response/EDUCA3"
         "204":
           description: No content. Break out with specific **break out id** successfully updated.
     delete:
+      tags:
+        - breakouts
       description: Delete break out with specific **break out id**.
       responses:
         "204":
@@ -580,6 +626,8 @@ paths:
 
   /breakout_categories:
     get:
+      tags:
+        - breakout_categories
       description: Get list of **Break out category ID** -> **Break out category value** pairs.
       responses:
         "200":
@@ -591,6 +639,8 @@ paths:
         "404":
           description: Not found. No entries found in collection.
     post:
+      tags:
+        - breakout_categories
       description: Add a new **Break out category ID** -> **Break out category value** pair.
       requestBody:
         content:
@@ -604,7 +654,7 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/breakouts-categories/CAT2"
+                example: "localhost:8080/breakouts-categories/CAT2"
         "400":
           description: Bad request. Request body is malformed.
   /breakout_categories/{category}:
@@ -616,6 +666,8 @@ paths:
             type: string
             example: "CAT3"
     get:
+      tags:
+        - breakout_categories
       description: Get information based on break out category with specific **break out category id**.
       responses:
         "200":
@@ -629,6 +681,8 @@ paths:
         "404":
           description: Not found. Break out category with specific **break out category id** not found.
     put:
+      tags:
+        - breakout_categories
       description: Create or update **Break out category ID** -> **Break out category value** pair with specific **break out category id**.
       requestBody:
         required: true
@@ -643,10 +697,12 @@ paths:
             Location:
               schema:
                 type: string
-                example: "localhost:8081/response/CAT3"
+                example: "localhost:8080/response/CAT3"
         "204":
           description: No content. Break out category with specific **break out category id** successfully updated.
     delete:
+      tags:
+        - breakout_categories
       description: Delete break out category with specific **break out category id**.
       responses:
         "204":

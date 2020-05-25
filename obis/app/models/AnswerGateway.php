@@ -20,7 +20,7 @@ class AnswerGateway {
     }
     
     public function getAllBmi() {
-        $query ="SELECT id, year_value, locationabbr, sample_size, data_value_percentage, confidence_limit_low, confidence_limit_high, response_id, break_out_id, break_out_category_id 
+        $query ="SELECT *
                  FROM bmi";
 
         try {
@@ -33,7 +33,7 @@ class AnswerGateway {
     }
     
     public function insertBmi(Array $input) {
-        $query = "INSERT INTO bmi(year_value, locationabbr, sample_size, data_value_percentage, confidence_limit_low, confidence_limit_high, response_id, break_out_id, break_out_category_id)
+        $query = "INSERT INTO bmi (year_value, locationabbr, sample_size, data_value_percentage, confidence_limit_low, confidence_limit_high, response_id, break_out_id, break_out_category_id)
                   VALUES (:year_value, :locationabbr, :sample_size, :data_value_percentage, :confidence_limit_low, :confidence_limit_high, :response_id, :break_out_id, :break_out_category_id)";
 
         try {
@@ -116,7 +116,7 @@ class AnswerGateway {
 
     public function deleteBmi($id) {
         $query = "DELETE FROM bmi
-                  WHERE id = :id;";
+                  WHERE id = :id";
 
         try {
             $statement = Database::getConnection()->prepare($query);
@@ -128,9 +128,9 @@ class AnswerGateway {
     }
 
     public function getBmiWithLocation($locationabbr) {
-        $query ="SELECT id, year_value, locationabbr, sample_size, data_value_percentage, response_id, break_out_id, break_out_category_id 
-                     FROM bmi
-                     WHERE locationabbr = :locationabbr";
+        $query ="SELECT *
+                 FROM bmi
+                 WHERE locationabbr = :locationabbr";
 
         try {
             $statement = Database::getConnection()->prepare($query);
@@ -144,7 +144,7 @@ class AnswerGateway {
     }
 
     public function getBmiWithYear($year_value) {
-        $query ="SELECT id, year_value, locationabbr, sample_size, data_value_percentage, response_id, break_out_id, break_out_category_id 
+        $query ="SELECT *
                  FROM bmi
                  WHERE year_value = :year_value";
 
@@ -159,7 +159,7 @@ class AnswerGateway {
     }
 
     public function getBmiWithYearLocation($year, $location) {
-        $query ="SELECT id, year_value, locationabbr, sample_size, data_value_percentage, response_id, break_out_id, break_out_category_id 
+        $query ="SELECT *
                  FROM bmi
                  WHERE year_value = :year AND locationabbr = :location";
 
@@ -174,19 +174,6 @@ class AnswerGateway {
         }     
     }
 
-    public function getAllLocations() {
-        $query ="SELECT *
-                 FROM locations;";
-
-        try {
-            $statement = Database::getConnection()->query($query);
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch(\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-
     /**
      * Validate resource to be added to /locations collection.
      */
@@ -197,8 +184,21 @@ class AnswerGateway {
         return true;
     }
 
+    public function getAllLocations() {
+        $query ="SELECT *
+                 FROM locations";
+
+        try {
+            $statement = Database::getConnection()->query($query);
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch(\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
     public function insertLocation($input) {
-        $query = "INSERT INTO locations(locationabbr, location_name)
+        $query = "INSERT INTO locations
                   VALUES (:locationabbr, :location_name)";
 
         try {
@@ -241,11 +241,89 @@ class AnswerGateway {
 
     public function deleteLocation($locationabbr) {
         $query = "DELETE FROM locations
-                  WHERE locationabbr = :locationabbr;";
+                  WHERE locationabbr = :locationabbr";
 
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['locationabbr' => $locationabbr]);
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * Validate resource to be added to /responses collection.
+     */
+    public function isValidInputResponse($input) {
+        if(!isset($input["response_id"]) ||
+           !isset($input["response"]))
+            return false;
+        return true;
+    }
+
+    public function getAllResponses() {
+        $query ="SELECT *
+                 FROM responses";
+
+        try {
+            $statement = Database::getConnection()->query($query);
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch(\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    public function insertResponse($input) {
+        $query = "INSERT INTO responses
+                  VALUES (:response_id, :response)";
+
+        try {
+            $statement = Database::getConnection()->prepare($query);
+            $statement->execute(['response_id' =>  $input['response_id'],
+                                 'response' =>  $input['response']]);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    public function getResponseWithID($response_id) {
+        $query = "SELECT *
+                  FROM responses
+                  WHERE response_id = :response_id";
+
+        try {
+            $statement = Database::getConnection()->prepare($query);
+            $statement->execute(["response_id" => $response_id]);
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return isset($result[0]) ? $result[0] : (object)null;
+        } catch(\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    public function updateResponse($response_id, $input) {
+        $query = "UPDATE responses
+                  SET response = :response
+                  WHERE response_id = :response_id";
+
+        try {
+            $statement = Database::getConnection()->prepare($query);
+            $statement->execute(['response_id' => $response_id,
+                                 'response' => $input['response']]);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    public function deleteResponse($response_id) {
+        $query = "DELETE FROM responses
+                  WHERE response_id = :response_id";
+
+        try {
+            $statement = Database::getConnection()->prepare($query);
+            $statement->execute(['response_id' => $response_id]);
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -344,7 +422,7 @@ class AnswerGateway {
     
     public function getAllBreakoutsCat() {
         $query ="SELECT *
-                 FROM break_outs_category;";
+                 FROM break_outs_category";
 
         try {
             $statement = Database::getConnection()->query($query);

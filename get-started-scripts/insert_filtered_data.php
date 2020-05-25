@@ -34,18 +34,6 @@
         $break_out_id = $line[10];
         $break_out_category_id = $line[11];
         $response_id = $line[12];
-        
-        // insert into bmi
-        $stmt = $conn->prepare("INSERT INTO bmi(year_value, locationabbr, sample_size,
-                            data_value_percentage, confidence_limit_low, confidence_limit_high,
-                            response_id, break_out_id, break_out_category_id)
-                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isidddsss", $year_value, $locationabbr, $sample_size, $data_value,
-                            $confidence_limit_low, $confidence_limit_high, $response_id,
-                            $break_out_id, $break_out_category_id);
-        if(!$stmt->execute())   
-        exit("failed execute on \"insert into bmi\"");
-        $stmt->close();
 
         // insert into locations if (key,value) pair hasn't been inserted yet
         if(!array_key_exists($locationabbr, $locations)) {
@@ -91,6 +79,17 @@
             $counter++;
         }
 
+        // insert into bmi
+        $stmt = $conn->prepare("INSERT INTO bmi(year_value, locationabbr, sample_size,
+                            data_value_percentage, confidence_limit_low, confidence_limit_high,
+                            response_id, break_out_id, break_out_category_id)
+                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isidddsss", $year_value, $locationabbr, $sample_size, $data_value,
+                            $confidence_limit_low, $confidence_limit_high, $response_id,
+                            $break_out_id, $break_out_category_id);
+        if(!$stmt->execute())   
+        exit("failed execute on \"insert into bmi\"");
+        $stmt->close();
         $counter++;
     }
 

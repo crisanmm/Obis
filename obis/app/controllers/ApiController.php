@@ -256,6 +256,81 @@ class ApiController extends Controller {
 
     /**
      * Handles the following endpoints:
+     * /api/responses
+     * /api/responses/{response}
+     * 
+     * @param string $first NULL, if queried endpoint is /api/responses
+     *                      {response}, if queried endpoint is /api/responses/{response}
+     */
+    public function responses($first = NULL) {
+        if(isValidJWT()) {
+            $requestMethod = $_SERVER["REQUEST_METHOD"];
+            $response = $this->notFoundResponse();
+    
+            if($first == NULL) {
+                // requested resource is /responses
+                switch($requestMethod) {
+                    case "GET":
+                        http_response_code(200);
+                        $response = json_encode(self::$answerGateway->getAllResponses());
+                    break;
+
+                    case "POST":
+                        $input = json_decode(file_get_contents('php://input'), true);
+                        if(self::$answerGateway->isValidInputResponse($input)) {
+                            self::$answerGateway->insertResponse($input);
+                            http_response_code(201);
+                            $response = file_get_contents('php://input');
+                        } else {
+                            $response = $this->badRequestResponse("Request body is malformed.");
+                        }
+                    break;
+                    
+                    default:
+                        $response = $this->notAllowedMethodResponse($requestMethod, "GET, POST");
+                }
+            } else {
+                // requested resource is /responses/{response}
+                // $first is {response}
+                switch($requestMethod) {
+                    case "GET":
+                        http_response_code(200);
+                        $response = json_encode(self::$answerGateway->getResponseWithID($first));
+                    break;
+
+                    case "PUT":
+                        $input = json_decode(file_get_contents('php://input'), true);
+                        if(self::$answerGateway->isValidInputResponse($input)) {
+                            self::$answerGateway->updateResponse($first, $input);
+                            $response = $this->updatedResponse();
+                        } else {
+                            $response = $this->badRequestResponse("Request body is malformed.");
+                        }
+                    break;
+
+                    case "PATCH":
+                        // to do?
+                    break;
+
+                    case "DELETE":
+                        http_response_code(200);
+                        $response = json_encode(self::$answerGateway->getResponseWithID($first));
+                        self::$answerGateway->deleteResponse($first);
+                    break;
+
+                    default:
+                        $response = $this->notAllowedMethodResponse($requestMethod, "GET, PUT, PATCH, DELETE");
+                }
+            }
+        } else {
+            $response = $this->failedAuthResponse();
+        }
+
+        $this->view('api' . DIRECTORY_SEPARATOR . 'index', ["response" => $response]);
+    }
+
+    /**
+     * Handles the following endpoints:
      * /api/breakouts
      * /api/breakouts/{breakout}
      * 
