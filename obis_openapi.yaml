@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.2
+  version: 1.1.3
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -171,8 +171,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Answers"
-        "404":
-          description: Not found. No entries found in collection.
     post:
       tags:
         - answers
@@ -213,8 +211,6 @@ paths:
                 $ref: "#/components/schemas/Answer"
         "400":
           description: Bad request. Possibly malformed parameter, is ID an integer?
-        "404":
-          description: Not found. Answer with specific ID not found.
     put:
       tags:
         - answers
@@ -282,8 +278,6 @@ paths:
                 $ref: "#/components/schemas/Answer"
         "400":
           description: Bad request. Path parameter is malformed.
-        "404":
-          description: Not found. No list with answers with specific location exists.
   /answers/year/{year}:
     get:
       tags:
@@ -322,8 +316,6 @@ paths:
                 $ref: "#/components/schemas/Answer"
         "400":
           description: Bad request. Path parameter is malformed.
-        "404":
-          description: Not found. No list with answers with specific year exists.
   /answers/location/{location}/year/{year}:
     get:
       tags:
@@ -369,8 +361,6 @@ paths:
                 $ref: "#/components/schemas/Answer"
         "400":
           description: Bad request. Path parameters are malformed.
-        "404":
-          description: Not found. No list with answers with specific year exists.
 
   /locations:
     get:
@@ -384,8 +374,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Locations"
-        "404":
-          description: Not found. No entries found in collection.
     post:
       tags:
         - location
@@ -426,8 +414,6 @@ paths:
                 $ref: "#/components/schemas/Location"
         "400":
           description: Bad request. Possibly malformed parameter, is the **location abbreviation** a string?
-        "404":
-          description: Not found. Location with specific **location abbreviation** not found.
     put:
       tags:
         - location
@@ -468,8 +454,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Responses"
-        "404":
-          description: Not found. No entries found in collection.
     post:
       tags:
         - responses
@@ -510,8 +494,6 @@ paths:
                 $ref: "#/components/schemas/Response"
         "400":
           description: Bad request. Possibly malformed parameter, is the **response id** a string?
-        "404":
-          description: Not found. Response with specific **response id** not found.
     put:
       tags:
         - responses
@@ -552,8 +534,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Breakouts"
-        "404":
-          description: Not found. No entries found in collection.
     post:
       tags:
         - breakouts
@@ -594,8 +574,6 @@ paths:
                 $ref: "#/components/schemas/Breakout"
         "400":
           description: Bad request. Possibly malformed parameter, is the **break out id** a string?
-        "404":
-          description: Not found. Break out with specific **break out id** not found.
     put:
       tags:
         - breakouts
@@ -636,8 +614,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BreakoutCategories"
-        "404":
-          description: Not found. No entries found in collection.
     post:
       tags:
         - breakout_categories
@@ -678,8 +654,6 @@ paths:
                 $ref: "#/components/schemas/BreakoutCategory"
         "400":
           description: Bad request. Possibly malformed parameter, is the **break out category id** a string?
-        "404":
-          description: Not found. Break out category with specific **break out category id** not found.
     put:
       tags:
         - breakout_categories
