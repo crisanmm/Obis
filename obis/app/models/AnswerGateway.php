@@ -2,6 +2,27 @@
 
 class AnswerGateway {
 
+    private const baseAPIURL = "localhost:8080/api";
+    
+    function modifyAnswer(&$answer) {
+        $response = $this->getResponseWithID($answer['response_id']);
+        $response['href'] = self::baseAPIURL . '/responses/' . $response['response_id'];
+
+        $break_out = $this->getBreakoutWithID($answer['break_out_id']);
+        $break_out['href'] = self::baseAPIURL . '/breakouts/' . $break_out['break_out_id'];
+
+        $break_out_category = $this->getBreakoutWithIDCat($answer['break_out_category_id']);
+        $break_out_category['href'] = self::baseAPIURL . '/breakout_categories/' . $break_out_category['break_out_category_id'];
+
+        unset($answer['response_id']);
+        unset($answer['break_out_id']);
+        unset($answer['break_out_category_id']);
+
+        $answer['response'] = $response;
+        $answer['break_out'] = $break_out;
+        $answer['break_out_category'] = $break_out_category;
+    }
+    
     /**
      * Validate resource to be added to /answers collection.
      */
@@ -20,12 +41,16 @@ class AnswerGateway {
     }
     
     public function getAllBmi() {
-        $query ="SELECT *
-                 FROM bmi";
+        $query = "SELECT *
+                  FROM bmi";
 
         try {
             $statement = Database::getConnection()->query($query);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach($result as &$res)
+                $this->modifyAnswer($res);
+            
             return $result;
         } catch(\PDOException $e) {
             exit($e->getMessage());
@@ -62,7 +87,12 @@ class AnswerGateway {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return isset($result[0]) ? $result[0] : (object)null;
+            if(isset($result[0])) {
+                $this->modifyAnswer($result[0]);
+                return $result[0];
+            } else {
+                return (object)null;
+            }
         } catch(\PDOException $e) {
             exit($e->getMessage());
         }
@@ -77,7 +107,12 @@ class AnswerGateway {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(["id" => $id]);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return isset($result[0]) ? $result[0] : (object)null;
+            if(isset($result[0])) {
+                $this->modifyAnswer($result[0]);
+                return $result[0];
+            } else {
+                return (object)null;
+            }
         } catch(\PDOException $e) {
             exit($e->getMessage());
         }     
@@ -136,6 +171,10 @@ class AnswerGateway {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['locationabbr' => $locationabbr]);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach($result as &$res)
+                $this->modifyAnswer($res);
+
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -152,6 +191,10 @@ class AnswerGateway {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['year_value' => $year_value]);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach($result as &$res)
+                $this->modifyAnswer($res);
+            
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -168,6 +211,10 @@ class AnswerGateway {
             $statement->execute(['year' => (int)$year,
                                  'location' => $location]);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach($result as &$res)
+                $this->modifyAnswer($res);
+
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());

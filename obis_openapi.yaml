@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.3
+  version: 1.1.4
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -77,6 +77,39 @@ components:
             href:
               type: string
               example: "localhost:8080/api/breakout_categories/CAT2"
+    AnswerForPOST:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 101138
+        location:
+          type: string
+          example: 'CA'
+        year:
+          type: integer
+          example: 2012
+        sample_size:
+          type: integer
+          example: 2527
+        data_value_percentage:
+          type: number
+          example: 40.9
+        confidence_limit_low:
+          type: number
+          example: 39.1
+        confidence_limit_high:
+          type: number
+          example: 42.6
+        response_id:
+          type: string
+          example: "RESP040"
+        break_out_id:
+          type: string
+          example: "SEX1"
+        break_out_category_id:
+          type: string
+          example: "CAT2"
     Answers:
       type: array
       items:
@@ -179,7 +212,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Answer"
+              $ref: "#/components/schemas/AnswerForPOST"
       responses:
         "201":
           description: Created. New answer successfully added.
