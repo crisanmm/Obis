@@ -14,9 +14,49 @@
     <meta name="robots" content="noindex">
     <link rel="stylesheet" href="/obis/css/index.css">
     <script src="/obis/js/scripts.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    //google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart(str) 
+    {
+      var xmlhttp = new XMLHttpRequest();
+       var options = {
+          title: 'My Daily Activities'
+        };
+    
+    xmlhttp.onreadystatechange = function() 
+    {
+      console.log("test");
+      if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+
+      }
+    };
+
+    xmlhttp.open("GET","http://localhost/obis/api/answers/year/"+str,true);
+    xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
+    xmlhttp.send();
+      }
+
+    </script>
+
     <link rel="stylesheet" href="/obis/css/statistics.css">
  </head>
-
 
   <body>
     <header>
@@ -37,186 +77,53 @@
   </header>
   <main>
     <article>
-    <div class="content" id="PC">
-    <h1>Statistics</h1>
-    <div class="text"> 
-      <p>Overweight and obesity are defined by the World Health Organisation as abnormal or excessive fat accumulation that may impair health. Body mass index or BMI is 
-      commonly the best overweight indicator. BMI is computed by a person's weight in kilograms divided by the square of his height in meters (kg/m2). The body mass index
-      is used for population-level measure of overweight and obesity because is computed in the same way for both sexes; Hovewer the body mass index may not correspond to 
-      the same amount of fat in different individuals.</p>
-      <p>Being overweight and especially obese enhances the chances of developing medical conditions as:</p>
-      <ul class="ul-activ">
-        <li>diabetes</li>
-        <li>heart disease</li>
-        <li>cancer</li>
-        <li>musculoskeletal disorders</li>
-      </ul>
-      <p>For adults, World Health Organisation defines overweight and obesity as follows:</p>
-        <ul class="ul-activ">
-          <li>overweight as a BMI greater or equal to 25</li>
-          <li>obesity as a BMI greater than or equal to 30</li>
-        </ul>
-    </div>
-    <div class="graph" >
-        <button class ="button" id ="button">US States</button>
-        <button class ="button" id ="button2">Gender</button>
-        <button class ="button" id ="button3">Period</button>
-        <button class ="button" id ="button4">Format</button>
-      </div>
-    <img src="/obis/images/doughnut-&-Pie.png" alt="temporary-pie" >
-    <div class = "popup" id = "p1">
-      <div class="popup-content-countries">
-          <div class="continetsContainer">
-          <a class="countriesList" id ="List of States">List of States</a>
-          </div>
-          <br><br>
-          <form method="get"> 
-            <div class = "countries"  id="us states"></div>
-            <input class="submit" type="submit" value="Submit">
-          
-          </form>
-          <img src="/obis/images/close.png" alt="Close" class="close" id ="close">
-        </div>
-      </div>
-     
-     
-      <div class = "popup" id = "p2">
-        <div class="popup-content-gender">
-            <div class="continetsContainer">
-              <a class="moreOptions" id ="gender">Gender</a>
-            </div>
-            <br><br>
-            <form method="get">
-              <div class="gender-options">
-                <input type="checkbox" name="male" value="male" id ="male">
-                <label for="male">Male</label><br>
-              </div>
-              <div class="gender-options">
-                <input type="checkbox" name="female" value="female" id="female">
-                <label for="female"> Female</label><br>
-              </div>
-              <input class="submit" type="submit" value="Submit">
-            </form>
+      <div id="piechart" style="width: 900px; height: 500px;"></div>
 
-            <img src="/obis/images/close.png" alt="Close" class="close" id ="close2">
-          </div>
-        </div>
 
-       
+<select name="year" id="year" onchange="drawChart(this.value)">
+  <option value="2011">2011</option>
+  <option value="2012">2012</option>
+  <option value="2013">2013</option>
+  <option value="2014">2014</option>
+  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+</select>
 
-        <div class = "popup" id = "p3">
-          <div class="popup-content-period">
-              <div class="continetsContainer">
-                <a class="moreOptions" id ="period">Period</a>
-              </div>
-              <br><br>
-              <form method="get">
-              <p class="text">start date: <input type="date" name="date_start" id="date_start"></p>
-              <p class="text">end date: <input type="date" name="date_end" id="date_end"></p>
-              <input class="submit" type="submit" value="Submit">
-              </form>
-              <img src="/obis/images/close.png" alt="Close" class="close" id ="close3">
-            </div>
-          </div>
+<select name="location" id="location">
+  <option value="AZ">Arizona</option>
+  <option value="AL">Alabama</option>
+  <option value="AK">Alaska</option>
+</select>
 
-         
+<form>
+  <input type="radio" id="byBMI" name="filter" value="byBMI">
+  <label for="byBMI">Filter by BMI</label><br>
+  <input type="radio" id="byCAT" name="filter" value="byCAT">
+  <label for="byCAT">Filter by Category</label><br>
+</form>
 
-          <div class = "popup" id = "p4">
-            <div class="popup-content-format" id="p4-content">
-                <div class="continetsContainer">
-                  <a class="moreOptions" id ="displayFormat">Display Format</a>
-                </div>
-                <br><br>
+<select name="bmi" id="bmi">
+  <option value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+  <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
+  <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
+  <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
+</select>
 
-                <form method="get"> 
-                  <div class="format-options">
-                    <input type="checkbox" name="bar" value="bar" id="bar">
-                    <label for="bar" >Bar</label><br>
-                  </div>
-                  <div class="format-options">
-                    <input type="checkbox" name="line" value="line" id="line">
-                    <label for="line" >Line</label><br>
-                  </div>
-                  <div class="format-options">
-                    <input type="checkbox" name="radar" value="radar" id="radar">
-                    <label for="radar" > Radar</label><br>
-                  </div>
-                  <div class="format-options">
-                    <input type="checkbox" name="doughnut-&-Pie" value="doughnut-&-Pie" id="doughnut-&-Pie">
-                    <label for="doughnut-&-Pie" >Doughnut & Pie</label><br>
-                  </div>
-                  <div class="format-options">
-                    <input type="checkbox" name="polar-Area" value="polar-Area"  id="polar-Area">
-                    <label for="polar-Area"> Polar Area</label><br>
-                  </div>
-                  <div class="format-options">
-                    <input type="checkbox" name="bubble" value="bubble" id="bubble">
-                    <label for="bubble" > Bubble</label><br>
-                  </div>
-                  <input class="submit" type="submit" value="Submit">
-                </form>
+<select name="breakouts" id="breaks">
+  <option value="AGE01">18-24</option>
+  <option value="AGE02">25-34</option>
+  <option value="AGE03">35-44</option>
+  <option value="AGE04">45-54</option>
+</select>
 
-                <img src="/obis/images/close.png" alt="Close" class="close" id ="close4">
-              </div>
-            </div>  
-            <script src="/obis/js/statistics_scripts.js"></script>
-            <script>
-            var countryList = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado',
-              'Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana',
-              'Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan',
-              'Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey',
-              'New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania',
-              'Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia',
-              'Washington','West Virginia','Wisconsin','Wyoming'];
-              continent = "us states";
-              countryList.forEach(createCountry);  
-              document.getElementById("us states").style.display ="flex"; 
-        </script> 
-        </div>
-      </article>
-      <aside class="aside-container">
-        </aside>  
 
-      <article>
-        <div class="content" id="iphone">
-          <h1>Statistics</h1>
-    <div class="text"> 
-      <p>Overweight and obesity are defined by the World Health Organisation as abnormal or excessive fat accumulation that may impair health. Body mass index or BMI is 
-      commonly the best overweight indicator. BMI is computed by a person's weight in kilograms divided by the square of his height in meters (kg/m2). The body mass index
-      is used for population-level measure of overweight and obesity because is computed in the same way for both sexes; Hovewer the body mass index may not correspond to 
-      the same amount of fat in different individuals.</p>
-      <p>Being overweight and especially obese enhances the chances of developing medical conditions as:</p>
-      <ul class="ul-activ">
-        <li>diabetes</li>
-        <li>heart disease</li>
-        <li>cancer</li>
-        <li>musculoskeletal disorders</li>
-      </ul>
-      <p>For adults, World Health Organisation defines overweight and obesity as follows:</p>
-        <ul class="ul-activ">
-          <li>overweight as a BMI greater or equal to 25</li>
-          <li>obesity as a BMI greater than or equal to 30</li>
-        </ul>
-    </div>
-    
-    <div class="graph" >
-      <form action="states.html">
-        <button class ="button" id ="button">US States</button>
-      </form>
-        <form action="gender.html">
-          <button class ="button" id ="button2">Gender</button>
-      </form>
-      <form action="period.html">
-          <button class ="button" id ="button3">Period</button>
-      </form>
-      <form action="format.html">
-        <button class ="button" id ="button4">Format</button>
-      </form>
-    </div>
-        </div>
-    
-      </article>
-      
+
+
+
+
+
 </main>
 <footer>
   <div class="logos">

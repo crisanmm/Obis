@@ -62,8 +62,10 @@ class ApiController extends Controller {
                 // requested resource is /answers
                 switch($requestMethod) {
                     case "GET":
+                        $params = $_GET;
+                        $params_string = $this->prepareParams($params);
                         http_response_code(200);
-                        $response = json_encode(self::$answerGateway->getAllBmi());
+                        $response = json_encode(self::$answerGateway->getAllBmi($params_string));
                     break;
                     
                     case "POST":
@@ -86,7 +88,9 @@ class ApiController extends Controller {
                 switch($requestMethod) {
                     case "GET":
                         http_response_code(200);
-                        $response = json_encode(self::$answerGateway->getBmiWithID($first));
+                        $params = $_GET;
+                        $params_string = $this->prepareParams($params);
+                        $response = json_encode(self::$answerGateway->getBmiWithID($first,$params_string));
                     break;
                     
                     case "PUT":
@@ -124,9 +128,12 @@ class ApiController extends Controller {
                                 // requested resource is /answers/location/{location}
                                 // $first is "location"
                                 // $second is {location}
+
+                                $params = $_GET;
+                                $params_string = $this->prepareParams($params);
                                 http_response_code(200);
                                 if(isset($second)) 
-                                $response = json_encode(self::$answerGateway->getBmiWithLocation($second));
+                                $response = json_encode(self::$answerGateway->getBmiWithLocation($second,$params_string));
                                 else
                                 $response = $this->badRequestResponse("Resource not specified.");
                             break;
@@ -136,8 +143,11 @@ class ApiController extends Controller {
                                 // $first is "year"
                                 // $second is {year}
                                 http_response_code(200);
-                                if(isset($second))
-                                    $response = json_encode(self::$answerGateway->getBmiWithYear($second));
+                                if(isset($second)){
+                                    $params = $_GET;
+                                    $params_string = $this->prepareParams($params);
+                                    $response = json_encode(self::$answerGateway->getBmiWithYear($second,$params_string));
+                                }
                                 else
                                     $response = $this->badRequestResponse("Resource not specified.");
                             break;
@@ -158,11 +168,13 @@ class ApiController extends Controller {
                 // $fourth is {year}
                 switch($requestMethod) {
                     case "GET":
+                        $params = $_GET;
+                        $params_string = $this->prepareParams($params);
                         http_response_code(200);
                         if(!isset($second) || !isset($fourth))
                             $response = $this->badRequestResponse("Resources not specified.");
                         else
-                            $response = json_encode($result = self::$answerGateway->getBmiWithYearLocation($fourth, $second));
+                            $response = json_encode($result = self::$answerGateway->getBmiWithYearLocation($fourth, $second,$params_string));
                     break;
 
                     default:
@@ -525,4 +537,17 @@ class ApiController extends Controller {
                             "error" => "$requestedMethod not allowed on this resource."]);    
     }
 
+
+    private function prepareParams($params)
+    {
+        $params = array_slice($params,1);
+        $newParams = [];
+
+        foreach($params as $key => $value)
+        {
+            array_push($newParams, $key . " = \"" . $value . '"');
+        }
+
+        return implode(" and ",$newParams);
+    }
 }

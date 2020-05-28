@@ -40,10 +40,14 @@ class AnswerGateway {
         return true;
     }
     
-    public function getAllBmi() {
+    public function getAllBmi($params) {
         $query = "SELECT *
                   FROM bmi";
 
+        if ($params)
+        {
+            $query = $query . " where " . $params;
+        }
         try {
             $statement = Database::getConnection()->query($query);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -98,10 +102,12 @@ class AnswerGateway {
         }
     }
     
-    public function getBmiWithID($id) {
+    public function getBmiWithID($id,$params) {
         $query = "SELECT *
                   FROM bmi
                   WHERE id = :id";
+        if($params)
+            $query = $query . " and " . $params;
 
         try {
             $statement = Database::getConnection()->prepare($query);
@@ -162,11 +168,12 @@ class AnswerGateway {
         }    
     }
 
-    public function getBmiWithLocation($locationabbr) {
+    public function getBmiWithLocation($locationabbr,$params) {
         $query ="SELECT *
                  FROM bmi
                  WHERE locationabbr = :locationabbr";
-
+        if($query)
+            $query = $query . " and " .$params;
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['locationabbr' => $locationabbr]);
@@ -182,11 +189,12 @@ class AnswerGateway {
 
     }
 
-    public function getBmiWithYear($year_value) {
+    public function getBmiWithYear($year_value,$params) {
         $query ="SELECT *
                  FROM bmi
                  WHERE year_value = :year_value";
-
+        if($params)
+            $query = $query . " and " . $params;
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['year_value' => $year_value]);
@@ -201,10 +209,12 @@ class AnswerGateway {
         }     
     }
 
-    public function getBmiWithYearLocation($year, $location) {
+    public function getBmiWithYearLocation($year, $location,$params) {
         $query ="SELECT *
                  FROM bmi
                  WHERE year_value = :year AND locationabbr = :location";
+        if($query)
+            $query = $query . " and " . $params;
 
         try {
             $statement = Database::getConnection()->prepare($query);

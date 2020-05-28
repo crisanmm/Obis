@@ -78,6 +78,7 @@ class AccountController extends Controller {
             ));
 
             $jwt = JWT::encode($token, $secret_key);
+            echo $jwt;
         }
         
         $this->view('home' . DIRECTORY_SEPARATOR . 'index', ["user" => $user,
