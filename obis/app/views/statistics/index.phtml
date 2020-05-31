@@ -540,201 +540,167 @@
     </script>
 
     <link rel="stylesheet" href="/obis/css/statistics.css">
- </head>
-
-  <body>
-    <header>
+</head>
+<body>
+   <header>
       <a href="/obis/home/index" ><img src="/obis/images/obis-logo.svg" alt="obis logo"></a>
       <nav>
-          <ul class="nav-button-list">
-              <li><a href="/obis/home/index" class="nav-button">Home</a></li>
-              <li><a href="/obis/statistics/index" class="nav-button" style="color: #ffd524; font-weight: bolder">Statistics</a></li>
-              <li><a href="/obis/home/aboutus" class="nav-button">About us</a></li>
-              <li><a href="/obis/home/contact" class="nav-button">Contact</a></li>
-          </ul>
-          <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
+         <ul class="nav-button-list">
+            <li><a href="/obis/home/index" class="nav-button">Home</a></li>
+            <li><a href="/obis/statistics/index" class="nav-button" style="color: #ffd524; font-weight: bolder">Statistics</a></li>
+            <li><a href="/obis/home/aboutus" class="nav-button">About us</a></li>
+            <li><a href="/obis/home/contact" class="nav-button">Contact</a></li>
+         </ul>
+         <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
       </nav>
-<!--               php here-->
+      <!--               php here-->
       <a href="/obis/account/login" class="auth">
-          sign in
+      sign in
       </a>
-  </header>
-  <main>
-    <article>
+   </header>
+   <main>
+      <article>
       <div id="piechart" style="width: 900px; height: 500px;"></div>
-
-
-<select name="year" id="year" onchange="drawChart()">
-  <option selected value="2011">2011</option>
-  <option value="2012">2012</option>
-  <option value="2013">2013</option>
-  <option value="2014">2014</option>
-  <option value="2015">2015</option>
-  <option value="2016">2016</option>
-  <option value="2017">2017</option>
-  <option value="2018">2018</option>
-</select>
-
-<select name="location" class="location" id="location" onchange="drawChart()">
-</select>
-
-
-<select name="typeFilter" id="filterType" onchange="drawChart()">
-  <option selected value="byBMI">Filter by BMI</option>
-  <option value="byCAT">Filter by Category</option>
-</select>
-
-<select name="bmi" id="bmi" onchange="drawChart()">
-  <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
-  <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
-  <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
-  <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
-</select>
-
-<select name="breaks_cat" id="cat" onchange="setCategory(this.value,this.id)">
-  <option value="CAT2">Gender</option>
-  <option selected value="CAT3">Age Group</option>
-  <option value="CAT4">Race/Ethnicity</option>
-  <option value="CAT5">Education Attained</option>
-  <option value="CAT6">Household Income</option>
-</select>
-
-<div id="shape_shifter">
-<select name="breakouts" id="breaks" onchange="drawChart()">
-  <option selected value="AGE01">18-24</option>
-  <option value="AGE02">25-34</option>
-  <option value="AGE03">35-44</option>
-  <option value="AGE04">45-54</option>
-  <option value="AGE05">55-64</option>
-  <option value="AGE09">65+</option>
-</select>
-</div>
-
-<select name="export" id="exp1">
-  <option selected value="svg">Export as SVG</option>
-  <option value="webp">Export as WEBP</option>
-  <option value="csv">Export as CSV</option>
-</select>
-
-<button type="button" id="expBtn1"
-onclick="exportData(this.id)">Export</button>
-
-
-<hr>
-
-<div id="column" style="width: 900px; height: 500px;"></div>
-
-<select name="year" id="year2" onchange="drawColumn()">
-  <option selected value="2011">2011</option>
-  <option value="2012">2012</option>
-  <option value="2013">2013</option>
-  <option value="2014">2014</option>
-  <option value="2015">2015</option>
-  <option value="2016">2016</option>
-  <option value="2017">2017</option>
-  <option value="2018">2018</option>
-</select>
-
-<select name="location" class="location" id="location2" onchange="drawColumn()">
-</select>
-<select name="location" class="location" id="location3" onchange="drawColumn()">
-</select>
-
-
-<select name="typeFilter" id="filterType2" onchange="drawColumn()">
-  <option selected value="byBMI">Filter by BMI</option>
-  <option value="byCAT">Filter by Category</option>
-</select>
-
-<select name="bmi" id="bmi2" onchange="drawColumn()">
-  <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
-  <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
-  <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
-  <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
-</select>
-
-<select name="breaks_cat" id="cat2" onchange="setCategory(this.value,this.id)">
-  <option value="CAT2">Gender</option>
-  <option selected value="CAT3">Age Group</option>
-  <option value="CAT4">Race/Ethnicity</option>
-  <option value="CAT5">Education Attained</option>
-  <option value="CAT6">Household Income</option>
-</select>
-
-<div id="shape_shifter2">
-<select name="breakouts" id="breaks2" onchange="drawColumn()">
-  <option selected value="AGE01">18-24</option>
-  <option value="AGE02">25-34</option>
-  <option value="AGE03">35-44</option>
-  <option value="AGE04">45-54</option>
-  <option value="AGE05">55-64</option>
-  <option value="AGE09">65+</option>
-</select>
-</div>
-
-<select name="export" id="exp2">
-  <option selected value="svg">Export as SVG</option>
-  <option value="webp">Export as WEBP</option>
-  <option value="csv">Export as CSV</option>
-</select>
-
-<button type="button" id="expBtn2"
-onclick="exportData(this.id)">Export</button>
-
-<hr>
-
-<div id="mapTitle"> </div>
-<div id="map" style="width: 900px; height: 500px;"></div>
-
-
-<select name="year" id="year3" onchange="drawMap()">
-  <option selected value="2011">2011</option>
-  <option value="2012">2012</option>
-  <option value="2013">2013</option>
-  <option value="2014">2014</option>
-  <option value="2015">2015</option>
-  <option value="2016">2016</option>
-  <option value="2017">2017</option>
-  <option value="2018">2018</option>
-</select>
-
-<select name="bmi" id="bmi3" onchange="drawMap()">
-  <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
-  <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
-  <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
-  <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
-</select>
-
-<select name="breaks_cat" id="cat3" onchange="setCategory(this.value,this.id)">
-  <option value="CAT2">Gender</option>
-  <option selected value="CAT3">Age Group</option>
-  <option value="CAT4">Race/Ethnicity</option>
-  <option value="CAT5">Education Attained</option>
-  <option value="CAT6">Household Income</option>
-</select>
-
-<div id="shape_shifter3">
-<select name="breakouts" id="breaks3" onchange="drawMap()">
-  <option selected value="AGE01">18-24</option>
-  <option value="AGE02">25-34</option>
-  <option value="AGE03">35-44</option>
-  <option value="AGE04">45-54</option>
-  <option value="AGE05">55-64</option>
-  <option value="AGE09">65+</option>
-</select>
-</div>
-
-<select name="export" id="exp3">
-  <option selected value="svg">Export as SVG</option>
-  <option value="webp">Export as WEBP</option>
-  <option value="csv">Export as CSV</option>
-</select>
-
-<button type="button" id="expBtn3"
-onclick="exportData(this.id)">Export</button>
-
-
-</main>
+      <select name="year" id="year" onchange="drawChart()">
+         <option selected value="2011">2011</option>
+         <option value="2012">2012</option>
+         <option value="2013">2013</option>
+         <option value="2014">2014</option>
+         <option value="2015">2015</option>
+         <option value="2016">2016</option>
+         <option value="2017">2017</option>
+         <option value="2018">2018</option>
+      </select>
+      <select name="location" class="location" id="location" onchange="drawChart()">
+      </select>
+      <select name="typeFilter" id="filterType" onchange="drawChart()">
+         <option selected value="byBMI">Filter by BMI</option>
+         <option value="byCAT">Filter by Category</option>
+      </select>
+      <select name="bmi" id="bmi" onchange="drawChart()">
+         <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+         <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
+         <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
+         <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
+      </select>
+      <select name="breaks_cat" id="cat" onchange="setCategory(this.value,this.id)">
+         <option value="CAT2">Gender</option>
+         <option selected value="CAT3">Age Group</option>
+         <option value="CAT4">Race/Ethnicity</option>
+         <option value="CAT5">Education Attained</option>
+         <option value="CAT6">Household Income</option>
+      </select>
+      <div id="shape_shifter">
+         <select name="breakouts" id="breaks" onchange="drawChart()">
+            <option selected value="AGE01">18-24</option>
+            <option value="AGE02">25-34</option>
+            <option value="AGE03">35-44</option>
+            <option value="AGE04">45-54</option>
+            <option value="AGE05">55-64</option>
+            <option value="AGE09">65+</option>
+         </select>
+      </div>
+      <select name="export" id="exp1">
+         <option selected value="svg">Export as SVG</option>
+         <option value="webp">Export as WEBP</option>
+         <option value="csv">Export as CSV</option>
+      </select>
+      <button type="button" id="expBtn1"
+         onclick="exportData(this.id)">Export</button>
+      <hr>
+      <div id="column" style="width: 900px; height: 500px;"></div>
+      <select name="year" id="year2" onchange="drawColumn()">
+         <option selected value="2011">2011</option>
+         <option value="2012">2012</option>
+         <option value="2013">2013</option>
+         <option value="2014">2014</option>
+         <option value="2015">2015</option>
+         <option value="2016">2016</option>
+         <option value="2017">2017</option>
+         <option value="2018">2018</option>
+      </select>
+      <select name="location" class="location" id="location2" onchange="drawColumn()">
+      </select>
+      <select name="location" class="location" id="location3" onchange="drawColumn()">
+      </select>
+      <select name="typeFilter" id="filterType2" onchange="drawColumn()">
+         <option selected value="byBMI">Filter by BMI</option>
+         <option value="byCAT">Filter by Category</option>
+      </select>
+      <select name="bmi" id="bmi2" onchange="drawColumn()">
+         <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+         <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
+         <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
+         <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
+      </select>
+      <select name="breaks_cat" id="cat2" onchange="setCategory(this.value,this.id)">
+         <option value="CAT2">Gender</option>
+         <option selected value="CAT3">Age Group</option>
+         <option value="CAT4">Race/Ethnicity</option>
+         <option value="CAT5">Education Attained</option>
+         <option value="CAT6">Household Income</option>
+      </select>
+      <div id="shape_shifter2">
+         <select name="breakouts" id="breaks2" onchange="drawColumn()">
+            <option selected value="AGE01">18-24</option>
+            <option value="AGE02">25-34</option>
+            <option value="AGE03">35-44</option>
+            <option value="AGE04">45-54</option>
+            <option value="AGE05">55-64</option>
+            <option value="AGE09">65+</option>
+         </select>
+      </div>
+      <select name="export" id="exp2">
+         <option selected value="svg">Export as SVG</option>
+         <option value="webp">Export as WEBP</option>
+         <option value="csv">Export as CSV</option>
+      </select>
+      <button type="button" id="expBtn2"
+         onclick="exportData(this.id)">Export</button>
+      <hr>
+      <div id="mapTitle"> </div>
+      <div id="map" style="width: 900px; height: 500px;"></div>
+      <select name="year" id="year3" onchange="drawMap()">
+         <option selected value="2011">2011</option>
+         <option value="2012">2012</option>
+         <option value="2013">2013</option>
+         <option value="2014">2014</option>
+         <option value="2015">2015</option>
+         <option value="2016">2016</option>
+         <option value="2017">2017</option>
+         <option value="2018">2018</option>
+      </select>
+      <select name="bmi" id="bmi3" onchange="drawMap()">
+         <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+         <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
+         <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
+         <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
+      </select>
+      <select name="breaks_cat" id="cat3" onchange="setCategory(this.value,this.id)">
+         <option value="CAT2">Gender</option>
+         <option selected value="CAT3">Age Group</option>
+         <option value="CAT4">Race/Ethnicity</option>
+         <option value="CAT5">Education Attained</option>
+         <option value="CAT6">Household Income</option>
+      </select>
+      <div id="shape_shifter3">
+         <select name="breakouts" id="breaks3" onchange="drawMap()">
+            <option selected value="AGE01">18-24</option>
+            <option value="AGE02">25-34</option>
+            <option value="AGE03">35-44</option>
+            <option value="AGE04">45-54</option>
+            <option value="AGE05">55-64</option>
+            <option value="AGE09">65+</option>
+         </select>
+      </div>
+      <select name="export" id="exp3">
+         <option selected value="svg">Export as SVG</option>
+         <option value="webp">Export as WEBP</option>
+         <option value="csv">Export as CSV</option>
+      </select>
+      <button type="button" id="expBtn3"
+         onclick="exportData(this.id)">Export</button>
+   </main>
 <footer>
   <div class="logos">
       <a href="https://info.uaic.ro"><img class="logo" src="/obis/images/fii-logo.png"></a>
