@@ -1,30 +1,111 @@
 <?php
 
+/**
+ * The class that is used for database manipulation.
+ */
 class AnswerGateway {
 
-    private const baseAPIURL = "localhost:8080/api";
+    /**
+     * Cached version of the `responses` table.
+     * @var $responses Associative array, keys are `response_id`,
+     *                                    values are `response`
+     */
+    private static $responses;
+
+    /**
+     * Cached version of the `break_outs` table.
+     * @var $break_outs Associative array, keys are `break_out_id`,
+     *                                     values are `break_out`
+     */
+    private static $break_outs;
+
+    /**
+     * Cached version of the `break_out_categories` table.
+     * @var $break_out_categories Associative array, keys are `break_out_category_id`,
+     *                                               values are `break_out_category`
+     */
+    private static $break_out_categories;
     
-    function modifyAnswer(&$answer) {
-        $response = $this->getResponseWithID($answer['response_id']);
-        $response['href'] = self::baseAPIURL . '/responses/' . $response['response_id'];
+    /**
+     * Represents the base URL for creating references inside resources.
+     * @var $baseAPIURL Could look like: `http://localhost:8080/obis/api`
+     */
+    private static $baseAPIURL;
 
-        $break_out = $this->getBreakoutWithID($answer['break_out_id']);
-        $break_out['href'] = self::baseAPIURL . '/breakouts/' . $break_out['break_out_id'];
+    public function __construct() {
+        self::$baseAPIURL = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . "/obis/api";
+        $this->cacheData();
+    }
 
-        $break_out_category = $this->getBreakoutWithIDCat($answer['break_out_category_id']);
-        $break_out_category['href'] = self::baseAPIURL . '/breakout_categories/' . $break_out_category['break_out_category_id'];
+    /**
+     * Caches responses, break_outs and break_out_categories.
+     */
+    private function cacheData() {
+        $responses = $this->getAllResponses();
+        for($i = 0; $i < count($responses); $i++) {
+            $response_id = $responses[$i]['response_id'];
+            $response_value = $responses[$i]['response'];
+            self::$responses[$response_id] = $response_value;
+        }
 
+        $break_outs = $this->getAllBreakouts();
+        for($i = 0; $i < count($break_outs); $i++) {
+            $break_out_id = $break_outs[$i]['break_out_id'];
+            $break_out_value = $break_outs[$i]['break_out'];
+            self::$break_outs[$break_out_id] = $break_out_value;
+        }
+
+        $break_out_categories = $this->getAllBreakoutsCat();
+        for($i = 0; $i < count($break_out_categories); $i++) {
+            $break_out_category_id = $break_out_categories[$i]['break_out_category_id'];
+            $break_out_category_value = $break_out_categories[$i]['break_out_category'];
+            self::$break_out_categories[$break_out_category_id] = $break_out_category_value;
+        }
+    }
+
+    /**
+     * Change `response`, `break_out`, `break_out_category` from:
+     * 
+     * `
+     * "response_id": "RESP040"
+     * `
+     * 
+     * to:
+     * 
+     * `
+     * "response": {
+     *      "response_id": "RESP040",
+     *      "response": "Overweight (BMI 25.0-29.9)",
+     *      "href": "http://localhost:8080/obis/api/responses/RESP040"
+     *  }
+     * `
+     */
+    private function modifyAnswer(&$answer) {
+        $response['response_id'] = $answer['response_id'];
+        $response['response'] = self::$responses[$answer['response_id']];
+        $response['href'] = self::$baseAPIURL . '/responses/' . $answer['response_id'];
         unset($answer['response_id']);
-        unset($answer['break_out_id']);
-        unset($answer['break_out_category_id']);
-
         $answer['response'] = $response;
+
+        $break_out['break_out_id'] = $answer['break_out_id'];
+        $break_out['break_out'] = self::$break_outs[$answer['break_out_id']];
+        $break_out['href'] = self::$baseAPIURL . '/breakouts/' . $answer['break_out_id'];
+        unset($answer['break_out_id']);
         $answer['break_out'] = $break_out;
+        
+        $break_out_category['break_out_category_id'] = $answer['break_out_category_id'];
+        $break_out_category['break_out_category'] = self::$break_out_categories[$answer['break_out_category_id']];
+        $break_out_category['href'] = self::$baseAPIURL . '/breakout_categories/' . $answer['break_out_category_id'];
+        unset($answer['break_out_category']);
         $answer['break_out_category'] = $break_out_category;
     }
     
     /**
-     * Validate resource to be added to /answers collection.
+     * Validate resource to be added to the `bmi` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return boolean 
      */
     public function IsValidInputBmi($input) {
         if(!isset($input["year_value"]) || 
@@ -40,18 +121,22 @@ class AnswerGateway {
         return true;
     }
     
+    /**
+     * Returns the rows in the `bmi` table.
+     * 
+     * @return array
+     */
     public function getAllBmi($params) {
         $query = "SELECT *
                   FROM bmi";
 
         if ($params)
-        {
-            $query = $query . " where " . $params;
-        }
+            $query = $query . " WHERE " . $params;
+
         try {
             $statement = Database::getConnection()->query($query);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-
+            
             foreach($result as &$res)
                 $this->modifyAnswer($res);
             
@@ -61,7 +146,14 @@ class AnswerGateway {
         }
     }
     
-    public function insertBmi(Array $input) {
+    /**
+     * Inserts a new row in the `bmi` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return void
+     */
+    public function insertBmi($input) {
         $query = "INSERT INTO bmi (year_value, locationabbr, sample_size, data_value_percentage, confidence_limit_low, confidence_limit_high, response_id, break_out_id, break_out_category_id)
                   VALUES (:year_value, :locationabbr, :sample_size, :data_value_percentage, :confidence_limit_low, :confidence_limit_high, :response_id, :break_out_id, :break_out_category_id)";
 
@@ -78,9 +170,14 @@ class AnswerGateway {
                                  'break_out_category_id' => $input['break_out_category_id']]);
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }  
     }
 
+    /**
+     * Returns the last added resource in the `bmi` table. Used for returning the resource just added using HTTP `POST` method.
+     * 
+     * @return array Associative array where the keys are the column names
+     */
     public function getLastBmi() {
         $query = "SELECT *
                   FROM bmi
@@ -102,12 +199,21 @@ class AnswerGateway {
         }
     }
     
-    public function getBmiWithID($id,$params) {
+    /**
+     * Returns the resource in the `bmi` table with the specified `id`.
+     * 
+     * @param int $id The id of the desired resource
+     * @param string $params Query parameters
+     * 
+     * @return array Associative array where the keys are the column names
+     */
+    public function getBmiWithID($id, $params) {
         $query = "SELECT *
                   FROM bmi
                   WHERE id = :id";
+
         if($params)
-            $query = $query . " and " . $params;
+            $query = $query . " AND " . $params;
 
         try {
             $statement = Database::getConnection()->prepare($query);
@@ -124,6 +230,14 @@ class AnswerGateway {
         }     
     }
 
+    /**
+     * Updates the row with the specified `id` in the table `bmi`.
+     * 
+     * @param int $id The id of the desired row to be updated
+     * @param array $input Associative array corresponding to the new resource
+     * 
+     * @return void
+     */
     public function updateBmi($id, $input) {
         $query = "UPDATE bmi
                   SET year_value = :year_value,
@@ -154,7 +268,13 @@ class AnswerGateway {
         }    
     }
 
-
+    /**
+     * Delete row with specified `id` in the table `bmi`.
+     * 
+     * @param int $id The id of the resource to be deleted
+     * 
+     * @return void
+     */
     public function deleteBmi($id) {
         $query = "DELETE FROM bmi
                   WHERE id = :id";
@@ -162,18 +282,27 @@ class AnswerGateway {
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['id' => $id]);
-            return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
     }
 
-    public function getBmiWithLocation($locationabbr,$params) {
+    /**
+     * Returns the rows with the specified state abbreviation.
+     * 
+     * @param string $locationabbr The state abbreviation
+     * @param string $params Query parameters
+     * 
+     * @return array
+     */
+    public function getBmiWithLocation($locationabbr, $params) {
         $query ="SELECT *
                  FROM bmi
                  WHERE locationabbr = :locationabbr";
-        if($query)
-            $query = $query . " and " .$params;
+                 
+        if($params)
+            $query = $query . " AND " .$params;
+
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['locationabbr' => $locationabbr]);
@@ -186,15 +315,24 @@ class AnswerGateway {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }     
-
     }
 
-    public function getBmiWithYear($year_value,$params) {
+    /**
+     * Returns the rows with the specified year.
+     * 
+     * @param int $year_value The year
+     * @param string $params Query parameters
+     * 
+     * @return array
+     */
+    public function getBmiWithYear($year_value, $params) {
         $query ="SELECT *
                  FROM bmi
                  WHERE year_value = :year_value";
+                 
         if($params)
-            $query = $query . " and " . $params;
+            $query = $query . " AND " . $params;
+
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['year_value' => $year_value]);
@@ -209,17 +347,27 @@ class AnswerGateway {
         }     
     }
 
-    public function getBmiWithYearLocation($year, $location,$params) {
+    /**
+     * Returns the rows with the specified year and state
+     * 
+     * @param int $year_value The year
+     * @param string $locationabbr The state abbreviation
+     * @param string $params Query parameters
+     * 
+     * @return array
+     */
+    public function getBmiWithYearLocation($year_value, $locationabbr, $params) {
         $query ="SELECT *
                  FROM bmi
-                 WHERE year_value = :year AND locationabbr = :location";
+                 WHERE year_value = :year_value AND locationabbr = :locationabbr";
+
         if($params)
-            $query = $query . " and " . $params;
+            $query = $query . " AND " . $params;
 
         try {
             $statement = Database::getConnection()->prepare($query);
-            $statement->execute(['year' => (int)$year,
-                                 'location' => $location]);
+            $statement->execute(['year_value' => $year_value,
+                                 'locationabbr' => $locationabbr]);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach($result as &$res)
@@ -232,7 +380,7 @@ class AnswerGateway {
     }
 
     /**
-     * Validate resource to be added to /locations collection.
+     * Validate resource to be added to `locations` table.
      */
     public function isValidInputLocation($input) {
         if(!isset($input["locationabbr"]) ||
@@ -241,6 +389,11 @@ class AnswerGateway {
         return true;
     }
 
+    /**
+     * Returns the rows in the `locations` table.
+     * 
+     * @return array
+     */
     public function getAllLocations() {
         $query ="SELECT *
                  FROM locations";
@@ -254,6 +407,13 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Inserts a new row in the `locations` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return void
+     */
     public function insertLocation($input) {
         $query = "INSERT INTO locations
                   VALUES (:locationabbr, :location_name)";
@@ -265,8 +425,17 @@ class AnswerGateway {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
+
+        $this->cacheData();
     }
 
+    /**
+     * Returns the resource in the `location` table with the specified state abbreviation.
+     * 
+     * @param string $locationabbr The state abbreviation
+     * 
+     * @return array
+     */
     public function getLocationWithID($locationabbr) {
         $query = "SELECT *
                   FROM locations
@@ -282,6 +451,14 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Updates the row with the specified state abbreviation in the table `locations`.
+     * 
+     * @param int $locationabbr The state abbreviation of the desired row to be updated
+     * @param array $input Associative array corresponding to the new resource
+     * 
+     * @return void
+     */
     public function updateLocation($locationabbr, $input) {
         $query = "UPDATE locations
                   SET location_name = :location_name
@@ -296,6 +473,13 @@ class AnswerGateway {
         }    
     }
 
+    /**
+     * Delete row with specified state abbreviation in the table `locations`.
+     * 
+     * @param int $locationabbr The state abbreviation of the desired row to be deleted
+     * 
+     * @return void
+     */
     public function deleteLocation($locationabbr) {
         $query = "DELETE FROM locations
                   WHERE locationabbr = :locationabbr";
@@ -310,7 +494,11 @@ class AnswerGateway {
     }
 
     /**
-     * Validate resource to be added to /responses collection.
+     * Validate resource to be added to `responses` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return boolean
      */
     public function isValidInputResponse($input) {
         if(!isset($input["response_id"]) ||
@@ -319,6 +507,11 @@ class AnswerGateway {
         return true;
     }
 
+    /**
+     * Returns the rows in the `responses` table.
+     * 
+     * @return array
+     */
     public function getAllResponses() {
         $query ="SELECT *
                  FROM responses";
@@ -332,6 +525,13 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Inserts a new row in the `responses` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return void
+     */
     public function insertResponse($input) {
         $query = "INSERT INTO responses
                   VALUES (:response_id, :response)";
@@ -343,8 +543,17 @@ class AnswerGateway {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
+
+        $this->cacheData();
     }
 
+    /**
+     * Returns the resource in the `responses` table with the specified response id.
+     * 
+     * @param string $response_id The response id of the resource to be updated
+     * 
+     * @return array
+     */
     public function getResponseWithID($response_id) {
         $query = "SELECT *
                   FROM responses
@@ -360,6 +569,14 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Updates the row with the specified response id in the table `responses`.
+     * 
+     * @param int $response_id The response id of the resource to be updated
+     * @param array $input Associative array corresponding to the new resource
+     * 
+     * @return void
+     */
     public function updateResponse($response_id, $input) {
         $query = "UPDATE responses
                   SET response = :response
@@ -374,6 +591,13 @@ class AnswerGateway {
         }    
     }
 
+    /**
+     * Delete row with specified response id in the table `responses`.
+     * 
+     * @param int $response_id The response id of the resource to be updated
+     * 
+     * @return void
+     */
     public function deleteResponse($response_id) {
         $query = "DELETE FROM responses
                   WHERE response_id = :response_id";
@@ -388,7 +612,11 @@ class AnswerGateway {
     }
 
     /**
-     * Validate resource to be added to /breakouts collection.
+     * Validate resource to be added to `breakouts` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return boolean
      */
     public function isValidInputBreakout($input) {
         if(!isset($input["break_out_id"]) ||
@@ -397,6 +625,11 @@ class AnswerGateway {
         return true;
     }
     
+    /**
+     * Returns the rows in the `break_outs` table.
+     * 
+     * @return array
+     */
     public function getAllBreakouts() {
         $query ="SELECT *
                  FROM break_outs";
@@ -410,6 +643,13 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Inserts a new row in the `break_outs` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return void
+     */
     public function insertBreakout($input) {
         $query = "INSERT INTO break_outs
                   VALUES (:break_out_id, :break_out)";
@@ -421,8 +661,17 @@ class AnswerGateway {
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
+
+        $this->cacheData();
     }
 
+    /**
+     * Returns the resource in the `break_out` table with the specified break_out_id.
+     * 
+     * @param string $break_out_id The break out id
+     * 
+     * @return array
+     */
     public function getBreakoutWithID($break_out_id) {
         $query ="SELECT *
                  FROM break_outs
@@ -438,6 +687,14 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Updates the row with the specified break out id in the table `break_out`.
+     * 
+     * @param int $break_out_id The break out id
+     * @param array $input Associative array corresponding to the new resource
+     * 
+     * @return void
+     */
     public function updateBreakout($break_out_id, $input) {
         $query = "UPDATE break_outs
                   SET break_out = :break_out
@@ -452,6 +709,13 @@ class AnswerGateway {
         }    
     }
 
+    /**
+     * Delete row with specified break out id in the table `break_out`.
+     * 
+     * @param int $break_out The break out id of the response to be deleted
+     * 
+     * @return void
+     */
     public function deleteBreakout($break_out_id) {
         $query = "DELETE FROM break_outs
                   WHERE break_out_id = :break_out_id";
@@ -466,7 +730,11 @@ class AnswerGateway {
     }
 
     /**
-     * Validate resource to be added to /breakouts collection.
+     * Validate resource to be added to the `break_out_categories` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return boolean 
      */
     public function isValidInputBreakoutsCat($input)
     {
@@ -477,9 +745,14 @@ class AnswerGateway {
         return true;
     }
     
+    /**
+     * Returns the rows in the `break_outs_categories` table.
+     * 
+     * @return array
+     */
     public function getAllBreakoutsCat() {
         $query ="SELECT *
-                 FROM break_outs_category";
+                 FROM break_out_categories";
 
         try {
             $statement = Database::getConnection()->query($query);
@@ -490,8 +763,15 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Inserts a new row in the `break_out_categories` table.
+     * 
+     * @param array $input An associative array containing the new resource to be added
+     * 
+     * @return void
+     */
     public function insertBreakoutsCat($input) {
-        $query = "INSERT INTO break_outs_category
+        $query = "INSERT INTO break_out_categories
                   VALUES (:break_out_category_id, :break_out_category)";
 
         try {
@@ -500,12 +780,21 @@ class AnswerGateway {
                                  'break_out_category' =>  $input['break_out_category']]);
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }  
+        
+        $this->cacheData();
     }
 
+    /**
+     * Returns the resource in the `break_out_category` table with the specified break_out_category_id.
+     * 
+     * @param string $break_out_id The break out category id
+     * 
+     * @return array
+     */
     public function getBreakoutWithIDCat($break_out_category_id) {
         $query ="SELECT *
-                 FROM break_outs_category
+                 FROM break_out_categories
                  WHERE break_out_category_id = :break_out_category_id";
 
         try {
@@ -518,8 +807,16 @@ class AnswerGateway {
         }
     }
 
+    /**
+     * Updates the row with the specified break out category id in the table `break_out_categories`.
+     * 
+     * @param int $break_out_id The break out category id
+     * @param array $input Associative array corresponding to the new resource
+     * 
+     * @return void
+     */
     public function updateBreakoutCat($id,$input) {
-        $query = "UPDATE break_outs_category
+        $query = "UPDATE break_out_categories
                   SET break_out_category = :break_out_category
                   WHERE break_out_category_id = :break_out_category_id";
 
@@ -532,8 +829,15 @@ class AnswerGateway {
         }    
     }
 
+    /**
+     * Delete row with specified break out category id in the table `break_out_categories`.
+     * 
+     * @param int $break_out The break out category id of the response to be deleted
+     * 
+     * @return void
+     */
     public function deleteBreakoutCat($break_out_category_id) {
-        $query = "DELETE FROM break_outs_category 
+        $query = "DELETE FROM break_out_categories 
                   WHERE break_out_category_id = :break_out_category_id";
         try {
             $statement = Database::getConnection()->prepare($query);

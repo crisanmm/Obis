@@ -12,7 +12,7 @@
     $locations = [];
     $responses = [];
     $break_outs = [];
-    $break_outs_category = [];
+    $break_out_categories = [];
         
     // headers
     fgetcsv($datafile);
@@ -20,7 +20,7 @@
     $counter = 0;
         
     while(($line = fgetcsv($datafile)) !== false) {
-
+        
         $year_value = $line[0];
         $locationabbr = $line[1];
         $location = $line[2];
@@ -68,13 +68,13 @@
             $counter++;
         }
 
-        // insert into break_outs_category if (key,value) pair hasn't been inserted yet
-        if(!array_key_exists($break_out_category_id, $break_outs_category)) {
-            $break_outs_category[$break_out_category_id] = $break_out_category;
-            $stmt = $conn->prepare("INSERT INTO break_outs_category VALUES(?, ?)");
+        // insert into break_out_categories if (key,value) pair hasn't been inserted yet
+        if(!array_key_exists($break_out_category_id, $break_out_categories)) {
+            $break_out_categories[$break_out_category_id] = $break_out_category;
+            $stmt = $conn->prepare("INSERT INTO break_out_categories VALUES(?, ?)");
             $stmt->bind_param("ss", $break_out_category_id, $break_out_category);
             if(!$stmt->execute())
-                exit("failed execute on \"insert into break_outs_category\"");
+                exit("failed execute on \"insert into break_out_categories\"");
             $stmt->close();
             $counter++;
         }

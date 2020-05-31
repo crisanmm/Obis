@@ -56,7 +56,7 @@ class AccountController extends Controller {
         $userIsLoggedIn = true;
         if($user === false)
             $userIsLoggedIn = false;
-
+        
         if($userIsLoggedIn) {
             $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
             $issuer_claim = "obis"; 

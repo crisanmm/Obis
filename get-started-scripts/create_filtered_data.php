@@ -66,6 +66,34 @@
         
         if(strtoupper($line[20]) == 'TOPIC09') {
             $filteredCounter++;
+
+            // Execute the following mappings
+            // RACE1 -> RACE01
+            // RACE2 -> RACE02
+            // RACE3 -> RACE08
+            // RACE4 -> RACE06
+            // RACE5 -> RACE07
+            switch($line[22]) {
+                case "RACE1":
+                    $line[22] = "RACE01";
+                break;
+                
+                case "RACE2":
+                    $line[22] = "RACE02";
+                break;
+                
+                case "RACE3":
+                    $line[22] = "RACE08";
+                break;
+                
+                case "RACE4":
+                    $line[22] = "RACE06";
+                break;
+                
+                case "RACE5":
+                    $line[22] = "RACE07";
+                break;
+            }
             
             unset($line[26]); // remove GeoLocation (one to one relationship between state and geolocation coordinates)
             unset($line[24]); // remove QuestionID
@@ -81,6 +109,7 @@
             unset($line[5]); // remove Question
             unset($line[4]); // remove Topic
             unset($line[3]); // remove Class
+            
             fputcsv($filteredFp, $line);
         }
         

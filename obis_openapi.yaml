@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.4
+  version: 1.1.5
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -15,7 +15,31 @@ servers:
     description: non-secure (HTTP)
 
 components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
+  responses:
+    Unauthorized:
+      description: Failed authorization
+      content:
+        application/json:
+          schema:
+            $ref : "#/components/schemas/Error"
+      
   schemas:
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Could not access resource
+        error:
+          type: string
+          example: Failed authorization
 
     Answer:
       type: object
@@ -171,7 +195,10 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/BreakoutCategory"
-    
+  
+security: 
+  - bearer: []
+  
 paths:
   /answers:
     get:
@@ -277,6 +304,7 @@ paths:
     get:
       tags:
         - answers
+      description: Get information based on answer with specific location.
       parameters:
         - in: path
           required: true
@@ -314,6 +342,7 @@ paths:
   /answers/year/{year}:
     get:
       tags:
+      description: Get information based on answer with specific location.
         - answers
       parameters:
         - in: path
