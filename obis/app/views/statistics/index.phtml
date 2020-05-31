@@ -120,7 +120,9 @@
       choice = "break_out_id";
     }
 
-    xmlhttp.open("GET","http://localhost/obis/api/answers/location/"+location+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat,true);
+    var tmp = window.location.href.split("\/").slice(0,3).join("\/");
+
+    xmlhttp.open("GET",tmp+ "/obis/api/answers/location/"+location+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat,true);
     xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
     xmlhttp.send();
     }
@@ -210,7 +212,11 @@
         }
       }
 
-      xmlhttp.open("GET","http://localhost/obis/api/locations",true);
+        var tmp = window.location.href.split("\/").slice(0,3).join("\/");
+        console.log(tmp);
+
+
+      xmlhttp.open("GET",tmp + "/obis/api/locations",true);
       xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
       xmlhttp.send();
 
@@ -268,7 +274,11 @@
         choice = "break_out_id";
       }
 
-      var urls = ["http://localhost/obis/api/answers/location/"+location+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat ,"http://localhost/obis/api/answers/location/"+location2+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat ];
+      var tmp = window.location.href.split("\/").slice(0,3).join("\/");
+
+
+
+      var urls = [tmp + "/obis/api/answers/location/"+location+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat ,tmp + "/obis/api/answers/location/"+location2+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat ];
 
 
       Promise.all(urls.map(url => fetch(url,{headers:{'Authorization' : "Bearer "+ localStorage.getItem("JWT")}}).then(response => response.json()))).then(function(results){
@@ -444,7 +454,11 @@
 
     filter = bmi;
 
-    xmlhttp.open("GET","http://localhost/obis/api/answers/year/" + year +"?" + "response_id" + "=" +filter+"&break_out_category_id="+ cat,true);
+    var tmp = window.location.href.split("\/").slice(0,3).join("\/");
+
+    console.log(breaks);
+
+    xmlhttp.open("GET",tmp + "/obis/api/answers/year/" + year +"?" + "response_id" + "=" +filter+"&break_out_category_id="+ cat + "&break_out_id="+breaks,true);
     xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
     xmlhttp.send();
     }
