@@ -213,7 +213,7 @@ class AnswerGateway {
         $query ="SELECT *
                  FROM bmi
                  WHERE year_value = :year AND locationabbr = :location";
-        if($query)
+        if($params)
             $query = $query . " and " . $params;
 
         try {

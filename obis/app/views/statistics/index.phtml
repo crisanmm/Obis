@@ -18,40 +18,437 @@
     
     <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
-    //google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {'packages':['geochart'],'mapsApiKey': 'AIzaSyARMHx13VGLtwkevK7g5IXaqzSxVGuRN00'});
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawColumn);
+    google.charts.setOnLoadCallback(drawMap);
 
-    function drawChart(str) 
+    function drawChart() 
     {
       var xmlhttp = new XMLHttpRequest();
-       var options = {
-          title: 'My Daily Activities'
-        };
-    
+
     xmlhttp.onreadystatechange = function() 
     {
-      console.log("test");
-      if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
-      var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+      var options;
 
+      if (this.readyState == 4 && this.status == 200) 
+      {
+        //console.log(this.responseText);
+
+        if(filterType == "byCAT")
+        {
+          var obj = JSON.parse(this.responseText);
+
+          var arr = [];
+          arr.push(['Test','Sample Size']);
+          
+          obj.forEach(parseJson);
+
+          function parseJson(data)
+          {
+            arr.push([data["response"]["response"],Number(data["sample_size"])]);
+          }
+
+          var e = document.getElementById("location");
+          var text = e.options[e.selectedIndex].text;
+
+          options = {title: obj[0]["break_out_category"]["break_out_category"] + " : " + obj[0]["break_out"]["break_out"] + "\n" + year + " - " + text};
+        }
+
+        if(filterType == "byBMI")
+        {
+          var obj = JSON.parse(this.responseText);
+          
+          obj.sort(function(a,b){
+            return a["break_out"]["break_out"].localeCompare(b["break_out"]["break_out"]);
+          });
+
+          var arr = [];
+          arr.push(['Test','Sample Size']);
+          
+          obj.forEach(parseJson);
+
+          function parseJson(data)
+          {
+            arr.push([data["break_out"]["break_out"],Number(data["sample_size"])]);
+          }
+
+          var e = document.getElementById("location");
+          var text = e.options[e.selectedIndex].text;
+
+          options = {title: obj[0]["response"]["response"] + " - " + obj[0]["break_out_category"]["break_out_category"] + "\n" + year + " - " + text};
+        }
+
+        var data = google.visualization.arrayToDataTable(arr);
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
         chart.draw(data, options);
-
       }
     };
 
-    xmlhttp.open("GET","http://localhost/obis/api/answers/year/"+str,true);
+    var e = document.getElementById("location");
+    try{
+      var location = e.options[e.selectedIndex].value;
+    }catch(err)
+    {
+      var location = "AK";
+    }
+    var filter;
+    var choice;
+
+    e = document.getElementById("year");
+    var year = e.options[e.selectedIndex].value;
+
+    e = document.getElementById("bmi");
+    var bmi = e.options[e.selectedIndex].value;
+
+    e = document.getElementById("breaks");
+    var breaks = e.options[e.selectedIndex].value;
+    
+    e = document.getElementById("cat");
+    var cat = e.options[e.selectedIndex].value;
+
+    e = document.getElementById("filterType");
+    var filterType = e.options[e.selectedIndex].value;
+
+    if(filterType == "byBMI")
+    {
+      filter = bmi;
+      choice = "response_id";
+    } else 
+    {
+      filter = breaks;
+      choice = "break_out_id";
+    }
+
+    xmlhttp.open("GET","http://localhost/obis/api/answers/location/"+location+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat,true);
     xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
     xmlhttp.send();
+    }
+
+    function setCategory(category,id)
+    {
+      var shaper;
+      var brk;
+      var chrt;
+
+      if(id == "cat")
+      {
+        shaper = "shape_shifter";
+        brk = "breaks";
+        chrt = "drawChart()";
+      }else
+      if(id == "cat2") 
+      {
+        shaper = "shape_shifter2";
+        brk = "breaks2";   
+        chrt = "drawColumn()";
+      }else 
+      {
+        shaper = "shape_shifter3";
+        brk = "breaks3";   
+        chrt = "drawMap()";
       }
+
+      var cat1 = '<select name="breakouts" id="' + brk + '" onchange="'+ chrt +'">\n<option selected value="BO1">Overall</option>\n</select>';
+
+      var cat2 = '<select name="breakouts" id="' + brk + '" onchange="'+ chrt +'">\n<option selected value="SEX1">Male</option>\n<option value="SEX2">Female</option>\n</select>';
+
+      var cat3 = '<select name="breakouts" id="' + brk + '" onchange="'+ chrt +'">\n<option selected value="AGE01">18-24</option>\n<option value="AGE02">25-34</option>\n<option value="AGE03">35-44</option>\n<option value="AGE04">45-54</option>\n<option value="AGE05">55-64</option>\n<option value="AGE09">65+</option>\n</select>';
+
+      var cat4 = '<select name="breakouts" id="' + brk + '" onchange="'+ chrt +'">\n<option selected value="RACE01">White, non-Hispanic</option>\n<option value="RACE02">Black, non-Hispanic</option>\n<option value="RACE03">American Indian or Alaskan Native, non-Hispanic</option>\n<option value="RACE04">Asian, non-Hispanic</option>\n<option value="RACE05">Native Hawaiian or other Pacific Islander, non-Hispanic</option>\n<option value="RACE06">Other, non-Hispanic</option>\n<option value="RACE07">Multiracial, non-Hispanic</option>\n<option value="RACE08">Hispanic</option>\n</select>';
+
+      var cat5 = '<select name="breakouts" id="' + brk + '" onchange="'+ chrt +'">\n<option selected value="EDUCA1">Less than H.S.</option>\n<option value="EDUCA2">H.S. or G.E.D.</option>\n<option value="EDUCA3">Some post-H.S.</option>\n<option value="EDUCA4">College graduate</option>\n</select>';
+      
+      var cat6 = '<select name="breakouts" id="' + brk + '" onchange="'+ chrt +'">\n<option selected value="INCOME1">Less than $15,000</option>\n<option value="INCOME2">$15,000-$24,999</option>\n<option value="INCOME3">$25,000-$34,999</option>\n<option value="INCOME4">$35,000-$49,999</option>\n<option value="INCOME5">$50,000+</option>\n</select>';
+
+      switch(category)
+      {
+        case "CAT3":
+        document.getElementById(shaper).innerHTML = cat3;
+        break;
+        case "CAT1":
+        document.getElementById(shaper).innerHTML = cat1;
+        break;
+        case "CAT2":
+        document.getElementById(shaper).innerHTML = cat2;
+        break;
+        case "CAT4":
+        document.getElementById(shaper).innerHTML = cat4;
+        break;
+        case "CAT5":
+        document.getElementById(shaper).innerHTML = cat5;
+        break;
+        case "CAT6":
+        document.getElementById(shaper).innerHTML = cat6;
+        break;
+      }
+
+      if(id == "cat") 
+        drawChart();
+      else
+        if(id == "cat2")
+          drawColumn();
+        else
+          drawMap();
+    }
+
+
+    window.onload = function ()
+    {
+      all_selects = document.getElementsByClassName('location');
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() 
+      {
+        if (this.readyState == 4 && this.status == 200) 
+        { 
+          var obj = JSON.parse(this.responseText);
+          for(var i=0; i<all_selects.length; i++)
+          {
+            select = all_selects[i];
+            obj.forEach(parseShit);
+          }
+        }
+      }
+
+      xmlhttp.open("GET","http://localhost/obis/api/locations",true);
+      xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
+      xmlhttp.send();
+
+      function parseShit(value)
+      {
+        var newOption = document.createElement('option');
+        newOption.value = value["locationabbr"];
+        newOption.innerHTML = value["location_name"];
+        select.appendChild(newOption);
+      }
+    }
+
+    function drawColumn()
+    {
+      var e = document.getElementById("location2");
+      try{
+        var location = e.options[e.selectedIndex].value;
+      }catch(err)
+      {
+        var location = "AK";
+      }
+      e = document.getElementById("location3");
+      try{
+        var location2 = e.options[e.selectedIndex].value;
+      }catch(err)
+      {
+        var location2 = "AK";
+      }
+
+      var filter;
+      var choice;
+
+      e = document.getElementById("year2");
+      var year = e.options[e.selectedIndex].value;
+
+      e = document.getElementById("bmi2");
+      var bmi = e.options[e.selectedIndex].value;
+
+      e = document.getElementById("breaks2");
+      var breaks = e.options[e.selectedIndex].value;
+      
+      e = document.getElementById("cat2");
+      var cat = e.options[e.selectedIndex].value;
+
+      e = document.getElementById("filterType2");
+      var filterType = e.options[e.selectedIndex].value;
+
+      if(filterType == "byBMI")
+      {
+        filter = bmi;
+        choice = "response_id";
+      } else 
+      {
+        filter = breaks;
+        choice = "break_out_id";
+      }
+
+      var urls = ["http://localhost/obis/api/answers/location/"+location+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat ,"http://localhost/obis/api/answers/location/"+location2+"/year/" + year +"?" + choice + "=" +filter+"&break_out_category_id="+ cat ];
+
+
+      Promise.all(urls.map(url => fetch(url,{headers:{'Authorization' : "Bearer "+ localStorage.getItem("JWT")}}).then(response => response.json()))).then(function(results){
+        console.log(results);
+
+        if(filterType == "byCAT")
+        {
+          var e = document.getElementById("location2");
+          var text = e.options[e.selectedIndex].text;
+
+          e = document.getElementById("location3");
+          var text2 = e.options[e.selectedIndex].text;
+
+          var arr = [];
+          arr.push(['Test',text,text2]);
+          
+          results[0].forEach(parseJson);
+
+          function parseJson(data,i)
+          {
+            arr.push([data["response"]["response"],Number(data["data_value_percentage"])/100,Number(results[1][i]["data_value_percentage"])/100]);
+          }
+
+
+
+          options = {title: results[0][0]["break_out_category"]["break_out_category"] + " : " + results[0][0]["break_out"]["break_out"] + "\n" + year + " - " + text + " vs " + text2, vAxis : {format: 'percent', title: "BMI Percentage"}, hAxis : {title:results[0][0]["break_out_category"]["break_out_category"] + " " + results[0][0]["break_out"]["break_out"]}};
+        }
+
+        if(filterType == "byBMI")
+        {
+          results[0].sort(function(a,b){
+            return a["break_out"]["break_out"].localeCompare(b["break_out"]["break_out"]);
+          });
+          results[1].sort(function(a,b){
+            return a["break_out"]["break_out"].localeCompare(b["break_out"]["break_out"]);
+          });
+
+          var e = document.getElementById("location2");
+          var text = e.options[e.selectedIndex].text;
+
+          e = document.getElementById("location3");
+          var text2 = e.options[e.selectedIndex].text;
+
+          var arr = [];
+          arr.push(['Test',text,text2]);
+          
+          results[0].forEach(parseJson);
+
+          function parseJson(data,i)
+          {
+            arr.push([data["break_out"]["break_out"],Number(data["data_value_percentage"])/100,Number(results[1][i]["data_value_percentage"])/100]);
+          }
+
+          options = {title: results[0][0]["response"]["response"] + " - " + results[0][0]["break_out_category"]["break_out_category"] + "\n" + year + " - " + text + " vs " + text2, vAxis : {format: 'percent', title: "BMI Percentage"},hAxis : {title: results[0][0]["break_out_category"]["break_out_category"]}};
+        }
+        console.table(arr);
+        var data = google.visualization.arrayToDataTable(arr);
+        var chart = new google.visualization.ColumnChart(document.getElementById('column'));
+        chart.draw(data, options);
+      });
+    }
+
+    function drawMap()
+    {
+      console.log("lmao");
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() 
+      {
+        var options;
+
+        if (this.readyState == 4 && this.status == 200) 
+        {
+          // console.log(this.responseText);
+          var stateNames = {
+              "AL": "Alabama",
+              "AK": "Alaska",
+              "AS": "American Samoa",
+              "AZ": "Arizona",
+              "AR": "Arkansas",
+              "CA": "California",
+              "CO": "Colorado",
+              "CT": "Connecticut",
+              "DE": "Delaware",
+              "DC": "District Of Columbia",
+              "FM": "Federated States Of Micronesia",
+              "FL": "Florida",
+              "GA": "Georgia",
+              "GU": "Guam",
+              "HI": "Hawaii",
+              "ID": "Idaho",
+              "IL": "Illinois",
+              "IN": "Indiana",
+              "IA": "Iowa",
+              "KS": "Kansas",
+              "KY": "Kentucky",
+              "LA": "Louisiana",
+              "ME": "Maine",
+              "MH": "Marshall Islands",
+              "MD": "Maryland",
+              "MA": "Massachusetts",
+              "MI": "Michigan",
+              "MN": "Minnesota",
+              "MS": "Mississippi",
+              "MO": "Missouri",
+              "MT": "Montana",
+              "NE": "Nebraska",
+              "NV": "Nevada",
+              "NH": "New Hampshire",
+              "NJ": "New Jersey",
+              "NM": "New Mexico",
+              "NY": "New York",
+              "NC": "North Carolina",
+              "ND": "North Dakota",
+              "MP": "Northern Mariana Islands",
+              "OH": "Ohio",
+              "OK": "Oklahoma",
+              "OR": "Oregon",
+              "PW": "Palau",
+              "PA": "Pennsylvania",
+              "PR": "Puerto Rico",
+              "RI": "Rhode Island",
+              "SC": "South Carolina",
+              "SD": "South Dakota",
+              "TN": "Tennessee",
+              "TX": "Texas",
+              "UT": "Utah",
+              "VT": "Vermont",
+              "VI": "Virgin Islands",
+              "VA": "Virginia",
+              "WA": "Washington",
+              "WV": "West Virginia",
+              "WI": "Wisconsin",
+              "WY": "Wyoming"
+          }
+          var obj = JSON.parse(this.responseText);
+
+          var arr = [];
+          arr.push(['State','Percentage']);
+          
+          obj.forEach(parseJson);
+
+          function parseJson(data)
+          {
+            arr.push([stateNames[data["locationabbr"]],Number(data["data_value_percentage"])]);
+          }
+
+          var options = {region: 'US',displayMode: 'regions',resolution: 'provinces'};
+
+          document.getElementById("mapTitle").innerHTML = obj[0]["response"]["response"] + " - " + obj[0]["break_out_category"]["break_out_category"] + "<br>" + "Year: " + year;
+
+          var data = google.visualization.arrayToDataTable(arr);
+          var chart = new google.visualization.GeoChart(document.getElementById('map'));
+          chart.draw(data, options);
+        }
+      };
+
+    var filter;
+    var choice;
+
+    e = document.getElementById("year3");
+    var year = e.options[e.selectedIndex].value;
+
+    e = document.getElementById("bmi3");
+    var bmi = e.options[e.selectedIndex].value;
+
+    e = document.getElementById("breaks3");
+    var breaks = e.options[e.selectedIndex].value;
+    
+    e = document.getElementById("cat3");
+    var cat = e.options[e.selectedIndex].value;
+
+
+    filter = bmi;
+
+    xmlhttp.open("GET","http://localhost/obis/api/answers/year/" + year +"?" + "response_id" + "=" +filter+"&break_out_category_id="+ cat,true);
+    xmlhttp.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("JWT"));
+    xmlhttp.send();
+    }
+
 
     </script>
 
@@ -80,8 +477,8 @@
       <div id="piechart" style="width: 900px; height: 500px;"></div>
 
 
-<select name="year" id="year" onchange="drawChart(this.value)">
-  <option value="2011">2011</option>
+<select name="year" id="year" onchange="drawChart()">
+  <option selected value="2011">2011</option>
   <option value="2012">2012</option>
   <option value="2013">2013</option>
   <option value="2014">2014</option>
@@ -91,37 +488,135 @@
   <option value="2018">2018</option>
 </select>
 
-<select name="location" id="location">
-  <option value="AZ">Arizona</option>
-  <option value="AL">Alabama</option>
-  <option value="AK">Alaska</option>
+<select name="location" class="location" id="location" onchange="drawChart()">
 </select>
 
-<form>
-  <input type="radio" id="byBMI" name="filter" value="byBMI">
-  <label for="byBMI">Filter by BMI</label><br>
-  <input type="radio" id="byCAT" name="filter" value="byCAT">
-  <label for="byCAT">Filter by Category</label><br>
-</form>
 
-<select name="bmi" id="bmi">
-  <option value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+<select name="typeFilter" id="filterType" onchange="drawChart()">
+  <option selected value="byBMI">Filter by BMI</option>
+  <option value="byCAT">Filter by Category</option>
+</select>
+
+<select name="bmi" id="bmi" onchange="drawChart()">
+  <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
   <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
   <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
   <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
 </select>
 
-<select name="breakouts" id="breaks">
-  <option value="AGE01">18-24</option>
+<select name="breaks_cat" id="cat" onchange="setCategory(this.value,this.id)">
+  <option value="CAT2">Gender</option>
+  <option selected value="CAT3">Age Group</option>
+  <option value="CAT4">Race/Ethnicity</option>
+  <option value="CAT5">Education Attained</option>
+  <option value="CAT6">Household Income</option>
+</select>
+
+<div id="shape_shifter">
+<select name="breakouts" id="breaks" onchange="drawChart()">
+  <option selected value="AGE01">18-24</option>
   <option value="AGE02">25-34</option>
   <option value="AGE03">35-44</option>
   <option value="AGE04">45-54</option>
+  <option value="AGE05">55-64</option>
+  <option value="AGE09">65+</option>
+</select>
+</div>
+
+<hr>
+
+<div id="column" style="width: 900px; height: 500px;"></div>
+
+<select name="year" id="year2" onchange="drawColumn()">
+  <option selected value="2011">2011</option>
+  <option value="2012">2012</option>
+  <option value="2013">2013</option>
+  <option value="2014">2014</option>
+  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+</select>
+
+<select name="location" class="location" id="location2" onchange="drawColumn()">
+</select>
+<select name="location" class="location" id="location3" onchange="drawColumn()">
 </select>
 
 
+<select name="typeFilter" id="filterType2" onchange="drawColumn()">
+  <option selected value="byBMI">Filter by BMI</option>
+  <option value="byCAT">Filter by Category</option>
+</select>
+
+<select name="bmi" id="bmi2" onchange="drawColumn()">
+  <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+  <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
+  <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
+  <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
+</select>
+
+<select name="breaks_cat" id="cat2" onchange="setCategory(this.value,this.id)">
+  <option value="CAT2">Gender</option>
+  <option selected value="CAT3">Age Group</option>
+  <option value="CAT4">Race/Ethnicity</option>
+  <option value="CAT5">Education Attained</option>
+  <option value="CAT6">Household Income</option>
+</select>
+
+<div id="shape_shifter2">
+<select name="breakouts" id="breaks2" onchange="drawColumn()">
+  <option selected value="AGE01">18-24</option>
+  <option value="AGE02">25-34</option>
+  <option value="AGE03">35-44</option>
+  <option value="AGE04">45-54</option>
+  <option value="AGE05">55-64</option>
+  <option value="AGE09">65+</option>
+</select>
+</div>
+
+<hr>
+
+<div id="mapTitle"> </div>
+<div id="map" style="width: 900px; height: 500px;"></div>
 
 
+<select name="year" id="year3" onchange="drawMap()">
+  <option selected value="2011">2011</option>
+  <option value="2012">2012</option>
+  <option value="2013">2013</option>
+  <option value="2014">2014</option>
+  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+</select>
 
+<select name="bmi" id="bmi3" onchange="drawMap()">
+  <option selected value="RESP039">Obese (BMI 30.0 - 99.8)</option>
+  <option value="RESP040">Overweight (BMI 25.0-29.9)</option>
+  <option value="RESP041">Normal Weight (BMI 18.5-24.9)</option>
+  <option value="RESP042">Underweight (BMI 12.0-18.4)</option>
+</select>
+
+<select name="breaks_cat" id="cat3" onchange="setCategory(this.value,this.id)">
+  <option value="CAT2">Gender</option>
+  <option selected value="CAT3">Age Group</option>
+  <option value="CAT4">Race/Ethnicity</option>
+  <option value="CAT5">Education Attained</option>
+  <option value="CAT6">Household Income</option>
+</select>
+
+<div id="shape_shifter3">
+<select name="breakouts" id="breaks3" onchange="drawMap()">
+  <option selected value="AGE01">18-24</option>
+  <option value="AGE02">25-34</option>
+  <option value="AGE03">35-44</option>
+  <option value="AGE04">45-54</option>
+  <option value="AGE05">55-64</option>
+  <option value="AGE09">65+</option>
+</select>
+</div>
 
 
 </main>
