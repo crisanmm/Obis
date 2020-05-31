@@ -23,6 +23,13 @@
     google.charts.setOnLoadCallback(drawColumn);
     google.charts.setOnLoadCallback(drawMap);
 
+    var gPieChart;
+    var gPieChartData;
+    var gColumnChart;
+    var gColumnChartData;
+    var gMapChart;
+    var gMapChartData;
+
     function drawChart() 
     {
       var xmlhttp = new XMLHttpRequest();
@@ -82,6 +89,8 @@
         var data = google.visualization.arrayToDataTable(arr);
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
+        gPieChart = chart;
+        gPieChartData = data;
       }
     };
 
@@ -338,6 +347,9 @@
         var data = google.visualization.arrayToDataTable(arr);
         var chart = new google.visualization.ColumnChart(document.getElementById('column'));
         chart.draw(data, options);
+
+        gColumnChart = chart;
+        gColumnChartData = data;
       });
     }
 
@@ -433,6 +445,9 @@
           var data = google.visualization.arrayToDataTable(arr);
           var chart = new google.visualization.GeoChart(document.getElementById('map'));
           chart.draw(data, options);
+          
+          gMapChart = chart;
+          gMapChartData = data;
         }
       };
 
@@ -463,6 +478,66 @@
     xmlhttp.send();
     }
 
+    function exportData(id)
+    {
+      var elemID;
+      var chartID;
+      var chart;
+      var chartData;
+
+      if(id == "expBtn1")
+      {
+        elemID = "exp1";
+        chartID = "piechart";
+        chart = gPieChart;
+        chartData = gPieChartData;
+      }else if (id == "expBtn2")
+      {
+        elemID = "exp2";
+        chartID = "column";
+        chart = gColumnChart;
+        chartData = gColumnChartData;
+      }else 
+      {
+        elemID = "exp3";
+        chartID = "map";
+        chart = gMapChart;
+        chartData = gMapChartData;
+      }
+
+      e = document.getElementById(elemID);
+      var exp = e.options[e.selectedIndex].value;
+
+      if(exp == "svg")
+      {
+        e = document.getElementById(chartID);
+        var file = new Blob([e.getElementsByTagName('svg')[0].outerHTML],{type: "text/svg"});
+        
+        var lnk = document.createElement("a");
+        lnk.download = "data.svg";
+        lnk.href = URL.createObjectURL(file);
+        lnk.click();
+        lnk.remove();
+      }
+      else if (exp == "webp")
+      {
+        var lnk = document.createElement("a");
+        lnk.download = "data.webp";
+        lnk.href = chart.getImageURI();
+        lnk.click();
+        lnk.remove();
+      }
+      else
+      {
+        var file = new Blob([google.visualization.dataTableToCsv(chartData)],{type: "text/csv"});
+
+        var lnk = document.createElement("a");
+        lnk.download = "data.csv";
+        lnk.href = URL.createObjectURL(file);
+        lnk.click();
+        lnk.remove();
+      }
+    }
 
     </script>
 
@@ -537,6 +612,16 @@
 </select>
 </div>
 
+<select name="export" id="exp1">
+  <option selected value="svg">Export as SVG</option>
+  <option value="webp">Export as WEBP</option>
+  <option value="csv">Export as CSV</option>
+</select>
+
+<button type="button" id="expBtn1"
+onclick="exportData(this.id)">Export</button>
+
+
 <hr>
 
 <div id="column" style="width: 900px; height: 500px;"></div>
@@ -589,6 +674,15 @@
 </select>
 </div>
 
+<select name="export" id="exp2">
+  <option selected value="svg">Export as SVG</option>
+  <option value="webp">Export as WEBP</option>
+  <option value="csv">Export as CSV</option>
+</select>
+
+<button type="button" id="expBtn2"
+onclick="exportData(this.id)">Export</button>
+
 <hr>
 
 <div id="mapTitle"> </div>
@@ -631,6 +725,15 @@
   <option value="AGE09">65+</option>
 </select>
 </div>
+
+<select name="export" id="exp3">
+  <option selected value="svg">Export as SVG</option>
+  <option value="webp">Export as WEBP</option>
+  <option value="csv">Export as CSV</option>
+</select>
+
+<button type="button" id="expBtn3"
+onclick="exportData(this.id)">Export</button>
 
 
 </main>
