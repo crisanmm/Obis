@@ -105,21 +105,26 @@
         }
         var filter;
         var choice;
+        var year = "2011";
+        var bmi = "RESP039"
+        var breaks = "AGE01";
+        var cat = "CAT3";
+        var filterType = "byBMI";
 
         e = document.getElementById("year");
-        var year = e.options[e.selectedIndex].value;
+        year = e.options[e.selectedIndex].value;
 
         e = document.getElementById("bmi");
-        var bmi = e.options[e.selectedIndex].value;
+        bmi = e.options[e.selectedIndex].value;
 
         e = document.getElementById("breaks");
-        var breaks = e.options[e.selectedIndex].value;
+        breaks = e.options[e.selectedIndex].value;
 
         e = document.getElementById("cat");
-        var cat = e.options[e.selectedIndex].value;
+        cat = e.options[e.selectedIndex].value;
 
         e = document.getElementById("filterType");
-        var filterType = e.options[e.selectedIndex].value;
+        filterType = e.options[e.selectedIndex].value;
 
         if (filterType == "byBMI") {
             filter = bmi;
