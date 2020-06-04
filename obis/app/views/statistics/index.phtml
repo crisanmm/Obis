@@ -58,7 +58,7 @@
                     }
 
                     var e = document.getElementById("location");
-                    var text = e.options[e.selectedIndex].text;
+                    text = e.options[e.selectedIndex].text;
 
                     options = {
                         title: obj[0]["break_out_category"]["break_out_category"] + " : " + obj[0]["break_out"]["break_out"] + "\n" + year + " - " + text
@@ -82,7 +82,7 @@
                     }
 
                     var e = document.getElementById("location");
-                    var text = e.options[e.selectedIndex].text;
+                    text = e.options[e.selectedIndex].text;
 
                     options = {
                         title: obj[0]["response"]["response"] + " - " + obj[0]["break_out_category"]["break_out_category"] + "\n" + year + " - " + text
@@ -96,13 +96,13 @@
                 gPieChartData = data;
             }
         };
-
         var e = document.getElementById("location");
         try {
             var location = e.options[e.selectedIndex].value;
         } catch (err) {
             var location = "AK";
         }
+        var text = "Alaska";
         var filter;
         var choice;
         var year = "2011";
