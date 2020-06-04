@@ -38,8 +38,12 @@ google.charts.load('current', {
                         arr.push([data["response"]["response"], Number(data["sample_size"])]);
                     }
 
-                    var e = document.getElementById("location");
-                    text = e.options[e.selectedIndex].text;
+                    try {
+                        var location = e.options[e.selectedIndex].value;
+                        text = e.options[e.selectedIndex].text;
+                    } catch (err) {
+                        text = "Alaska";
+                    }
 
                     options = {
                         title: obj[0]["break_out_category"]["break_out_category"] + " : " + obj[0]["break_out"]["break_out"] + "\n" + year + " - " + text
@@ -62,8 +66,13 @@ google.charts.load('current', {
                         arr.push([data["break_out"]["break_out"], Number(data["sample_size"])]);
                     }
 
-                    var e = document.getElementById("location");
-                    text = e.options[e.selectedIndex].text;
+                    try {
+                        var location = e.options[e.selectedIndex].value;
+                        text = e.options[e.selectedIndex].text;
+                    } catch (err) {
+                        text = "Alaska";
+                    }
+                    
 
                     options = {
                         title: obj[0]["response"]["response"] + " - " + obj[0]["break_out_category"]["break_out_category"] + "\n" + year + " - " + text
