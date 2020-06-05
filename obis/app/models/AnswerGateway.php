@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The class that is used for database manipulation.
+ * This class that is used for database API manipulation.
  */
 class AnswerGateway {
 
@@ -839,6 +839,7 @@ class AnswerGateway {
     public function deleteBreakoutCat($break_out_category_id) {
         $query = "DELETE FROM break_out_categories 
                   WHERE break_out_category_id = :break_out_category_id";
+        
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute(['break_out_category_id' => $break_out_category_id]);
@@ -847,5 +848,5 @@ class AnswerGateway {
             exit($e->getMessage());
         }    
     }
-
+    
 }

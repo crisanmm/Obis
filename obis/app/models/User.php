@@ -2,9 +2,24 @@
 
 class User {
 
+    /**
+     * @var $firstname User's firstname
+     */
     private $firstname;
+
+    /**
+     * @var $lastname User's lastname
+     */
     private $lastname;
+
+    /**
+     * @var $email User's emails
+     */
     private $email;
+
+    /**
+     * @var $password User's hashed password
+     */
     private $password;
 
     /**

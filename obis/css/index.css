@@ -65,13 +65,12 @@ header nav ul {
 
 header nav ul li {
     padding: 5px;
-    border: 1px solid aqua;
     margin: auto 0;
 }
 
-/*header nav .nav-button-list {
-    display: none;
-}*/
+header nav button:focus {
+    outline: none;
+}
 
 header nav .nav-dropmenu {
     background-color: rgba(0,0,0,0);
@@ -119,10 +118,14 @@ main article .content section:first-child h3 {
     margin-top: 0px;
 }
 
-main article .content p {
+main article .content {
     margin: 1rem;
     font-size: 1.5rem;
     text-indent: 2rem;
+}
+
+main article .content ul {
+    list-style: inside;
 }
 
 main .aside-container {
@@ -156,7 +159,6 @@ main aside ul li a {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    text-transform: uppercase;
     background-color: rgba(255, 213, 36, 1);
     border-radius: .3rem;
     padding: .5rem 0;
