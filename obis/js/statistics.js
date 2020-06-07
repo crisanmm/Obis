@@ -17,6 +17,8 @@ google.charts.load('current', {
     var gMapChart;
     var gMapChartData;
 
+    var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvYmlzIiwiYXVkIjoib2Jpc19yZXN0X2FwaV91c2VycyIsImlhdCI6MTU5MTU0MDMwMCwibmJmIjoxNTkxNTQwMzEwLCJleHAiOjIxOTE1NDAzMDAsImRhdGEiOnsiZmlyc3RuYW1lIjoiYiIsImxhc3RuYW1lIjoiYiIsImVtYWlsIjoiYkBtYWlsLmNvbSJ9fQ.DlhKvjkr0KmHlccI9dfuIioSSlg0lWMa5aspqozXM2os"
+
     function drawChart() {
         var xmlhttp = new XMLHttpRequest();
 
@@ -127,7 +129,7 @@ google.charts.load('current', {
         var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
 
         xmlhttp.open("GET", tmp + "/obis/api/answers/location/" + location + "/year/" + year + "?" + choice + "=" + filter + "&break_out_category_id=" + cat, true);
-        xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+        xmlhttp.setRequestHeader("Authorization", "Bearer " + jwt);
         xmlhttp.send();
     }
 
@@ -270,7 +272,7 @@ google.charts.load('current', {
 
         Promise.all(urls.map(url => fetch(url, {
             headers: {
-                'Authorization': "Bearer " + localStorage.getItem("JWT")
+                'Authorization': "Bearer " + jwt
             }
         }).then(response => response.json()))).then(function(results) {
             console.log(results);
@@ -470,7 +472,7 @@ google.charts.load('current', {
         console.log(breaks);
 
         xmlhttp.open("GET", tmp + "/obis/api/answers/year/" + year + "?" + "response_id" + "=" + filter + "&break_out_category_id=" + cat + "&break_out_id=" + breaks, true);
-        xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+        xmlhttp.setRequestHeader("Authorization", "Bearer " + jwt);
         xmlhttp.send();
     }
 

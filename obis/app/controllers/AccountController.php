@@ -86,4 +86,9 @@ class AccountController extends Controller {
                                                             "jwt" => $jwt]);
     }
 
+    public function dataupload()
+    {
+        $this->view('account' . DIRECTORY_SEPARATOR . 'dataupload');
+    }
+
 }
