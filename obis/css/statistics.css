@@ -96,19 +96,22 @@ header .auth {
     display: none;
 }
 
-main .separator {
-    width: 85vw;
-    height: 3px;
-    background-color: grey;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin: 0 auto;
-}
-
 main label {
     text-transform: initial;
     font-weight: 900;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+}
+
+main select {
+    border-radius: 0px;
+}
+
+main .separator {
+    width: 85vw;
+    height: 1px;
+    background-color: grey;
+    border: 1px solid grey;
+    margin: 1rem auto;
 }
 
 main .sector {
@@ -124,8 +127,8 @@ main .sector > div {
 
 main .sector .drawspace {
     grid-area: drawspace;
-    width: 75vw;
-    height: 30vw;
+    width: 100vw;
+    height: 40vh;
 }
 
 main .sector .options {
@@ -278,35 +281,19 @@ footer .bottom-footer .copyright {
     header .auth:active {
         background-color: rgba(255, 213, 36, .75);
     }
-/*     
-    main {
-        margin: 0 auto;
-        max-width: 1400px;
-        padding: 4rem 0;
-        grid-template-areas: "aside main-article"
-                            ". main-article";
-        grid-template-columns: 1fr 3fr;
-        grid-gap: 2.5rem;
+
+    main label {
+        text-transform: initial;
+        font-weight: 900;
+        font-size: 1.3rem;
     }
     
-    main article .content {
-        max-width: 70rem;
+    main .sector .drawspace {
+        grid-area: drawspace;
+        width: 85vw;
+        height: 65vh;
     }
-        
-    main .aside-container {
-        max-height: min-content;
-        background-color: white;
-    }
-    
-    main .aside-container .aside-p {
-        color: black;
-    }
-    
-    main .aside-container ul li {
-        min-width: 10vw;
-        max-width: 20vw;
-    }
-     */
+
     footer {
         grid-template-areas: "logos links"
                             "bottom-footer bottom-footer";
@@ -337,25 +324,6 @@ footer .bottom-footer .copyright {
         grid-area: bottom-footer;
         justify-content: space-evenly;
     }
-    
-}
-
-@media screen and (max-width: 1052px) {
-    
-    /* main {
-        grid-template-areas: "main-article"
-                            "aside";
-        grid-template-columns: 1fr;
-    }
-    
-    main article .content {
-        margin: 0 auto;
-    } 
-    
-    main .aside-container ul li {
-        min-width: 30vw;
-        max-width: 45vw;
-    } */
     
 }
 
