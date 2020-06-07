@@ -113,9 +113,9 @@ main label {
 
 main .sector {
     display: grid;
-    grid-template-areas: "drawspace drawspace"
-                         "year-location filters"
-                         "export export";
+    grid-template-areas: "drawspace"
+                         "options"
+                         "export";
 }
 
 main .sector > div {
@@ -128,18 +128,54 @@ main .sector .drawspace {
     height: 30vw;
 }
 
-main .sector .year-location {
-    grid-area: year-location;
+main .sector .options {
+    grid-area: options;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "labels selects";
+    column-gap: 0.5rem;
 }
 
-main .sector .filters {
-    grid-area: filters;
+main .sector .options .labels,
+main .sector .options .selects {
+    display: grid;
+    grid-template-rows: repeat(auto, 1fr);
+    row-gap: 0.5rem;
+}
+
+main .sector .options .labels {
+    grid-area: labels;
+}
+
+main .sector .options .labels label {
+    text-align: right;
+    margin: auto 0;
+}
+
+main .sector .options .selects {
+    grid-area: selects;
+}
+
+main .sector .options .selects .option {
+    margin: auto 0;
 }
 
 main .sector .export {
     grid-area: export;
+    margin: 2rem 0;
+    display: grid;
+    grid-template-areas: "label select";
+    column-gap: 0.5rem;
+}
+
+main .sector .export label {
+    grid-area: label;
+    text-align: right;
+    margin: auto 0;
+}
+
+main .sector .export .select-wrapper {
+    grid-area: select;
+    margin: auto 0;
 }
 
 footer {
