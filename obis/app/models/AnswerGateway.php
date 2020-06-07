@@ -96,7 +96,7 @@ class AnswerGateway {
         $break_out_category['break_out_category_id'] = $answer['break_out_category_id'];
         $break_out_category['break_out_category'] = self::$break_out_categories[$answer['break_out_category_id']];
         $break_out_category['href'] = self::$baseAPIURL . '/breakout_categories/' . $answer['break_out_category_id'];
-        unset($answer['break_out_category']);
+        unset($answer['break_out_category_id']);
         $answer['break_out_category'] = $break_out_category;
     }
     
