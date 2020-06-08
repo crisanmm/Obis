@@ -3,17 +3,6 @@
 use \Firebase\JWT\JWT;
 
 class AccountController extends Controller {
-
-    /**
-     * Render default page
-     */
-    public function index() {
-        // user account view
-        // or 
-        // register view
-        // based on state
-        $this->view('account' . DIRECTORY_SEPARATOR . 'login');
-    }
     
     /**
      * Render register page
@@ -81,13 +70,12 @@ class AccountController extends Controller {
             echo $jwt;
         }
         
-        $this->view('home' . DIRECTORY_SEPARATOR . 'index', ["user" => $user,
+        $this->view('home' . DIRECTORY_SEPARATOR . 'home', ["user" => $user,
                                                             "userIsLoggedIn" => $userIsLoggedIn,
                                                             "jwt" => $jwt]);
     }
 
-    public function dataupload()
-    {
+    public function dataupload() {
         $this->view('account' . DIRECTORY_SEPARATOR . 'dataupload');
     }
 

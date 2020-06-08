@@ -17,7 +17,7 @@ google.charts.load('current', {
     var gMapChart;
     var gMapChartData;
 
-    var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvYmlzIiwiYXVkIjoib2Jpc19yZXN0X2FwaV91c2VycyIsImlhdCI6MTU5MTU0MDMwMCwibmJmIjoxNTkxNTQwMzEwLCJleHAiOjIxOTE1NDAzMDAsImRhdGEiOnsiZmlyc3RuYW1lIjoiYiIsImxhc3RuYW1lIjoiYiIsImVtYWlsIjoiYkBtYWlsLmNvbSJ9fQ.DlhKvjkr0KmHlccI9dfuIioSSlg0lWMa5aspqozXM2os"
+    var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvYmlzIiwiYXVkIjoib2Jpc19yZXN0X2FwaV91c2VycyIsImlhdCI6MTU5MTU3MjExOCwibmJmIjoxNTkxNTcyMTI4LCJleHAiOjIxOTE1NzIxMTgsImRhdGEiOnsiZmlyc3RuYW1lIjoiY3JpIiwibGFzdG5hbWUiOiJtaSIsImVtYWlsIjoibWNAZXhhbXBsZS5vcmcifX0.gkEvK68NrKVIvYadH7LCgO2tbVpXgTs_7vj9oubRDTw";
 
     function drawChart() {
         var xmlhttp = new XMLHttpRequest();

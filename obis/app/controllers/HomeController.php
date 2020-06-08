@@ -3,12 +3,22 @@
 class HomeController extends Controller {
 
     /**
-     * Render default page
+     * Render home page
      */
-    public function index() {
-        // $user = $this->model('User');
-        // $user->name = 'john';
-        $this->view('home' . DIRECTORY_SEPARATOR . 'index', array('no' => 'yes'));
+    public function home() {
+        $this->view('home' . DIRECTORY_SEPARATOR . 'home');
+    }
+    
+    /**
+     * Render statistics page
+     */
+    public function statistics() {
+        $model = new StatisticsModel();
+        $yearsArray = $model->getYearsArray();
+        $statesArray = $model->getStatesArray();
+
+        $this->view('home' . DIRECTORY_SEPARATOR . 'statistics', ["yearsArray" => $yearsArray,
+                                                                  "statesArray" => $statesArray]);
     }
     
     /**

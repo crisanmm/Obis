@@ -2,6 +2,8 @@
 
 abstract class Controller {
 
+    public function __construct() {}
+    
     public function model($model) {
         require_once 'app' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . "$model.php";
         return new $model;

@@ -7,28 +7,18 @@
         <meta charset="utf-8">
         <meta name="description" content="Visualise BRFSS adult obesity statistics and access our REST API.">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/obis/css/allpages.css">
         <link rel="stylesheet" href="/obis/css/login.css">
+
         <script src="/obis/js/scripts.js"></script>
     </head>
     
     <body>
-        
-        <header>
-            <a href="/obis/home/index" ><img src="/obis/images/obis-logo.svg" alt="obis logo"></a>
-            <nav>
-                <ul class="nav-button-list">
-                    <li><a href="/obis/home/index" class="nav-button" >Home</a></li>
-                    <li><a href="/obis/statistics/index" class="nav-button">STATISTICS</a></li>
-                    <li><a href="/obis/home/aboutus" class="nav-button">About us</a></li>
-                    <li><a href="/obis/home/contact" class="nav-button">Contact</a></li>
-                </ul>
-                <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button"></button>
-            </nav>
-<!--               php here-->
-            <a href="/obis/account/login" class="auth">
-                sign in
-            </a>
-        </header>
+
+        <!-- HEADER -->
+        <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "header.phtml"; ?>
+        <!-- HEADER -->
         
         <main>
             
@@ -60,29 +50,9 @@
             
         </main>
         
-        <footer>
-           <div class="logos">
-               <a href="https://info.uaic.ro"><img class="logo" src="/obis/images/fii-logo.png" alt="UAIC FII logo"></a>
-            </div>
-            
-            <div class="links-container">
-                <ul class="links">
-                    <li class="icon"><a href="https://github.com/hristodormihai/Obis"><img src="/obis/images/github-white.svg" alt="github logo"></a>
-                </ul>
-            </div>
-            
-            <div class="bottom-footer">
-                <p class="copyright">Copyright © 2020 Crisan Mihai</p>
-                <div class="select-language">
-                    <label for="language-select">Language:</label>
-                    <select name="language" id="language-select">
-                        <option value="english">English</option>
-                        <option value="romanian">Romanian</option>
-                        <option value="french">French</option>
-                    </select>
-                </div>
-            </div> 
-        </footer>
+        <!-- FOOTER -->
+        <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "footer.phtml"; ?>
+        <!-- FOOTER -->
     
     </body>
     

@@ -1,0 +1,63 @@
+main {
+    margin: 2rem 0;
+    display: grid;
+    grid-template-areas: "title"
+                        "descriptions";
+}
+
+main .title {
+    grid-area: title;
+}
+
+main .descriptions {
+    grid-area: descriptions;
+}
+
+main .descriptions section {
+    margin: 5rem 0;
+}
+
+main h2:first-child {
+    margin-bottom: 0px;
+    font-size: 4rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+main h2:first-child + p {
+    margin-top: 0px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+main .descriptions section img:first-of-type {
+    max-width: 20%;
+    float: left;
+    margin: 0 1rem;
+}
+
+main .descriptions section h3:first-of-type {
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin: 0px;
+}
+
+main section p {
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    margin-top: 0px;
+}
+
+@media screen and (min-width: 769px) {
+
+    main {
+        margin: 0 auto;
+        max-width: 1400px;
+    }
+    
+    main .descriptions {
+        margin: 0 auto;
+        max-width: 70rem;
+    }
+    
+}

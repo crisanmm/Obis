@@ -1,0 +1,26 @@
+<?php
+    $style = "style=\"color: #ffd524; font-weight: bolder\"";
+    $array = explode('/', $_SERVER['REQUEST_URI']);
+    $page = end($array);
+?>
+
+<header>
+    <a href="/obis/home/index"><img src="/obis/images/obis-logo.svg" alt="obis logo" /></a>
+
+    <nav class="dropdown">
+        
+        <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button" /></button>
+        <ul class="nav-button-list" id="headDrop">
+            <li><a href="/obis/home/home" class="nav-button" <?php if($page == "home") echo $style; ?>>Home</a></li>
+            <li><a href="/obis/home/statistics" class="nav-button" <?php if($page == "statistics") echo $style; ?>>Statistics</a></li>
+            <li><a href="/obis/home/aboutus" class="nav-button" <?php if($page == "aboutus") echo $style; ?>>About us</a></li>
+            <li><a href="/obis/home/contact" class="nav-button" <?php if($page == "contact") echo $style; ?>>Contact</a></li>
+        </ul>
+    </nav>
+
+    <a href="/obis/account/login" class="auth">
+        <?php
+            echo isset($_SESSION['username']) ? $_SESSION['username'] : "LOG IN"
+        ?>
+    </a>
+</header>

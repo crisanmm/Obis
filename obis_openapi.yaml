@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.5
+  version: 1.1.6
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -16,7 +16,7 @@ servers:
 
 components:
   securitySchemes:
-    bearer:
+    JWT:
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -47,12 +47,12 @@ components:
         id:
           type: integer
           example: 101138
-        location:
-          type: string
-          example: 'CA'
-        year:
+        year_value:
           type: integer
           example: 2012
+        locationabbr:
+          type: string
+          example: 'CA'
         sample_size:
           type: integer
           example: 2527
@@ -104,13 +104,10 @@ components:
     AnswerForPOST:
       type: object
       properties:
-        id:
-          type: integer
-          example: 101138
-        location:
+        locationabbr:
           type: string
           example: 'CA'
-        year:
+        year_value:
           type: integer
           example: 2012
         sample_size:
@@ -197,7 +194,7 @@ components:
         $ref: "#/components/schemas/BreakoutCategory"
   
 security: 
-  - bearer: []
+  - JWT: []
   
 paths:
   /answers:
@@ -342,8 +339,8 @@ paths:
   /answers/year/{year}:
     get:
       tags:
-      description: Get information based on answer with specific location.
         - answers
+      description: Get information based on answer with specific location.
       parameters:
         - in: path
           required: true
