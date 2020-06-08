@@ -36,9 +36,9 @@
                         <label for="year">Year</label>
                         <label for="location">Location</label>
                         <label for="filterType">Filter by</label>
-                        <label for="bmi">Choose BMI</label>
+                        <label for="bmi" id="leBMIch1">Choose BMI</label>
                         <label for="cat">Choose category</label>
-                        <label for="breaks">Choose break out</label>
+                        <label for="breaks" id="leBreakch1" class="show">Choose break out</label>
                     </div>
                     
                     <div class="selects">
@@ -61,7 +61,7 @@
                         </div>
                         
                         <div class="option">
-                            <select name="typeFilter" id="filterType" onchange="drawChart()">
+                            <select name="typeFilter" id="filterType" onchange="drawChart(); hideOther(this.id);">
                                 <option selected value="byBMI">BMI</option>
                                 <option value="byCAT">Category</option>
                             </select>
@@ -86,7 +86,7 @@
                             </select>
                         </div>
                         
-                        <div id="shape_shifter" class="option">
+                        <div id="shape_shifter" class="option show">
                             <select name="breakouts" id="breaks" onchange="drawChart()">
                                 <option selected value="AGE01">18-24</option>
                                 <option value="AGE02">25-34</option>
@@ -125,9 +125,9 @@
                         <label for="location2">Location 1</label>
                         <label for="location3">Location 2</label>
                         <label for="filterType2">Filter by</label>
-                        <label for="bmi2">Choose BMI</label>
+                        <label for="bmi2" id="leBMIch2">Choose BMI</label>
                         <label for="cat2">Choose category</label>
-                        <label for="breaks2">Choose break out</label>
+                        <label for="breaks2" id="leBreakch2" class="show">Choose break out</label>
                     </div>
 
                     <div class="selects">
@@ -151,7 +151,7 @@
                         </div>
 
                         <div class="option">
-                            <select name="typeFilter" id="filterType2" onchange="drawColumn()">
+                            <select name="typeFilter" id="filterType2" onchange="drawColumn(); hideOther(this.id)">
                                 <option selected value="byBMI">Filter by BMI</option>
                                 <option value="byCAT">Filter by Category</option>
                             </select>
@@ -176,7 +176,7 @@
                             </select>
                         </div>
 
-                        <div id="shape_shifter2" class="option">
+                        <div id="shape_shifter2" class="option show">
                             <select name="breakouts" id="breaks2" onchange="drawColumn()">
                                 <option selected value="AGE01">18-24</option>
                                 <option value="AGE02">25-34</option>
