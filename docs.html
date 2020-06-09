@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<head></head>
+
+<body>
+    
+<h2>Table of contents</h2>
+
+<ol>
+    <li><a href="#abstract">Abstract</a></li>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#proj">Project Requirements</a></li>
+    <li><a href="#tech">Technologies Used</a></li>
+    <li><a href="#valid">Validation</a></li>
+    <li><a href="#user">User Interaction</a></li>
+    <li><a href="#design">UI Design</a></li>
+    <li><a href="#api">Obis REST API</a></li>
+    <li><a href="#res">Web Dev Results</a></li>
+    <li><a href="#prog">Project Progress</a></li>
+    <li><a href="#code">Code Management System</a></li>
+    <li><a href="#arch">Architecture</a></li>
+    <li><a href="#refs">Acknowledgements and References</a></li>
+
+</ol>
+
+<h2 id="abstract">Abstract</h2>
+
+<p> Obis is an application that let's you view and access statistics about obesity in the United States. Data is collected by telephone surveys, the data is provided by Behavioral Risk Factor Surveillance System (BRFSS).</p>
+
+
+<h2 id="intro">Introduction</h2>
+
+<p>Obesity in the United States is a major health issue resulting in numerous diseases, specifically increased risk of certain types of cancer, coronary artery disease, type 2 diabetes, stroke, as well as significant increases in early mortality and economic costs.
+</p>
+
+<p>"Obesity" is defined as a Body Mass Index (BMI) of 30 and over, and the measure of "Adult Obesity" from the BRFSS encapsulates the self-reported prevalence of obesity among adults for the civilian non-institutionalized population 18 years and over</p>
+<p>In order to make it easy for everyone to see and use the data BRFSS gathered, we offer:
+    <ul>
+        <li>An API that can be accesed while having an account</li> 
+        <li>Different charts to display the situation in USA</li> 
+        <li>Comparisions between different states</li>
+        <li>Means to download the charts in 3 different formats</li>
+    </ul>
+</p>
+
+<p>Our goal is to facilitate an easy interaction between the given data and users, using self explanatory, visual charts.</p>
+
+<h2 id="proj">Project Requirements</h2>
+
+<p> Make a WEB application to visualise BRFSS data with the following specifications: </p>
+<ul>
+    <li>Create a REST API</li>
+    <li>Comparisions between states</li>    
+    <li>3 different charts to display data</li>    
+    <li>Facilitate chart export as CSV, WebP and SVG</li>    
+</ul>
+
+<h2 id="tech">Technologies Used</h2>
+
+<ul>
+    <li>HTML</li>
+    <p> HTML (HyperText Markup Language) is the most basic building block of the Web. It defines the meaning and structure of web content.</p>
+    <li>CSS</li>
+    <p>Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. CSS describes how elements should be rendered on screen, on paper, in speech, or on other media.</p>
+    <li>JavaScript</li>
+    <p>JavaScript is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting object-oriented, imperative, and declarative styles. We choose JS because this project required a programming language capable of making dynamic and interactive web pages by implementing custom client-side scripts.</p>
+    <li>PHP</li>
+    <p>We choose PHP because is a robust programming language and it has an extensive list of core functionality which includes cross-platform adaptability, multi-browser compatibility, secure web apps and so on. Compared to other web languages, PHP is an efficient language which supports all major web servers to deliver high performance consistently</p>
+    <li>MySQL</li>
+    <p>It came with the XAMPP pack, and it is exceptionally quick, regardless of the underlying platform. It features self-management capabilities like auto restart, space expansion and automatic configuration changes for ease of management.</p>
+    <li>Apache</li>
+    <p>Like the database, the Apache server came along with XAMPP. With the tool ngrok, we were able to redirect localhost to a public adress. Apache proved to be reliable and secure</p>
+    <li>AJAX</li>
+    <p>AJAX allows web pages to be updated asynchronously by exchanging small amounts of data with the server behind the scenes. For us to be able to update the charts without refreshing the page we choose to use AJAX.</p>
+    <li>REST</li>
+    <p>One of the main features of our website is the API we offer. In order to achieve a complete set of capabilities we created a RESTful API utilising CRUD functionality.</p>
+    <li>CSV</li>
+    <p>CSV files are plain-text files, making them easier for the website developer to create. The data we got from BRSFF was in a csv format, making it simple to upload it to our database.</p>
+    <li>JSON</li>
+    <p>The JSON format is often used for serializing and transmitting structured data over a network connection. It is used primarily to transmit data between a server and web application, serving as an alternative to XML.</p>
+    <li>JWT</li>
+    <p>We choose to generate a token for every user in order to acces our API. This keeps the database secure and avoids bloated/spam like requests.(bots)</p>
+</ul>
+
+<h2 id="valid">Validation</h2>
+
+<p> For HTML validation we used https://validator.w3.org</p>
+<p> For CSS validation we used http://csslint.net</p>
+
+<p> Results: </p> //sa faci validarea fa cu alea
+
+<h2 id="user">User Interaction</h2>
+
+<img src="https://i.imgur.com/PutX6mJ.png" alt="nema">
+
+<h2 id="design">UI Design</h2>
+
+//aici tu stii 
+
+<h2 id="api">Obis REST API</h2>
+
+<p> Our API has the basic CRUD functionalities and has been documented here. //link la smecheria aia
+
+<h2 id="res">Web Dev Results</h2>
+
+//cand termini paginile si rulezi aia, faci un tabel cu toate. lmao
+
+<h2 id="prog">Project Progress</h2>
+
+//termina cu commiturile
+
+<p>From the start we assigned tasked and tracked the progress made in order to ensure a good finished application without passing the deadline.</p>
+<p>Main features and/or functionalities (to develop) were assigned as follows:</p>
+<ul>
+    <li>MVC architecture: Crisan Mihai</li>
+    <li>Main html + CSS: Crisan Mihai</li>
+    <li>Javascript: Hristodor Minu-Mihail</li>
+    <li>JWT integration: Hristodor Minu-Mihail</li>
+    <li>REST API: Hristodor Minu-Mihail and Crisan Mihai</li>
+    <li>Charts and export methods: Hristodor Minu-Mihail</li>
+    <li>Database initialisation: Crisan Mihai</li>
+    <li>Database interaction: Crisan Mihai and Hristodor Minu-Mihail</li>
+</ul>
+
+
+<h2 id="code">Code Management System</h2>
+
+For this project we decided we are going to use github. Git is the most commonly used version control system. Git tracks the changes you make to files, so you have a record of what has been done, and you can revert to specific versions should you ever need to. Git also makes collaboration easier, allowing changes by multiple people to all be merged into one source. This proved to be crucial because different changes were added at the same time, as we worked in parallel. We were able to track commit changes and discover where an issue was created, making it easier to solve, without changing large chunks of code.
+
+<h2 id="arch">Architecture</h2>
+
+MVC //scrii tu aci
+
+<p>Database UML scheme</p>
+<img src="https://i.imgur.com/0xw5ahM.png" alt="nema">
+
+
+
+<h2 id="refs">Acknowledgements and References</h2>
+
+<p><a href="https://www.cdc.gov/brfss/index.html">https://www.cdc.gov/brfss/index.html</a></p> 
+<p><a href="https://en.wikipedia.org/wiki/Obesity_in_the_United_States">https://en.wikipedia.org/wiki/Obesity_in_the_United_States</a></p> 
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2879283/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2879283/</a></p>
+<p><a href="https://www.cdc.gov/brfss/annual_data/annual_data.htm">https://www.cdc.gov/brfss/annual_data/annual_data.htm</a></p>
+<p><a href="https://www.w3schools.com">https://www.w3schools.com</a></p> 
+<p><a href="https://stackoverflow.com/questions/12698003/save-a-google-chart-as-svg">https://stackoverflow.com/questions/12698003/save-a-google-chart-as-svg</a></p> 
+<p><a href="http://www.csszengarden.com">http://www.csszengarden.com</a></p> 
+
+</body>
