@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/obis/css/allpages.css">
         <link rel="stylesheet" href="/obis/css/adminpanel.css">
 
-        <script src="/obis/js/scripts.js"></script>
+        <script src="/obis/js/scripts.js.php"></script>
         <script src="/obis/js/dataupload.js"></script>
         <?php 
         if(isset($jwt)) {
@@ -21,7 +21,7 @@
         } ?>
     </head>
     
-    <body>
+    <body onresize="leSizeCheck()">
 
         <!-- HEADER -->
         <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "header.phtml"; ?>
