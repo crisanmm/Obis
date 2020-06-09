@@ -25,9 +25,9 @@ main .form-container form :nth-child(even) {
 }
 
 main .form-container form [id] {
-    min-width: 50ch;
-    width: 100%;
-    padding: 0.05rem;
+    /* min-width: 50ch; */
+    /* width: 100%; */
+    /* padding: 0.05rem; */
     border: 0;
     border-radius: 0.25rem;
     background-color: rgba(41, 77, 115, .075);
@@ -90,16 +90,16 @@ main .register-container a[href*="register"] div:hover {
     }
     
     main .form-container form [id] {
-        min-width: 70ch;
-        padding: .5rem;
+        /* min-width: 70ch; */
+        /* padding: .5rem; */
     }
 }
 
 @media screen and (min-width: 769px) {
     
     main .form-container form [id] {
-        min-width: 100ch;
-        padding: 1rem;
+        /* min-width: 100ch; */
+        /* padding: 1rem; */
     }
     
 }
@@ -107,8 +107,8 @@ main .register-container a[href*="register"] div:hover {
 @media screen and (min-width: 1052px) {
 
     main .form-container form [id] {
-        min-width: 100ch;
-        padding: 1.5rem;
+        /* min-width: 100ch; */
+        /* padding: 1.5rem; */
     }
     
 }

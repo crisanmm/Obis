@@ -5,7 +5,10 @@
 ?>
 
 <header>
-    <a href="/obis/home/home"><img src="/obis/images/obis-logo.svg" alt="obis logo" /></a>
+    <a href="/obis/home/home">
+    <!-- <img src="/obis/images/obis-logo.svg" type="image/svg+xml" alt="obis logo" /> -->
+        <object data="/obis/images/obis-logo.svg" type="image/svg+xml" alt="obis logo"></object>
+    </a>
 
     <nav class="dropdown">
 
@@ -20,7 +23,7 @@
 
     <a href="/obis/account/user" class="auth">
         <?php
-            echo isset($_SESSION['username']) ? $_SESSION['username'] : "LOG IN"
+            echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN"
         ?>
     </a>
 </header>

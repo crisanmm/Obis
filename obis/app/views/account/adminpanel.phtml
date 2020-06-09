@@ -36,17 +36,17 @@
                     <form method="post">
                         <div class="firstname">
                             <label for="firstname">Your first name</label>
-                            <input id="firstname" name="firstname" type="text" value="First name">
+                            <input id="firstname" name="firstname" type="text" value="<?php echo $_SESSION['firstname'] ?>">
                         </div>
                         
                         <div class="lastname">
                             <label for="lastname">Your last name</label>
-                            <input id="lastname" name="lastname" type="text" value="Last name">
+                            <input id="lastname" name="lastname" type="text" value="<?php echo $_SESSION['lastname'] ?>">
                         </div>
 
                         <div class="email">
                             <label for="email">Your email</label>
-                            <input id="email" name="email" type="email" value="Email">
+                            <input id="email" name="email" type="email" value="<?php echo $_SESSION['email'] ?>">
                         </div>
                         
                         <button type="submit">Change</button>

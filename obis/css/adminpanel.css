@@ -76,7 +76,6 @@ main .app-data .method-collection {
     grid-area: method-collection;
     display: flex;
     justify-content: center;
-    /* margin: auto 0; */
     margin-bottom: 1.5rem;
 }
 
@@ -104,11 +103,10 @@ main .app-data .data .inputs input {
 
 main .app-data .data .inputs input {
     margin: .25rem .25rem;
-    width: 25ch;
+    max-width: 30ch;
     border: 0px;
     border-radius: .25rem;
     background-color: rgba(41, 77, 115, .075);
-    padding: .25em;
 }
 
 main .app-data .data .labels label {

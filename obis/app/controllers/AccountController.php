@@ -36,7 +36,7 @@ class AccountController extends Controller {
      * Render user page
      */
     public function user() {
-        if(isset($_SESSION['username'])) {
+        if(isset($_SESSION['firstname'])) {
             $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel');
         } else {
             $this->view('account' . DIRECTORY_SEPARATOR . 'login');
@@ -51,7 +51,9 @@ class AccountController extends Controller {
                             $_POST['password']);
 
         if($user !== false) {
-            $_SESSION['username'] = $user->getFirstname();
+            $_SESSION['firstname'] = $user->getFirstname();
+            $_SESSION['lastname'] = $user->getLastname();
+            $_SESSION['email'] = $user->getEmail();
             
             $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
             $issuer_claim = "obis"; 
