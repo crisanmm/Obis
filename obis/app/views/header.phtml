@@ -18,6 +18,14 @@
             <li><a href="/obis/home/statistics" class="nav-button" <?php if($page == "statistics") echo $style; ?>>Statistics</a></li>
             <li><a href="/obis/home/aboutus" class="nav-button" <?php if($page == "aboutus") echo $style; ?>>About us</a></li>
             <li><a href="/obis/home/contact" class="nav-button" <?php if($page == "contact") echo $style; ?>>Contact</a></li>
+            <div>
+                <!-- umpli cu ce e mai jos atunci cand dispare meniul de desktop -->
+                <!-- <li>
+                    <a href="/obis/account/user" class="nav-button">
+                        <?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN" ?>
+                    </a>
+                </li> -->
+            </div>
         </ul>
     </nav>
 
