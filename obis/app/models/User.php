@@ -46,9 +46,9 @@ class User {
         $query = "INSERT INTO users(firstname, lastname, email, password)
                   VALUES(:firstname, :lastname, :email, :password)";
     
-        $stmt = Database::getConnection()->prepare($query);
+        $statement = Database::getConnection()->prepare($query);
 
-        if($stmt->execute(["firstname" => $this->firstname,
+        if($statement->execute(["firstname" => $this->firstname,
                             "lastname" => $this->lastname,
                             "email" => $this->email,
                             "password" => $this->password]))
@@ -65,10 +65,10 @@ class User {
                   FROM users
                   WHERE email = :email";
     
-        $stmt = Database::getConnection()->prepare($query);
-        $stmt->execute(["email" => $email]);
+        $statement = Database::getConnection()->prepare($query);
+        $statement->execute(["email" => $email]);
 
-        if($stmt->rowCount() != 0)
+        if($statement->rowCount() != 0)
             return true;
         else
             return false;
@@ -89,11 +89,11 @@ class User {
                   FROM users
                   WHERE email = :email";
 
-        $stmt = Database::getConnection()->prepare($query);
-        $stmt->execute(["email" => $email]);
+        $statement = Database::getConnection()->prepare($query);
+        $statement->execute(["email" => $email]);
 
-        if($stmt->rowCount() != 0) {
-            $row = $stmt->fetch();
+        if($statement->rowCount() != 0) {
+            $row = $statement->fetch();
             if(password_verify($password, $row['password']))
                 return new User($row['firstname'],
                                 $row['lastname'],
@@ -106,7 +106,41 @@ class User {
         }
     }
 
-    // update() method will be here
+    /**
+     * Update a user's account data
+     * 
+     * @param string $oldFirstname Old email of the user
+     * @param string $oldLastname Old email of the user
+     * @param string $oldEmail Old email of the user
+     * @param string $newFirstname The first name to change to
+     * @param string $newLastname The last name to change to
+     * @param string $newEmail The new email to change to
+     * 
+     * @return bool `False` if `$newEmail` already exists in the database,
+     *              `True` otherwise
+     */
+    public static function updateData(&$oldFirstname, &$oldLastname, &$oldEmail, $newFirstname, $newLastname, $newEmail) {
+        $newFirstname = strip_tags($newFirstname);
+        $newLastname = strip_tags($newLastname);
+        $newEmail = strip_tags($newEmail);
+        
+        $query = "UPDATE users
+                  SET firstname = :newFirstname, lastname = :newLastname, email = :newEmail
+                  WHERE email = :oldEmail";
+
+        $statement = Database::getConnection()->prepare($query);
+        if($statement->execute(['newFirstname' => $newFirstname,
+                                    'newLastname' => $newLastname,
+                                    'newEmail' => $newEmail,
+                                    'oldEmail' => $oldEmail])) {
+            $oldFirstname = $newFirstname;
+            $oldLastname = $newLastname;
+            $oldEmail = $newEmail;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function setFirstname($firstname) {
         $this->firstname = strip_tags($firstname);

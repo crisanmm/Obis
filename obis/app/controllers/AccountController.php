@@ -37,7 +37,18 @@ class AccountController extends Controller {
      */
     public function user() {
         if(isset($_SESSION['firstname'])) {
-            $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel');
+            $formSent = false;
+            $changeIsSuccessful = false;
+            if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) &&
+               $_POST['firstname'] !== "" && $_POST['lastname'] !== "" && $_POST['email'] !== "") {
+                $formSent = true;
+                if(User::updateData($_SESSION['firstname'], $_SESSION['lastname'], $_SESSION['email'],
+                                    $_POST['firstname'], $_POST['lastname'], $_POST['email'])) {
+                    $changeIsSuccessful = true;
+                }
+            }
+            $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel', ['formSent' => $formSent,
+                                                                         'changeIsSuccessful' => $changeIsSuccessful]);
         } else {
             $this->view('account' . DIRECTORY_SEPARATOR . 'login');
         }

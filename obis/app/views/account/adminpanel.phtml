@@ -11,7 +11,10 @@
         <link rel="stylesheet" href="/obis/css/allpages.css">
         <link rel="stylesheet" href="/obis/css/adminpanel.css">
 
-        <script src="/obis/js/scripts.js.php"></script>
+        <script>
+            loginButtonName = `<?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN" ?>`
+        </script>
+        <script src="/obis/js/scripts.js"></script>
         <script src="/obis/js/dataupload.js"></script>
         <?php 
         if(isset($jwt)) {
@@ -31,9 +34,21 @@
             <h3>Administrator panel</h3>
 
             <div class="user">
+                <?php
+                    if(isset($formSent) && $formSent == true)
+                        if(!$changeIsSuccessful) {
+                ?>
+                            <h4 class="disclaimer fail">Failed account update.</h4>
+                <?php
+                        } else {
+                ?>
+                            <h4 class="disclaimer success">Successfull account update.</h4>
+                <?php
+                        }
+                ?>
                 <h4 class="header">Account data</h4>
                 <div class="user-info">
-                    <form method="post">
+                    <form action="/obis/account/user" method="post">
                         <div class="firstname">
                             <label for="firstname">Your first name</label>
                             <input id="firstname" name="firstname" type="text" value="<?php echo $_SESSION['firstname'] ?>">
@@ -49,7 +64,7 @@
                             <input id="email" name="email" type="email" value="<?php echo $_SESSION['email'] ?>">
                         </div>
                         
-                        <button type="submit">Change</button>
+                        <button type="submit">Change account data</button>
                     </form>
                 </div>
             </div>

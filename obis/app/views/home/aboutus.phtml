@@ -11,10 +11,13 @@
         <link rel="stylesheet" href="/obis/css/allpages.css">
         <link rel="stylesheet" href="/obis/css/aboutus.css">
 
-        <script src="/obis/js/scripts.js.php"></script>
+        <script>
+            loginButtonName = `<?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN" ?>`
+        </script>
+        <script src="/obis/js/scripts.js"></script>
     </head>
     
-    <body onresize="leSizeCheck()"> 
+    <body onresize="leSizeCheck()">
         
         <!-- HEADER -->
         <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "header.phtml"; ?>

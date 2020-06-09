@@ -172,7 +172,7 @@ footer .language {
         grid-gap: 1rem;
         padding: 1rem;
     }
-    
+
 }
 
 @media screen and (min-width: 769px) {
@@ -211,6 +211,7 @@ footer .language {
         height: 4rem;
         min-width: 8rem;
         border-radius: 3px;
+        padding: .4rem;
         color: black;
         text-transform: uppercase;
         text-decoration: none;
