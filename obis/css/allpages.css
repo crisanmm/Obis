@@ -48,6 +48,10 @@ body main {
     flex: auto;
 }
 
+main input {
+    padding: .25rem;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -151,6 +155,14 @@ footer .bottom-footer .copyright {
     margin: 0px;
 }
 
+@media screen and (min-width: 450px) {
+
+    main input {
+        padding: .5rem;
+    }
+
+}
+
 @media screen and (min-width: 769px) {
     
     html {
@@ -202,6 +214,11 @@ footer .bottom-footer .copyright {
         background-color: rgba(255, 213, 36, .75);
     }
 
+    main input {
+        min-width: 65vw;
+        padding: 1rem;
+    }
+    
     footer {
         grid-template-areas: "logos links"
                             "bottom-footer bottom-footer";
@@ -237,8 +254,12 @@ footer .bottom-footer .copyright {
 
 @media screen and (max-width: 768px){
 
-    .nav-button-list
-    {
+    main input {
+        min-width: 65vw;
+        padding: 1rem;
+    }
+    
+    .nav-button-list {
         display: none;
         position: absolute;
         font-size: 2.5em;
@@ -249,8 +270,7 @@ footer .bottom-footer .copyright {
         text-align: center;
     }
 
-    .nav-button
-    {
+    .nav-button {
         color: black;
     }
 
@@ -258,4 +278,19 @@ footer .bottom-footer .copyright {
         display: block;
     }
 
+}
+
+@media screen and (min-width: 1052px) {
+    
+    main .table-container table th,
+    main .table-container table td {
+        padding: 1.75rem;
+        border: 1px solid black;
+    }
+    
+    main input {
+        min-width: 50vw;
+        padding: 1.5rem;
+
+    }
 }

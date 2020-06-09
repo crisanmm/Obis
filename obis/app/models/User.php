@@ -60,13 +60,13 @@ class User {
     /**
      * Check if a user exists in the database or not
      */
-    public function exists() {
+    public static function exists($email) {
         $query = "SELECT email
                   FROM users
                   WHERE email = :email";
     
         $stmt = Database::getConnection()->prepare($query);
-        $stmt->execute(["email" => $this->email]);
+        $stmt->execute(["email" => $email]);
 
         if($stmt->rowCount() != 0)
             return true;

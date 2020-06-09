@@ -1,7 +1,13 @@
 main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+main .fail-disclaimer {
+    color: rgba(255, 0, 0, 0.75);
+    font-size: 4rem;
 }
 
 main .form-container {
@@ -21,7 +27,7 @@ main .form-container form :nth-child(even) {
 main .form-container form [id] {
     min-width: 50ch;
     width: 100%;
-    padding: 0.05rem;
+    padding: 0.25em;
     border: 0;
     border-radius: 0.25rem;
     background-color: rgba(41, 77, 115, .075);
@@ -55,22 +61,19 @@ main .form-container form button[type="submit"]:active {
 }
 
 @media screen and (min-width: 450px) {
-    main .table-container table th,
-    main .table-container table td {
-        padding: .5rem;
-    }
-    
+
     main .form-container form [id] {
         min-width: 70ch;
-        padding: .5rem;
+        padding: .5em;
     }
+
 }
 
 @media screen and (min-width: 769px) {
     
     main .form-container form [id] {
         min-width: 100ch;
-        padding: 1rem;
+        padding: 1em;
     }
 }
 
@@ -78,7 +81,7 @@ main .form-container form button[type="submit"]:active {
 
     main .form-container form [id] {
         min-width: 100ch;
-        padding: 1.5rem;
+        padding: 1.5em;
     }
     
 }

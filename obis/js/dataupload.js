@@ -1,177 +1,195 @@
-function generateForm()
-{
-    var e = document.getElementById("table");
-    var table = e.options[e.selectedIndex].value;
+// ANSWERS
+var POSTanswers =
+    `<div class="labels">
+        <label for="locationabbr">Location abbreviation</label>
+        <label for="year_value">Year</label>
+        <label for="sample_size">Sample Size</label>
+        <label for="data_value_percentage">Data Value Percentage</label>
+        <label for="confidence_limit_low">Confidence Limit Low</label>
+        <label for="confidence_limit_high">Confidence Limit High</label>
+        <label for="response_id">Response ID</label>
+        <label for="break_out_id">Breakout ID</label>
+        <label for="break_out_category_id">Breakout Category ID</label>
+    </div>
 
-    e = document.getElementById("type");
-    var type = e.options[e.selectedIndex].value; 
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="locationabbr" name="locationabbr" placeholder="CA">
+        <input required type="text" id="year_value" name="year_value" placeholder="2018">
+        <input required type="text" id="sample_size" name="sample_size" placeholder="1002">
+        <input required type="text" id="data_value_percentage" name="data_value_percentage" placeholder="40.9">
+        <input required type="text" id="confidence_limit_low" name="confidence_limit_low" placeholder="39.1">
+        <input required type="text" id="confidence_limit_high" name="confidence_limit_high" placeholder="42.6">
+        <input required type="text" id="response_id" name="response_id" placeholder="RESP040">
+        <input required type="text" id="break_out_id" name="break_out_id" placeholder="SEX1">
+        <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT2">
+    </form>`
 
-    var shaper = "formHere";
+var PUTanswers = 
+    `<div class="labels">
+        <label for="id">ID</label>
+        <label for="locationabbr">Location abbreviation</label>
+        <label for="year_value">Year</label>
+        <label for="sample_size">Sample Size</label>
+        <label for="data_value_percentage">Data Value Percentage</label>
+        <label for="confidence_limit_low">Confidence Limit Low</label>
+        <label for="confidence_limit_high">Confidence Limit High</label>
+        <label for="response_id">Response ID</label>
+        <label for="break_out_id">Breakout ID</label>
+        <label for="break_out_category_id">Breakout Category ID</label>
+    </div>
 
-    var form1 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="locationabbr">Location</label>
-                      <input type="text" id="locationabbr" name="locationabbr" placeholder="CA"><br>
-                      <label for="year_value">Year</label>
-                      <input type="text" id="year_value" name="year_value" placeholder="2018"><br>
-                      <label for="sample_size">Sample Size</label>
-                      <input type="text" id="sample_size" name="sample_size" placeholder="1002"><br>
-                      <label for="data_value_percentage">Data Value Percentage</label>
-                      <input type="text" id="data_value_percentage" name="data_value_percentage" placeholder="40.9"><br>
-                      <label for="confidence_limit_low">Confidence Limit Low</label>
-                      <input type="text" id="confidence_limit_low" name="confidence_limit_low" placeholder="39.1"><br>
-                      <label for="confidence_limit_high">Confidence Limit High</label>
-                      <input type="text" id="confidence_limit_high" name="confidence_limit_high" placeholder="42.6"><br>
-                      <label for="response_id">Response ID</label>
-                      <input type="text" id="response_id" name="response_id" placeholder="RESP040"><br>
-                      <label for="break_out_id">Breakout ID</label>
-                      <input type="text" id="break_out_id" name="break_out_id" placeholder="SEX1"><br>
-                      <label for="break_out_category_id">Breakout Category ID</label>
-                      <input type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT2"><br>
-                      <input type="submit" value="Submit">
-                    </form>    `
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="id" name="ID" placeholder="0">
+        <input required type="text" id="locationabbr" name="locationabbr" placeholder="CA">
+        <input required type="text" id="year_value" name="year_value" placeholder="2018">
+        <input required type="text" id="sample_size" name="sample_size" placeholder="1002">
+        <input required type="text" id="data_value_percentage" name="data_value_percentage" placeholder="40.9">
+        <input required type="text" id="confidence_limit_low" name="confidence_limit_low" placeholder="39.1">
+        <input required type="text" id="confidence_limit_high" name="confidence_limit_high" placeholder="42.6">
+        <input required type="text" id="response_id" name="response_id" placeholder="RESP040">
+        <input required type="text" id="break_out_id" name="break_out_id" placeholder="SEX1">
+        <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT2">
+    </form>`
 
-    var form2 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="id">ID</label>
-                      <input type="text" id="id" name="ID" placeholder="0"><br>
-                      <label for="locationabbr">Location</label>
-                      <input type="text" id="locationabbr" name="locationabbr" placeholder="CA"><br>
-                      <label for="year_value">Year</label>
-                      <input type="text" id="year_value" name="year_value" placeholder="2018"><br>
-                      <label for="sample_size">Sample Size</label>
-                      <input type="text" id="sample_size" name="sample_size" placeholder="1002"><br>
-                      <label for="data_value_percentage">Data Value Percentage</label>
-                      <input type="text" id="data_value_percentage" name="data_value_percentage" placeholder="40.9"><br>
-                      <label for="confidence_limit_low">Confidence Limit Low</label>
-                      <input type="text" id="confidence_limit_low" name="confidence_limit_low" placeholder="39.1"><br>
-                      <label for="confidence_limit_high">Confidence Limit High</label>
-                      <input type="text" id="confidence_limit_high" name="confidence_limit_high" placeholder="42.6"><br>
-                      <label for="response_id">Response ID</label>
-                      <input type="text" id="response_id" name="response_id" placeholder="RESP040"><br>
-                      <label for="break_out_id">Breakout ID</label>
-                      <input type="text" id="break_out_id" name="break_out_id" placeholder="SEX1"><br>
-                      <label for="break_out_category_id">Breakout Category ID</label>
-                      <input type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT2"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
+var DELETEanswers =
+    `<div class="labels">
+        <label for="id">ID</label>
+    </div>
 
-    var form3 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="locationabbr">Location Abbreviation</label>
-                      <input type="text" id="locationabbr" name="locationabbr" placeholder="CA"><br>
-                      <label for="loaction_name">Location Name</label>
-                      <input type="text" id="loaction_name" name="loaction_name" placeholder="California"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
-    var form4 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="response_id">Response ID</label>
-                      <input type="text" id="response_id" name="response_id" placeholder="RESP039"><br>
-                      <label for="response">Response</label>
-                      <input type="text" id="response" name="response" placeholder="Obese (BMI 30.0 - 99.8)"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
-    var form5 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="break_out_id">Breakout ID</label>
-                      <input type="text" id="break_out_id" name="break_out_id" placeholder="INCOME4"><br>
-                      <label for="break_out">Breakout</label>
-                      <input type="text" id="break_out" name="break_out" placeholder="$35,000-$49,999"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="id" name="ID" placeholder="0">
+    </form>`
+   
+// LOCATIONS
+var POSTlocations = 
+    `<div class="labels">
+        <label for="locationabbr">Location abbreviation</label>
+        <label for="location_name">Location name</label>
+    </div>
 
-    var form6 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="break_out_category_id">Breakout Category ID</label>
-                      <input type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT6"><br>
-                      <label for="break_out_category">Breakout Category</label>
-                      <input type="text" id="break_out_category" name="break_out_category" placeholder="Household Income"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="locationabbr" name="locationabbr" placeholder="CA">
+        <input required type="text" id="location_name" name="location_name" placeholder="California">
+    </form>`
 
-    var form7 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-                      <label for="id">ID</label>
-                      <input type="text" id="id" name="ID" placeholder="0"><br>
-                      <input type="submit" value="Submit">
-                      </form>`
+var PUTlocations = POSTlocations
+    
+var DELETElocations =
+    `<div class="labels">
+        <label for="locationabbr">Location abbreviation</label>
+    </div>
 
-    var form8 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-					<label for="locationabbr">Location Abbreviation</label>
-                    <input type="text" id="locationabbr" name="locationabbr" placeholder="CA"><br>
-                    <input type="submit" value="Submit">
-                    </form>`
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="locationabbr" name="locationabbr" placeholder="CA">
+    </form>`
 
-    var form9 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
- 					  <label for="response_id">Response ID</label>
-                      <input type="text" id="response_id" name="response_id" placeholder="RESP039"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
+// RESPONSES
 
-    var form10 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
- 					  <label for="break_out_id">Breakout ID</label>
-                      <input type="text" id="break_out_id" name="break_out_id" placeholder="INCOME4"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
+var POSTresponses =
+    `<div class="labels">
+        <label for="response_id">Response ID</label>
+        <label for="response">Response</label>
+    </div>
 
-    var form11 = `<form action="#" id="leForm" onsubmit="executeRequest();return false">
-					  <label for="break_out_category_id">Breakout Category ID</label>
-                      <input type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT6"><br>
-                      <input type="submit" value="Submit">
-                    </form>`
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="response_id" name="response_id" placeholder="RESP039">
+        <input required type="text" id="response" name="response" placeholder="Obese (BMI 30.0 - 99.8)">
+    </form>`
 
-	switch (table) {
-        case "answers":
-        	if(type == "POST")
-            	document.getElementById(shaper).innerHTML = form1;
-            else if(type == "PUT")
-            	document.getElementById(shaper).innerHTML = form2;
-            else
-            	document.getElementById(shaper).innerHTML = form7;
-            break;
-        case "locations":
-        	if(type != "DELETE")
-            	document.getElementById(shaper).innerHTML = form3;
-            else
-            	document.getElementById(shaper).innerHTML = form8;
-            break;
-        case "responses":
-        	if(type != "DELETE")
-            	document.getElementById(shaper).innerHTML = form4;
-            else
-            	document.getElementById(shaper).innerHTML = form9;
-            break;
-        case "breakouts":
-        	if(type != "DELETE")
-            	document.getElementById(shaper).innerHTML = form5;
-            else
-            	document.getElementById(shaper).innerHTML = form10;
-            break;
-        case "breakout_categories":
-        	if(type != "DELETE")        
-            	document.getElementById(shaper).innerHTML = form6;
-            else
-            	document.getElementById(shaper).innerHTML = form11;
-            break;
-    }
+var PUTresponses = POSTresponses
+
+var DELETEresponses =
+    `<div class="labels">
+        <label for="response_id">Response ID</label>
+    </div>
+
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="response_id" name="response_id" placeholder="RESP039">
+    </form>`
+    
+// BREAKOUTS
+
+var POSTbreakouts =
+    `<div class="labels">
+        <label for="break_out_id">Break out ID</label>
+        <label for="break_out">Break out</label>
+    </div>
+
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="break_out_id" name="break_out_id" placeholder="AGE01">
+        <input required type="text" id="break_out" name="break_out" placeholder="18-24">
+    </form>`
+
+
+var PUTbreakouts = POSTbreakouts
+
+var DELETEbreakouts =
+    `<div class="labels">
+        <label for="break_out_id">Break out ID</label>
+    </div>
+
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="break_out_id" name="break_out_id" placeholder="AGE01">
+    </form>`
+    
+// BREAKOUT_CATEGORIES
+   
+var POSTbreakout_categories =
+    `<div class="labels">
+        <label for="break_out_category_id">Break out category ID</label>
+        <label for="break_out_category">Break out category</label>
+    </div>
+
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT6">
+        <input required type="text" id="break_out_category" name="break_out_category" placeholder="Household Income">
+    </form>`
+
+var PUTbreakout_categories = POSTbreakout_categories
+
+var DELETEbreakout_categories =
+    `<div class="labels">
+        <label for="break_out_category_id">Break out category ID</label>
+        <label for="break_out_category">Break out category</label>
+    </div>
+
+    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+        <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT6">
+        <input required type="text" id="break_out_category" name="break_out_category" placeholder="Household Income">
+    </form>`
+    
+function generateForm() {
+    var e = document.getElementById("method");
+    var method = e.options[e.selectedIndex].value; 
+
+    e = document.getElementById("collection");
+    var collection = e.options[e.selectedIndex].value;
+                      
+    var form = method.toUpperCase() + collection.toLowerCase();
+    document.getElementById("data").innerHTML = window[form];
 }
 
-function executeRequest()
-{    
-    var elements = document.getElementById("leForm").elements;
-    var obj ={};
+function executeRequest() {
+    var elements = document.getElementById("inputs").elements;
+    var obj = {};
 
     for(var i = 0 ; i < elements.length ; i++){
-        var item = elements.item(i);
+        var item = elements[i];
         if(item.value != "Submit")
-        obj[item.name] = item.value;
+            obj[item.name] = item.value;
     }
 
     console.log(obj);
 
-    var e = document.getElementById("table");
-    var table = e.options[e.selectedIndex].value;
+    var e = document.getElementById("collection");
+    var collection = e.options[e.selectedIndex].value;
 
-    e = document.getElementById("type");
-    var type = e.options[e.selectedIndex].value; 
+    e = document.getElementById("method");
+    var method = e.options[e.selectedIndex].value; 
 
     var queryParam = "";
 
-    switch (table) {
+    switch (collection) {
         case "answers":
         	queryParam = obj["id"];
             break;
@@ -189,40 +207,35 @@ function executeRequest()
             break;
         }
 
-    console.log(type,table)
+    console.log(method, collection)
+    console.log(JSON.stringify(obj, null, 2));
+    
+    var xhr = new XMLHttpRequest();
 
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-    	// console.log(this.responseText);
-    	handleStatus(this.status);
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === XMLHttpRequest.DONE) {
+            console.log(xhr.status)
+            var outcome = ""
+            if(xhr.status == 400 || xhr.status == 405) {
+                outcome = "Failed"
+            } else {
+                outcome = "Successful"
+            }
+            alert(outcome + " " + method.toUpperCase() + " on " + collection.toLowerCase())
+        }
     }
 
     var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
 
-    if(type == "POST")
-    {
-	    xmlhttp.open(type, tmp + "/obis/api/"+ table, true);
-	    xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
-	    xmlhttp.send(JSON.stringify(obj));
-	}else 
-	{
-		xmlhttp.open(type, tmp + "/obis/api/"+ table + '/' + queryParam, true);
-	    xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
-	    xmlhttp.send(JSON.stringify(obj));
+    if(method == "POST") {
+	    xhr.open(method, tmp + "/obis/api/"+ collection, true);
+	    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+	    xhr.send(JSON.stringify(obj));
+	} else {
+		xhr.open(method, tmp + "/obis/api/"+ collection + '/' + queryParam, true);
+	    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+	    xhr.send(JSON.stringify(obj));
 	}
 
     return false;
-}
-
-function handleStatus(status)
-{
-	console.log(status);
-	if(status == 400 || status == 405)
-	{
-		document.getElementById("outcome").innerHTML = "not so gucci";
-	}else
-	{
-		document.getElementById("outcome").innerHTML = "we gucci";
-	}
 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <title>Admin panel | Obis</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Visualise BRFSS adult obesity statistics and access our REST API.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/obis/css/allpages.css">
+        <link rel="stylesheet" href="/obis/css/adminpanel.css">
+
+        <script src="/obis/js/scripts.js"></script>
+        <script src="/obis/js/dataupload.js"></script>
+        <?php 
+        if(isset($jwt)) {
+            echo "<script>";
+            echo "localStorage.setItem(\"JWT\", \"${jwt}\")";
+            echo "</script>";
+        } ?>
+    </head>
+    
+    <body>
+
+        <!-- HEADER -->
+        <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "header.phtml"; ?>
+        <!-- HEADER -->
+        
+        <main>
+            <h3>Administrator panel</h3>
+
+            <div class="user">
+                <h4 class="header">Account data</h4>
+                <div class="user-info">
+                    <form method="post">
+                        <div class="firstname">
+                            <label for="firstname">Your first name</label>
+                            <input id="firstname" name="firstname" type="text" value="First name">
+                        </div>
+                        
+                        <div class="lastname">
+                            <label for="lastname">Your last name</label>
+                            <input id="lastname" name="lastname" type="text" value="Last name">
+                        </div>
+
+                        <div class="email">
+                            <label for="email">Your email</label>
+                            <input id="email" name="email" type="email" value="Email">
+                        </div>
+                        
+                        <button type="submit">Change</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="app-data">
+                <h4 class="header">Application data</h4>
+
+                <div class="method-collection">
+                    <div class="option">
+                        <label for="method" class="sr-only">HTTP method</label>
+                        <select name="method" class="method" id="method" onchange="generateForm()">
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option">
+                        <label for="collection" class="sr-only">Collection</label>
+                        <select name="collection" class="collection" id="collection" onchange="generateForm()">
+                            <option value="answers">answers</option>
+                            <option value="locations">locations</option>
+                            <option value="responses">responses</option>
+                            <option value="breakouts">breakouts</option>
+                            <option value="breakout_categories">breakout_categories</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="data" class="data" onload="generateForm()">
+                    <div class="labels">
+                        <label for="locationabbr">Location abbreviation</label>
+                        <label for="year_value">Year</label>
+                        <label for="sample_size">Sample Size</label>
+                        <label for="data_value_percentage">Data Value Percentage</label>
+                        <label for="confidence_limit_low">Confidence Limit Low</label>
+                        <label for="confidence_limit_high">Confidence Limit High</label>
+                        <label for="response_id">Response ID</label>
+                        <label for="break_out_id">Breakout ID</label>
+                        <label for="break_out_category_id">Breakout Category ID</label>
+                    </div>
+
+                    <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
+                        <input required type="text" id="locationabbr" name="locationabbr" placeholder="CA">
+                        <input required type="text" id="year_value" name="year_value" placeholder="2018">
+                        <input required type="text" id="sample_size" name="sample_size" placeholder="1002">
+                        <input required type="text" id="data_value_percentage" name="data_value_percentage" placeholder="40.9">
+                        <input required type="text" id="confidence_limit_low" name="confidence_limit_low" placeholder="39.1">
+                        <input required type="text" id="confidence_limit_high" name="confidence_limit_high" placeholder="42.6">
+                        <input required type="text" id="response_id" name="response_id" placeholder="RESP040">
+                        <input required type="text" id="break_out_id" name="break_out_id" placeholder="SEX1">
+                        <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT2">
+                    </form>
+                </div>
+                
+                <button id="submit" type="submit" value="Submit" form="inputs">submit</button>
+            </div>
+        
+        </main>
+        
+        <!-- FOOTER -->
+        <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "footer.phtml"; ?>
+        <!-- FOOTER -->
+    
+    </body>
+    
+</html>

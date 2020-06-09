@@ -22,6 +22,14 @@
         
         <main>
             
+            <h4 class="fail-disclaimer">
+                <?php 
+                    if(isset($registerFailed))
+                        if($registerFailed === true)
+                            echo "Register failed.";
+                ?>
+            </h4>
+        
             <div class="form-container">
                 <form action="/obis/account/registerAction" method="post">
                     <label for="firstname" class="sr-only">Enter first name</label>
@@ -42,14 +50,6 @@
                     <button type="submit">register</button>
                 </form>
             </div>
-            
-            <?php
-                if(isset($userExists))
-                    if($userExists)
-                        echo "<p>user already exists</p>";
-                    else
-                        echo "<p>user created</p>";
-            ?>
             
         </main>
         

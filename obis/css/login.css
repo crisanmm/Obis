@@ -5,6 +5,11 @@ main {
     align-items: center;
 }
 
+main .fail-disclaimer {
+    color: rgba(255, 0, 0, 0.75);
+    font-size: 4rem;
+}
+
 main .form-container {
     display: flex;
     justify-content: space-around;

@@ -30,16 +30,18 @@ class StatisticsModel {
      * @return array
      */
     public function getStatesArray() {
-        $query = "SELECT location_name
+        $query = "SELECT locationabbr, location_name
                   FROM locations
-                  ORDER BY location_name";
+                  ORDER BY locationabbr";
 
         try {
             $statement = Database::getConnection()->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            for($i = 0; $i < count($result); $i++)
-                $result[$i] = $result[$i]['location_name'];
+            for($i = 0; $i < count($result); $i++) {
+                $result[$result[$i]['locationabbr']] = $result[$i]['location_name'];
+                unset($result[$i]);
+            }
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());

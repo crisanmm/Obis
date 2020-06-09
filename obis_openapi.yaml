@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  version: 1.1.6
+  version: 1.1.7
   title: "Obis REST API Specification"
   description: >
     Obis is a application that let's you view and access statistics
@@ -139,10 +139,10 @@ components:
     Location:
       type: object
       properties:
-        id:
+        locationabbr:
           type: string
           example: "CA"
-        value:
+        location_name:
           type: string
           example: "California"
     Locations:
@@ -153,10 +153,10 @@ components:
     Response:
       type: object
       properties:
-        id:
+        response_id:
           type: string
           example: "RESP039"
-        value:
+        response:
           type: string
           example: "Obese (BMI 30.0 - 99.8)"
     Responses:
@@ -168,10 +168,10 @@ components:
     Breakout:
       type: object
       properties:
-        id:
+        break_out_id:
           type: string
           example: "INCOME4"
-        value:
+        break_out:
           type: string
           example: "$35,000-$49,999"
     Breakouts:
@@ -182,10 +182,10 @@ components:
     BreakoutCategory:
       type: object
       properties:
-        id:
+        break_out_category_id:
           type: string
           example: "CAT6"
-        value:
+        break_out_category:
           type: string
           example: "Household income"
     BreakoutCategories:

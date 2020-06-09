@@ -196,34 +196,33 @@ google.charts.load('current', {
     }
 
 
-    window.onload = function() {
-        all_selects = document.getElementsByClassName('location');
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var obj = JSON.parse(this.responseText);
-                for (var i = 0; i < all_selects.length; i++) {
-                    select = all_selects[i];
-                    obj.forEach(parseShit);
-                }
-            }
-        }
+    // window.onload = function() {
+    //     all_selects = document.getElementsByClassName('location');
+    //     var xmlhttp = new XMLHttpRequest();
+    //     xmlhttp.onreadystatechange = function() {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             var obj = JSON.parse(this.responseText);
+    //             for (var i = 0; i < all_selects.length; i++) {
+    //                 select = all_selects[i];
+    //                 obj.forEach(parseStuff);
+    //             }
+    //         }
+    //     }
 
-        var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
-        console.log(tmp);
+    //     var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
+    //     console.log(tmp);
 
+    //     xmlhttp.open("GET", tmp + "/obis/api/locations", true);
+    //     xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+    //     xmlhttp.send();
 
-        xmlhttp.open("GET", tmp + "/obis/api/locations", true);
-        xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
-        xmlhttp.send();
-
-        function parseShit(value) {
-            var newOption = document.createElement('option');
-            newOption.value = value["locationabbr"];
-            newOption.innerHTML = value["location_name"];
-            select.appendChild(newOption);
-        }
-    }
+    //     function parseStuff(value) {
+    //         var newOption = document.createElement('option');
+    //         newOption.value = value["locationabbr"];
+    //         newOption.innerHTML = value["location_name"];
+    //         select.appendChild(newOption);
+    //     }
+    // }
 
     function drawColumn() {
         var e = document.getElementById("location2");

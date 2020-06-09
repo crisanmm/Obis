@@ -8,6 +8,10 @@ main select {
     border-radius: 0px;
 }
 
+main .show {
+    display: none;
+}
+
 main .separator {
     width: 85vw;
     height: 1px;
@@ -40,11 +44,15 @@ main .sector .options {
     column-gap: 0.5rem;
 }
 
+main .sector label,
+main .sector select {
+    margin: .35rem;
+}
+
 main .sector .options .labels,
 main .sector .options .selects {
     display: grid;
     grid-template-rows: repeat(auto, 1fr);
-    row-gap: 0.5rem;
 }
 
 main .sector .options .labels {
@@ -97,9 +105,4 @@ main .sector .export .select-wrapper {
         height: 65vh;
     }
 
-}
-
-.show
-{
-    display: none;
 }

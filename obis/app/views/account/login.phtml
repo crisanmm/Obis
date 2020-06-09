@@ -22,8 +22,16 @@
         
         <main>
             
+            <h4 class="fail-disclaimer">
+                <?php 
+                    if(isset($loginFailed))
+                        if($loginFailed === true)
+                            echo "Login failed.";
+                ?>
+            </h4>
+
             <div class="form-container">
-                <form action="/obis/account/loginAction" method="post">
+                <form action="/obis/account/login" method="post">
                     <label for="email" class="sr-only">Enter Email</label>
                     <input id="email" name="email" type="email" placeholder="Email" required>
                     
@@ -37,16 +45,6 @@
             <div class="register-container">
                 <a href="/obis/account/register"><div>register here</div></a>
             </div>
-            
-            <?php 
-                if(isset($userIsLoggedIn))
-                    if($userIsLoggedIn === true)
-                    {
-                        echo "<p>welcome {$user->getFirstname()}</p>";
-                    }
-                    else 
-                        echo "failed login";
-            ?>
             
         </main>
         

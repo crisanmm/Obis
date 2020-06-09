@@ -736,11 +736,9 @@ class AnswerGateway {
      * 
      * @return boolean 
      */
-    public function isValidInputBreakoutsCat($input)
-    {
-        if(! isset($input["break_out_category_id"]))
-            return false;
-        if(! isset($input["break_out_category"]))
+    public function isValidInputBreakoutsCat($input) {
+        if(!isset($input["break_out_category_id"]) ||
+           !isset($input["break_out_category"]))
             return false;
         return true;
     }

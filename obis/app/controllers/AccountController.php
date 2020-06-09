@@ -15,38 +15,44 @@ class AccountController extends Controller {
      * Perform register action
      */
     public function registerAction() {
-        $user = new User($_POST['firstname'],
-                            $_POST['lastname'],
-                            $_POST['email'],
-                            $_POST['password']);
+        if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['password']) &&
+           $_POST['firstname'] !== "" && $_POST['lastname'] !== "" && $_POST['email'] !== "" && $_POST['password'] !== "") {
+            if(!User::exists($_POST['email'])) {
+                $user = new User($_POST['firstname'],
+                                $_POST['lastname'],
+                                $_POST['email'],
+                                $_POST['password']);
+                $user->create();
 
-        $userExists = $user->exists();
+                $this->view('account' . DIRECTORY_SEPARATOR . 'login');
+                exit();
+            }
+        }
 
-        if(!$userExists)
-            $user->create();
-
-        $this->view('account' . DIRECTORY_SEPARATOR . 'register', ["userExists" => $userExists]);
+        $this->view('account' . DIRECTORY_SEPARATOR . 'register', ["registerFailed" => true]);
     }
     
     /**
-     * Render login page
+     * Render user page
      */
-    public function login() {
-        $this->view('account' . DIRECTORY_SEPARATOR . 'login');
+    public function user() {
+        if(isset($_SESSION['username'])) {
+            $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel');
+        } else {
+            $this->view('account' . DIRECTORY_SEPARATOR . 'login');
+        }
     }
     
     /**
      * Perform login action
      */
-    public function loginAction() {
+    public function login() {
         $user = User::login($_POST['email'],
                             $_POST['password']);
 
-        $userIsLoggedIn = true;
-        if($user === false)
-            $userIsLoggedIn = false;
-        
-        if($userIsLoggedIn) {
+        if($user !== false) {
+            $_SESSION['username'] = $user->getFirstname();
+            
             $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
             $issuer_claim = "obis"; 
             $audience_claim = "obis_rest_api_users";
@@ -67,16 +73,12 @@ class AccountController extends Controller {
             ));
 
             $jwt = JWT::encode($token, $secret_key);
-            echo $jwt;
+            // echo $jwt;
+            $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel', ["jwt" => $jwt]);
+            return;
         }
         
-        $this->view('home' . DIRECTORY_SEPARATOR . 'home', ["user" => $user,
-                                                            "userIsLoggedIn" => $userIsLoggedIn,
-                                                            "jwt" => $jwt]);
-    }
-
-    public function dataupload() {
-        $this->view('account' . DIRECTORY_SEPARATOR . 'dataupload');
+        $this->view('account' . DIRECTORY_SEPARATOR . 'login', ["loginFailed" => true]);
     }
 
 }
