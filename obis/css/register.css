@@ -47,17 +47,18 @@ main .form-container form button[type="submit"] {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 1.5rem auto;
-    background-color: rgba(255, 213, 36, 1);
+    background-color: rgba(255, 213, 36, .9);
     border: 0px;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 main .form-container form button[type="submit"]:hover {
-    background-color: rgba(255, 213, 36, .9);
+    background-color: rgba(255, 213, 36, .75);
 }
 
 main .form-container form button[type="submit"]:active {
-    background-color: rgba(255, 213, 36, .75);
+    background-color: rgba(255, 213, 36, .6);
 }
 
 @media screen and (min-width: 450px) {
