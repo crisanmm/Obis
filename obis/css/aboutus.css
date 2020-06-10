@@ -42,6 +42,11 @@ main .descriptions section h3:first-of-type {
     margin: 0px;
 }
 
+main .descriptions .crisan img {
+    border: 1px solid black;
+    border-radius: 1px;
+}
+
 main section p {
     font-size: 1.5rem;
     padding: 0 1rem;
