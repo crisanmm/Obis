@@ -136,6 +136,24 @@ class User {
         }
     }
 
+    /**
+     * Check if a user has administrator privileges, allows access to application data manipulation
+     * 
+     * @param string $email The email of the user
+     * 
+     * @return bool `True` if the user has administrator privileges,
+     *              `False` otherwise
+     */
+    public static function isAdmin($email) {
+        $query = "SELECT *
+                  FROM users
+                  WHERE email = :email AND admin = 1";
+
+        $statement = Database::getConnection()->prepare($query);
+        $statement->execute(['email' => $email]);
+        return $statement->rowCount() == 1;
+    }
+    
     public function setFirstname($firstname) {
         $this->firstname = strip_tags($firstname);
     }

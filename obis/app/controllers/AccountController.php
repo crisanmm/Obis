@@ -93,7 +93,8 @@ class AccountController extends Controller {
             header("Location: /obis/account/user");
             exit();
         }
-        $this->view('account' . DIRECTORY_SEPARATOR . 'panel', ['jwt' => $optionalJWT]);
+        $this->view('account' . DIRECTORY_SEPARATOR . 'panel', ['jwt' => $optionalJWT,
+                                                                'isAdmin' => User::isAdmin($_SESSION['email'])]);
     }   
     
     /**
@@ -112,7 +113,8 @@ class AccountController extends Controller {
                 }
             }
             $this->view('account' . DIRECTORY_SEPARATOR . 'panel', ['formSent' => $formSent,
-                                                                    'changeIsSuccessful' => $changeIsSuccessful]);
+                                                                    'changeIsSuccessful' => $changeIsSuccessful,
+                                                                    'isAdmin' => User::isAdmin($_SESSION['email'])]);
         } else {
             header("Location: /obis/account/login");
             exit();

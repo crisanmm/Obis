@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/obis/css/allpages.css">
-        <link rel="stylesheet" href="/obis/css/adminpanel.css">
+        <link rel="stylesheet" href="/obis/css/panel.css">
 
         <script>
             loginButtonName = `<?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN" ?>`
@@ -68,6 +68,7 @@
             </div>
 
             <div class="app-data">
+                <?php if(isset($isAdmin) && $isAdmin == true) { ?>
                 <h4 class="header">Application data</h4>
 
                 <div class="method-collection">
@@ -119,6 +120,7 @@
                 </div>
                 
                 <button id="submit" type="submit" value="Submit" form="inputs">submit</button>
+                <?php } ?>
             </div>
         
             <div class="logout">
