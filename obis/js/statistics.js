@@ -506,10 +506,12 @@ function hideOther(selected)
             document.getElementById("leBMIch1").classList.toggle("show");
             document.getElementById("shape_shifter").classList.toggle("show");    
             document.getElementById("leBreakch1").classList.toggle("show");
+            break;
         case("filterType2"):
             document.getElementById("bmi2").classList.toggle("show");
             document.getElementById("leBMIch2").classList.toggle("show");
             document.getElementById("shape_shifter2").classList.toggle("show");    
             document.getElementById("leBreakch2").classList.toggle("show");
+            break;
     }
 }
