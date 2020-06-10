@@ -128,6 +128,7 @@ google.charts.load('current', {
         var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
 
         xmlhttp.open("GET", tmp + "/obis/api/answers/location/" + location + "/year/" + year + "?" + choice + "=" + filter + "&break_out_category_id=" + cat, true);
+        // console.log(jwt);
         xmlhttp.setRequestHeader("Authorization", "Bearer " + jwt);
         xmlhttp.send();
     }

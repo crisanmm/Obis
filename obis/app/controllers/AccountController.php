@@ -7,7 +7,7 @@ function getJWT($user) {
     $issuer_claim = "obis";
     $audience_claim = "obis_rest_api_users";
     $issuedat_claim = time();
-    $notbefore_claim = $issuedat_claim + 10;
+    $notbefore_claim = $issuedat_claim;
     $expire_claim = $issuedat_claim + 600000000;
 
     $token = [
