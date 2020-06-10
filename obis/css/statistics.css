@@ -111,6 +111,11 @@ main .sector .export .select-wrapper {
     margin: auto 0;
 }
 
+main .sector #mapTitle {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
 @media screen and (min-width: 769px) {
 
     main label {
