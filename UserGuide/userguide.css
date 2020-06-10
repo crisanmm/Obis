@@ -1,0 +1,43 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+h1,h2{
+    text-align: center;
+}
+
+body{
+    margin:auto;
+    width:50%;
+    /*border: 3px solid lightblue;*/
+/*    padding: 2%;*/
+    background-image: url("c.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+#container{
+    margin:auto;
+    /*background-color: white;*/
+    padding: 5%;
+    font-size: 140%;
+
+}
+
+.background {
+    position: absolute;
+    display:block;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
