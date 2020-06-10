@@ -17,8 +17,8 @@ google.charts.load('current', {
     var gMapChart;
     var gMapChartData;
 
-    var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvYmlzIiwiYXVkIjoib2Jpc19yZXN0X2FwaV91c2VycyIsImlhdCI6MTU5MTU3MjExOCwibmJmIjoxNTkxNTcyMTI4LCJleHAiOjIxOTE1NzIxMTgsImRhdGEiOnsiZmlyc3RuYW1lIjoiY3JpIiwibGFzdG5hbWUiOiJtaSIsImVtYWlsIjoibWNAZXhhbXBsZS5vcmcifX0.gkEvK68NrKVIvYadH7LCgO2tbVpXgTs_7vj9oubRDTw";
-
+    var jwt = localStorage.getItem("JWT");
+    
     function drawChart() {
         var xmlhttp = new XMLHttpRequest();
 
@@ -26,7 +26,6 @@ google.charts.load('current', {
             var options;
 
             if (this.readyState == 4 && this.status == 200) {
-                //console.log(this.responseText);
 
                 if (filterType == "byCAT") {
                     var obj = JSON.parse(this.responseText);
@@ -195,35 +194,6 @@ google.charts.load('current', {
             drawMap();
     }
 
-
-    // window.onload = function() {
-    //     all_selects = document.getElementsByClassName('location');
-    //     var xmlhttp = new XMLHttpRequest();
-    //     xmlhttp.onreadystatechange = function() {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             var obj = JSON.parse(this.responseText);
-    //             for (var i = 0; i < all_selects.length; i++) {
-    //                 select = all_selects[i];
-    //                 obj.forEach(parseStuff);
-    //             }
-    //         }
-    //     }
-
-    //     var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
-    //     console.log(tmp);
-
-    //     xmlhttp.open("GET", tmp + "/obis/api/locations", true);
-    //     xmlhttp.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
-    //     xmlhttp.send();
-
-    //     function parseStuff(value) {
-    //         var newOption = document.createElement('option');
-    //         newOption.value = value["locationabbr"];
-    //         newOption.innerHTML = value["location_name"];
-    //         select.appendChild(newOption);
-    //     }
-    // }
-
     function drawColumn() {
         var e = document.getElementById("location2");
         try {
@@ -274,7 +244,6 @@ google.charts.load('current', {
                 'Authorization': "Bearer " + jwt
             }
         }).then(response => response.json()))).then(function(results) {
-            console.log(results);
 
             if (filterType == "byCAT") {
                 var e = document.getElementById("location2");
@@ -340,7 +309,6 @@ google.charts.load('current', {
                     }
                 };
             }
-            console.table(arr);
             var data = google.visualization.arrayToDataTable(arr);
             var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
             chart.draw(data, options);
@@ -351,14 +319,12 @@ google.charts.load('current', {
     }
 
     function drawMap() {
-        console.log("lmao");
         var xmlhttp = new XMLHttpRequest();
 
         xmlhttp.onreadystatechange = function() {
             var options;
 
             if (this.readyState == 4 && this.status == 200) {
-                // console.log(this.responseText);
                 var stateNames = {
                     "AL": "Alabama",
                     "AK": "Alaska",
@@ -468,7 +434,6 @@ google.charts.load('current', {
 
         var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
 
-        console.log(breaks);
 
         xmlhttp.open("GET", tmp + "/obis/api/answers/year/" + year + "?" + "response_id" + "=" + filter + "&break_out_category_id=" + cat + "&break_out_id=" + breaks, true);
         xmlhttp.setRequestHeader("Authorization", "Bearer " + jwt);

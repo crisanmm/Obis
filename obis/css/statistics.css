@@ -52,7 +52,7 @@ main .sector select {
 main .sector .options .labels,
 main .sector .options .selects {
     display: grid;
-    grid-template-rows: repeat(auto, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
 }
 
 main .sector .options .labels {

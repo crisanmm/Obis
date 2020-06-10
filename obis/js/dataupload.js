@@ -179,8 +179,6 @@ function executeRequest() {
             obj[item.name] = item.value;
     }
 
-    console.log(obj);
-
     var e = document.getElementById("collection");
     var collection = e.options[e.selectedIndex].value;
 
@@ -207,14 +205,11 @@ function executeRequest() {
             break;
         }
 
-    console.log(method, collection)
-    console.log(JSON.stringify(obj, null, 2));
     
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE) {
-            console.log(xhr.status)
             var outcome = ""
             if(xhr.status == 400 || xhr.status == 405) {
                 outcome = "Failed"

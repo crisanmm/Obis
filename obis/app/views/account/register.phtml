@@ -24,15 +24,15 @@
         <!-- HEADER -->
         
         <main>
-            
+            <?php 
+                if(isset($registerFailed))
+                    if($registerFailed === true)
+                    {
+            ?>
             <h4 class="fail-disclaimer">
-                <?php 
-                    if(isset($registerFailed))
-                        if($registerFailed === true)
-                            echo "Register failed.";
-                ?>
+               Register failed.
             </h4>
-        
+            <?php } ?>
             <div class="form-container">
                 <form action="/obis/account/registerAction" method="post">
                     <label for="firstname" class="sr-only">Enter first name</label>

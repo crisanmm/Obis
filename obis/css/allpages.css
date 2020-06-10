@@ -212,6 +212,11 @@ footer .language {
     margin: 0 auto;
 }
 
+iframe
+{
+    border:0px;
+}
+
 @media screen and (min-width: 450px) {
 
     main input {
@@ -223,7 +228,7 @@ footer .language {
         grid-gap: 1rem;
         padding: 1rem;
     }
-
+    
 }
 
 @media screen and (min-width: 769px) {

@@ -6,18 +6,17 @@
 
 <header>
     <a href="/obis/home/home">
-    <!-- <img src="/obis/images/obis-logo.svg" type="image/svg+xml" alt="obis logo" /> -->
-        <object data="/obis/images/obis-logo.svg" type="image/svg+xml" alt="obis logo"></object>
+        <object data="/obis/images/obis-logo.svg" type="image/svg+xml">Website LOGO</object> 
     </a>
 
     <nav class="dropdown">
-        <button onclick="dropMenu()" class="nav-dropmenu">
+        <div onclick="dropMenu()" class="nav-dropmenu">
             <div onclick="navIcon()" id="nav-icon">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-        </button>
+        </div>
 
         <ul class="nav-button-list" id="headDrop">
             <li><a href="/obis/home/home" class="nav-button" <?php if($page == "home") echo $style; ?>>Home</a></li>

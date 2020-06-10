@@ -24,14 +24,17 @@
         <!-- HEADER -->
         
         <main>
-            
+
+            <?php 
+                if(isset($loginFailed)) 
+                    if($loginFailed === true)
+                    {
+            ?> 
             <h4 class="fail-disclaimer">
-                <?php 
-                    if(isset($loginFailed)) 
-                        if($loginFailed === true)
-                            echo "Login failed.";
-                ?>
+              Login failed.
             </h4>
+        
+        <?php } ?>
 
             <div class="form-container">
                 <form action="/obis/account/login" method="post">
