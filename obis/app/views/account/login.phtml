@@ -30,11 +30,12 @@
                     if($loginFailed === true)
                     {
             ?> 
-            <h4 class="fail-disclaimer">
-              Login failed.
-            </h4>
-        
-        <?php } ?>
+                        <h4 class="fail-disclaimer">
+                            Login failed.
+                        </h4>
+            <?php
+                    }
+            ?>
 
             <div class="form-container">
                 <form action="/obis/account/login" method="post">

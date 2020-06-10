@@ -2,35 +2,98 @@
 
 use \Firebase\JWT\JWT;
 
+function getJWT($user) {
+    $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
+    $issuer_claim = "obis";
+    $audience_claim = "obis_rest_api_users";
+    $issuedat_claim = time();
+    $notbefore_claim = $issuedat_claim + 10;
+    $expire_claim = $issuedat_claim + 600000000;
+
+    $token = [
+        "iss" => $issuer_claim,
+        "aud" => $audience_claim,
+        "iat" => $issuedat_claim,
+        "nbf" => $notbefore_claim,
+        "exp" => $expire_claim,
+        "data" => ["firstname" => $user -> getFirstname(),
+                    "lastname" => $user -> getLastname(),
+                    "email" => $user -> getEmail()]];
+
+    $jwt = JWT::encode($token, $secret_key);
+}
+
 class AccountController extends Controller {
     
     /**
      * Render register page
      */
     public function register() {
-        $this->view('account' . DIRECTORY_SEPARATOR . 'register');
+        $registerFailed = true;
+        
+        // if the form has been submitted 
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // and the input is not made up of empty strings
+            if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm-password']) &&
+               $_POST['firstname'] !== "" && $_POST['lastname'] !== "" && $_POST['email'] !== "" && $_POST['password'] !== "" && $_POST['confirm-password'] !== "") {
+                // check if password & confirmpassword are the same
+                if($_POST['password'] === $_POST['confirm-password']) {
+                    // if user doesn't already exist then create new user
+                    if(!User::exists($_POST['email'])) {
+                        $user = new User($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['password'], $_POST['confirm-password']);
+                        if($user->create()) {
+                            // $this->view('account' . DIRECTORY_SEPARATOR . 'login');
+                            header("Location: /obis/account/login");
+                            exit();
+                        }
+                    }
+                }
+            }
+        } else { // $_SERVER['REQUEST_METHOD'] != 'POST'
+            $registerFailed = false;
+        }
+        $this->view('account' . DIRECTORY_SEPARATOR . 'register', ['registerFailed' => $registerFailed]);
     }
 
     /**
-     * Perform register action
+     * Render login page
      */
-    public function registerAction() {
-        if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['password']) &&
-           $_POST['firstname'] !== "" && $_POST['lastname'] !== "" && $_POST['email'] !== "" && $_POST['password'] !== "") {
-            if(!User::exists($_POST['email'])) {
-                $user = new User($_POST['firstname'],
-                                $_POST['lastname'],
-                                $_POST['email'],
-                                $_POST['password']);
-                $user->create();
+    public function login() {
+        $loginFailed = true;
 
-                $this->view('account' . DIRECTORY_SEPARATOR . 'login');
-                exit();
+        // if the form has been submitted
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // and the input is not made up of empty strings
+            if(isset($_POST['email']) && isset($_POST['password']) && $_POST['email'] !== "" && $_POST['password'] !== "") {
+                $user = User::login($_POST['email'], $_POST['password']);
+                if($user !== false) {
+                    $_SESSION['firstname'] = $user->getFirstname();
+                    $_SESSION['lastname'] = $user->getLastname();
+                    $_SESSION['email'] = $user->getEmail();
+                    
+                    $jwt = getJWT($user);
+                    $this->panel($jwt);
+                    return;
+                }
             }
+        } else {
+            $loginFailed = false;
         }
-
-        $this->view('account' . DIRECTORY_SEPARATOR . 'register', ["registerFailed" => true]);
+        
+        $this->view('account'. DIRECTORY_SEPARATOR . 'login', ['loginFailed' => $loginFailed]);
     }
+    
+    /**
+     * Render panel page
+     */
+    public function panel($optionalJWT = null) {
+        // if user is not logged in redirect to /obis/account/user
+        if(!isset($_SESSION['firstname'])) {
+            header("Location: /obis/account/user");
+            exit();
+        }
+        $this->view('account' . DIRECTORY_SEPARATOR . 'panel', ['jwt' => $optionalJWT]);
+    }   
     
     /**
      * Render user page
@@ -47,51 +110,24 @@ class AccountController extends Controller {
                     $changeIsSuccessful = true;
                 }
             }
-            $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel', ['formSent' => $formSent,
-                                                                         'changeIsSuccessful' => $changeIsSuccessful]);
+            $this->view('account' . DIRECTORY_SEPARATOR . 'panel', ['formSent' => $formSent,
+                                                                    'changeIsSuccessful' => $changeIsSuccessful]);
         } else {
             $this->view('account' . DIRECTORY_SEPARATOR . 'login');
         }
     }
-    
+
     /**
-     * Perform login action
+     * Perform log out action
      */
-    public function login() {
-        $user = User::login($_POST['email'],
-                            $_POST['password']);
-
-        if($user !== false) {
-            $_SESSION['firstname'] = $user->getFirstname();
-            $_SESSION['lastname'] = $user->getLastname();
-            $_SESSION['email'] = $user->getEmail();
-            
-            $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
-            $issuer_claim = "obis"; 
-            $audience_claim = "obis_rest_api_users";
-            $issuedat_claim = time(); 
-            $notbefore_claim = $issuedat_claim + 10; 
-            $expire_claim = $issuedat_claim + 600000000; 
-            
-            $token = array(
-                "iss" => $issuer_claim,
-                "aud" => $audience_claim,
-                "iat" => $issuedat_claim,
-                "nbf" => $notbefore_claim,
-                "exp" => $expire_claim,
-                "data" => array(
-                    "firstname" => $user -> getFirstname(),
-                    "lastname" => $user -> getLastname(),
-                    "email" => $user -> getEmail()
-            ));
-
-            $jwt = JWT::encode($token, $secret_key);
-            // echo $jwt;
-            $this->view('account' . DIRECTORY_SEPARATOR . 'adminpanel', ["jwt" => $jwt]);
-            return;
+    public function logout() {
+        // check if session is really set
+        if(isset($_SESSION['firstname'])) {
+            unset($_SESSION);
+            session_destroy();
         }
-        
-        $this->view('account' . DIRECTORY_SEPARATOR . 'login', ["loginFailed" => true]);
+        header("Location: /obis/home/home");
+        exit();
     }
-
+    
 }

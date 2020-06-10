@@ -48,13 +48,10 @@ class User {
     
         $statement = Database::getConnection()->prepare($query);
 
-        if($statement->execute(["firstname" => $this->firstname,
-                            "lastname" => $this->lastname,
-                            "email" => $this->email,
-                            "password" => $this->password]))
-            return true;
-        else
-            return false;
+        return $statement->execute(["firstname" => $this->firstname,
+                                "lastname" => $this->lastname,
+                                "email" => $this->email,
+                                "password" => $this->password]);
     }
     
     /**
@@ -68,10 +65,7 @@ class User {
         $statement = Database::getConnection()->prepare($query);
         $statement->execute(["email" => $email]);
 
-        if($statement->rowCount() != 0)
-            return true;
-        else
-            return false;
+        return $statement->rowCount() != 0;
     }
 
     /**

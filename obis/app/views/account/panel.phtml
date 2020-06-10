@@ -13,15 +13,13 @@
 
         <script>
             loginButtonName = `<?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN" ?>`
+            <?php
+                if(isset($jwt))
+                    echo "localStorage.setItem(\"JWT\", \"${jwt}\")";
+            ?>
         </script>
         <script src="/obis/js/scripts.js"></script>
         <script src="/obis/js/dataupload.js"></script>
-        <?php 
-        if(isset($jwt)) {
-            echo "<script>";
-            echo "localStorage.setItem(\"JWT\", \"${jwt}\")";
-            echo "</script>";
-        } ?>
     </head>
     
     <body onresize="leSizeCheck()">
@@ -42,7 +40,7 @@
                 <?php
                         } else {
                 ?>
-                            <h4 class="disclaimer success">Successfull account update.</h4>
+                            <h4 class="disclaimer success">Successful account update.</h4>
                 <?php
                         }
                 ?>
@@ -123,6 +121,12 @@
                 <button id="submit" type="submit" value="Submit" form="inputs">submit</button>
             </div>
         
+            <div class="logout">
+                <form action="/obis/account/logout" method="POST">
+                    <label for="logout" class="sr-only">Log out</label>
+                    <button id="logout" type="submit" value="logout">LOG OUT</button>
+                </form>
+            </div>
         </main>
         
         <!-- FOOTER -->
