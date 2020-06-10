@@ -11,8 +11,19 @@
     </a>
 
     <nav class="dropdown">
+        <!-- <button onclick="dropMenu()" class="nav-dropmenu">
+            <img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button" />
+        </button>
+         -->
+        <button onclick="dropMenu()" class="nav-dropmenu">
+            <div onclick="navIcon()" id="nav-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <!-- <img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button" /> -->
+        </button>
 
-        <button onclick="dropMenu()" class="nav-dropmenu"><img src="/obis/images/nav-dropmenu.svg" alt="navigation drop down menu button" /></button>
         <ul class="nav-button-list" id="headDrop">
             <li><a href="/obis/home/home" class="nav-button" <?php if($page == "home") echo $style; ?>>Home</a></li>
             <li><a href="/obis/home/statistics" class="nav-button" <?php if($page == "statistics") echo $style; ?>>Statistics</a></li>

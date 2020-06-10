@@ -89,6 +89,57 @@ header nav .nav-dropmenu {
     padding: 0px;
 }
 
+header nav .nav-dropmenu #nav-icon {
+    margin: 0;
+    padding: 0;
+}
+
+header nav .nav-dropmenu #nav-icon {
+    width: 45px;
+    height: 35px;
+    position: relative;
+    top: 0px;
+    cursor: pointer;
+}
+
+header nav .nav-dropmenu #nav-icon span {
+    display: block;
+    position: absolute;
+    height: 2.5px;
+    width: 100%;
+    background: #dfdfdf;
+    border-radius: 10px;
+    left: 0;
+    transition: .25s ease-in-out;
+}
+
+header nav .nav-dropmenu #nav-icon span:nth-child(1) {
+    top: 0px;
+}
+
+header nav .nav-dropmenu #nav-icon span:nth-child(2) {
+    top: 15px;
+}
+
+header nav .nav-dropmenu #nav-icon span:nth-child(3) {
+    top: 30px;
+}
+
+header nav .nav-dropmenu #nav-icon.open span:nth-child(1) {
+    transform: rotate(135deg);
+    top: 18px;
+}
+
+header nav .nav-dropmenu #nav-icon.open span:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+}
+
+header nav .nav-dropmenu #nav-icon.open span:nth-child(3) {
+    transform: rotate(-135deg);
+    top: 18px;
+}
+
 header nav ul li a {
     text-decoration: none;
     text-transform: uppercase;
@@ -133,7 +184,7 @@ footer .logos a {
 
 footer .logos .logo {
     object-fit: contain;
-    width: 25vw;
+    width: 40vw;
 }
 
 footer .links {
@@ -146,7 +197,7 @@ footer .links {
 }
 
 footer .links .icon {
-    width: 10vw;
+    width: 20vw;
     min-width: 20%;
     margin: 0;
 }

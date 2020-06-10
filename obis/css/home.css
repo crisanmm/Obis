@@ -2,8 +2,36 @@ main {
     position: relative;
     display: grid;
     grid-template-areas: "main-article"
-                        "aside";
+                         "aside";
     padding: 2rem 0 0 0;
+}
+
+main article .underline {
+    text-decoration: underline;
+}
+
+main article .bold {
+    font-weight: bolder;
+}
+
+main article .content .inline-link {
+    text-decoration: none;
+    color: #F47A20;
+}
+
+main article .content .inline-link:hover {
+    color: rgba(255, 213, 36, 1);
+}
+
+main article .content .inline-link:active {
+    color: rgba(255, 0, 0, .75);
+}
+
+main article .content .calculator a[href*=bmicalculator] {
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 15px;
+    background-image: url("/obis/images/external-icon.svg");
 }
 
 main article .content {
@@ -30,6 +58,26 @@ main article .content ul {
     list-style: inside;
 }
 
+main article .content .calculator {
+    width: min-content;
+    margin: 0 auto;
+    border: 2px solid grey;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+main article .content .calculator iframe {
+    margin: 2.5rem 2.5rem 0rem 2.5rem;
+}
+
+main article .content .calculator p {
+    margin: 1rem 0;
+    text-align: center;
+}
+
 main .aside-container {
     grid-area: aside;
     background-color: #294d73;
@@ -44,19 +92,19 @@ main .aside-container .aside-p {
     margin: 1rem 0 0 0;
 }
 
-main aside ul {
+main .aside-container ul {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-main aside ul li {
-    width: 75vw;
+main .aside-container ul li {
+    width: 40ch;
     margin: 1rem;
     text-align: center;
 }
 
-main aside ul li a {
+main .aside-container ul li a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,11 +117,20 @@ main aside ul li a {
     color: black;
 }
 
-main aside ul li a:hover {
+main .aside-container ul li a p {
+    margin: 0;
+    padding: 0;
+    background-image: url("/obis/images/external-icon.svg");
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 15px;
+}
+
+main .aside-container ul li a:hover {
     background-color: rgba(255, 213, 36, .9);
 }
 
-main aside ul li a:active {
+main .aside-container ul li a:active {
     background-color: rgba(255, 213, 36, .75);
 }
 
@@ -86,7 +143,7 @@ main aside ul li a:active {
         grid-template-areas: "aside main-article"
                             ". main-article";
         grid-template-columns: 1fr 3fr;
-        grid-gap: 2.5rem;
+        column-gap: 3rem;
     }
     
     main article .content {
@@ -101,11 +158,6 @@ main aside ul li a:active {
     main .aside-container .aside-p {
         color: black;
     }
-    
-    main .aside-container ul li {
-        min-width: 10vw;
-        max-width: 20vw;
-    }
 
 }
 
@@ -115,11 +167,6 @@ main aside ul li a:active {
         grid-template-areas: "main-article"
                             "aside";
         grid-template-columns: 1fr;
-    }
-
-    main .aside-container ul li {
-        min-width: 30vw;
-        max-width: 45vw;
     }
     
 }

@@ -1,3 +1,21 @@
+// $(document).ready(function(){
+// 	$('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').click(function(){
+// 		$(this).toggleClass('open');
+// 	});
+// });
+
+// document.addEventListener("DOMContentLoaded", function() {
+// 	var navicon = document.getElementById('nav-icon')
+
+// 	navicon.onclick(function() {
+// 		this.classList.toggle('open');
+// 	})
+// })
+
+function navIcon() {
+	document.getElementById("nav-icon").classList.toggle("open");
+}
+
 function dropMenu() {
   document.getElementById("headDrop").classList.toggle("show");
 }
