@@ -1,0 +1,28 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main h4 {
+    text-align: center;
+    font-size: 4rem;
+}
+
+main p {
+    font-size: 2rem;
+    text-align: center;
+}
+
+main .inline-link {
+    text-decoration: none;
+    color: #F47A20;
+}
+
+main .inline-link:hover {
+    color: rgba(255, 213, 36, 1);
+}
+
+main .inline-link:active {
+    color: rgba(255, 0, 0, .75);
+}

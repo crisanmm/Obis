@@ -13,12 +13,16 @@ class HomeController extends Controller {
      * Render statistics page
      */
     public function statistics() {
-        $model = new StatisticsModel();
-        $yearsArray = $model->getYearsArray();
-        $statesArray = $model->getStatesArray();
-
-        $this->view('home' . DIRECTORY_SEPARATOR . 'statistics', ["yearsArray" => $yearsArray,
-                                                                  "statesArray" => $statesArray]);
+        if(isset($_SESSION['firstname'])) {
+            $model = new StatisticsModel();
+            $yearsArray = $model->getYearsArray();
+            $statesArray = $model->getStatesArray();
+            
+            $this->view('home' . DIRECTORY_SEPARATOR . 'statistics', ["yearsArray" => $yearsArray,
+                                                                      "statesArray" => $statesArray]);
+        } else {
+            $this->view('error' . DIRECTORY_SEPARATOR . 'loginrequired');
+        }
     }
     
     /**

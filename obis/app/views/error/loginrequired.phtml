@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <title>View statistics | Obis</title>
+        <meta charset="utf-8">
+        <meta name="author" content="Hristodor Minu-Mihail">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/ico" href="/obis/images/placeholders/logo.png" />
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Montserrat'>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap">
+        <link rel="stylesheet" href="/obis/css/allpages.css">
+        <link rel="stylesheet" href="/obis/css/loginrequired.css">
+
+        <script>
+            loginButtonName = `<?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "LOG IN" ?>`
+        </script>
+        <script src="/obis/js/scripts.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="/obis/js/statistics.js" type="text/javascript"></script>
+    </head>
+
+    <body onresize="leSizeCheck()">
+
+        <!-- HEADER -->
+        <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "header.phtml"; ?>
+        <!-- HEADER -->
+
+        <main>
+
+            <h4>
+                You must be logged in order to view this page.
+            </h4>
+
+            <p>
+                You can login <a href="/obis/account/user" class="inline-link">here</a>.
+            </p>
+            
+        </main>
+
+        <!-- FOOTER -->
+        <?php include "app" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "footer.phtml"; ?>
+        <!-- FOOTER -->
+
+    </body>
+
+</html>
