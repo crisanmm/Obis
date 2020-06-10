@@ -47,8 +47,8 @@ CREATE TABLE `responses` (
 
 CREATE TABLE `users` (
 `id` int(11) NOT NULL,
-`firstname` varchar(128) NOT NULL,
-`lastname` varchar(128) NOT NULL,
+`firstname` varchar(64) NOT NULL,
+`lastname` varchar(64) NOT NULL,
 `email` varchar(128) NOT NULL,
 `password` varchar(1024) NOT NULL,
 `created` datetime NOT NULL DEFAULT current_timestamp(),
@@ -79,6 +79,12 @@ ADD PRIMARY KEY (`response_id`);
 
 ALTER TABLE `users`
 ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users`
+ADD UNIQUE(`email`);
+
+ALTER TABLE `users`
+ADD `admin` TINYINT(1) NOT NULL DEFAULT '0' AFTER `id`;
 
 ALTER TABLE `bmi`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140759;
