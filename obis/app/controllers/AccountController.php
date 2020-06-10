@@ -21,6 +21,7 @@ function getJWT($user) {
                     "email" => $user -> getEmail()]];
 
     $jwt = JWT::encode($token, $secret_key);
+    return $jwt;
 }
 
 class AccountController extends Controller {
@@ -113,7 +114,8 @@ class AccountController extends Controller {
             $this->view('account' . DIRECTORY_SEPARATOR . 'panel', ['formSent' => $formSent,
                                                                     'changeIsSuccessful' => $changeIsSuccessful]);
         } else {
-            $this->view('account' . DIRECTORY_SEPARATOR . 'login');
+            header("Location: /obis/account/login");
+            exit();
         }
     }
 
