@@ -150,12 +150,10 @@ var PUTbreakout_categories = POSTbreakout_categories
 var DELETEbreakout_categories =
     `<div class="labels">
         <label for="break_out_category_id">Break out category ID</label>
-        <label for="break_out_category">Break out category</label>
     </div>
 
     <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
         <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT6">
-        <input required type="text" id="break_out_category" name="break_out_category" placeholder="Household Income">
     </form>`
     
 function generateForm() {
