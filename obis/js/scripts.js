@@ -3,14 +3,14 @@ function navIcon() {
 }
 
 function dropMenu() {
-  document.getElementById("headDrop").classList.toggle("show");
+	document.getElementById("headDrop").classList.toggle("show");
 }
 
 function leSizeCheck() {
 	var ul = document.getElementById("headDrop");
 
-	if(window.innerWidth >= 769) {
-		if(document.getElementById("tmp")) {
+	if (window.innerWidth >= 769) {
+		if (document.getElementById("tmp")) {
 			var li = document.getElementById("tmp");
 			ul.removeChild(li);
 		}
@@ -22,7 +22,7 @@ function leSizeCheck() {
 
 		var currentPage = window.location.href.split('\/')
 		var controller = currentPage[currentPage.findIndex(e => e == "obis") + 1]
-		if(controller == "account")
+		if (controller == "account")
 			a.setAttribute("style", "color: #ffd524; font-weight: bolder")
 
 		var li = document.createElement("li")
@@ -32,6 +32,6 @@ function leSizeCheck() {
 	}
 }
 
-window.onload = function() {
-  leSizeCheck();
+window.onload = function () {
+	leSizeCheck();
 }

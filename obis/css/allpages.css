@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Open-sans';
     src: url('/obis/fonts/opensans-regular-webfont.woff2') format('woff2'),
-         url('/obis/fonts/opensans-regular-webfont.woff') format('woff');
+        url('/obis/fonts/opensans-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -9,7 +9,7 @@
 @font-face {
     font-family: 'Raleway';
     src: url('/obis/fonts/raleway-regular-webfont.woff2') format('woff2'),
-         url('/obis/fonts/raleway-regular-webfont.woff') format('woff');
+        url('/obis/fonts/raleway-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -84,7 +84,7 @@ header nav button:focus {
 }
 
 header nav .nav-dropmenu {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     border: 0px;
     padding: 0px;
 }
@@ -164,8 +164,8 @@ footer {
     color: #e3e3e3;
     font-weight: bold;
     display: grid;
-    grid-template-areas:"logos links"
-                        "copyright language";
+    grid-template-areas: "logos links"
+        "copyright language";
     grid-template-columns: 1fr 1fr;
 }
 
@@ -177,7 +177,7 @@ footer .logos {
     align-content: center;
 }
 
-footer .logos a { 
+footer .logos a {
     display: flex;
     justify-content: center;
 }
@@ -212,9 +212,8 @@ footer .language {
     margin: 0 auto;
 }
 
-iframe
-{
-    border:0px;
+iframe {
+    border: 0px;
 }
 
 @media screen and (min-width: 450px) {
@@ -228,37 +227,37 @@ iframe
         grid-gap: 1rem;
         padding: 1rem;
     }
-    
+
 }
 
 @media screen and (min-width: 769px) {
-    
+
     html {
         font-size: 11px;
     }
-    
+
     header nav ul {
         display: flex;
     }
-    
+
     header nav ul li {
         border: 0px;
         font-size: 1.5rem;
     }
-    
+
     header nav .nav-button-list {
         display: flex;
         margin: auto 1rem;
     }
-    
+
     header nav .nav-button {
         padding: 0 .75rem;
     }
-    
+
     header nav .nav-dropmenu {
         display: none;
     }
-    
+
     header .auth {
         display: flex;
         justify-content: space-around;
@@ -287,16 +286,16 @@ iframe
         width: 60vw;
         padding: 1rem;
     }
-    
+
     footer {
         grid-gap: 2.5rem;
         padding: 2.5rem;
     }
-    
+
 }
 
-@media screen and (max-width: 768px){
-    
+@media screen and (max-width: 768px) {
+
     .nav-button-list {
         display: none;
         position: absolute;
@@ -319,24 +318,24 @@ iframe
 }
 
 @media screen and (min-width: 1052px) {
-    
+
     main .table-container table th,
     main .table-container table td {
         padding: 1.75rem;
         border: 1px solid black;
     }
-    
+
     main input {
         width: 50vw;
         padding: 1.5rem;
     }
-    
+
     footer .logos .logo {
         width: 17.5vw;
     }
-    
+
     footer .links .icon {
         width: 10vw;
     }
-    
+
 }

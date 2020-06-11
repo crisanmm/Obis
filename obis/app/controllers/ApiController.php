@@ -9,27 +9,31 @@ $error = "";
 
 function isValidJWT() {
     $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
-    $arr = explode(" ", $authHeader);
-    $jwt = $arr[1];
-    $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
-        
     global $error;
-    
-    if(isset($jwt)) {
-        try {
-            JWT::decode($jwt, $secret_key, ['HS256']);
-            return true;
-        } catch(UnexpectedValueException $e) {
-            $error = "Provided JWT was invalid. " . $e->getMessage();
-        } catch(SignatureInvalidException $e) {
-            $error = "Provided JWT was invalid because the signature verification failed. " . $e->getMessage();
-        } catch(BeforeValidException $e) {
-            $error = "Provided JWT is trying to be used before it's eligible as defined by 'nbf'. " . $e->getMessage();
-        } catch(ExpiredException $e) {
-            $error = "Provided JWT has since expired, as defined by the 'exp' claim. " . $e->getMessage();
-        } catch(Exception $e) {
-            $error = $e->getMessage();
+    if(isset($authHeader) && $authHeader !== "") {
+        $arr = explode(" ", $authHeader);
+        $jwt = $arr[1];
+        $secret_key = "V98kn1KPjS939rPubLEuU32TQrN8CmL666saLeGA8vtX6BBh7qwlDu12Aa3n997P";
+        
+        if(isset($jwt)) {
+            try {
+                JWT::decode($jwt, $secret_key, ['HS256']);
+                return true;
+            } catch(UnexpectedValueException $e) {
+                $error = "Provided JWT was invalid. " . $e->getMessage();
+            } catch(SignatureInvalidException $e) {
+                $error = "Provided JWT was invalid because the signature verification failed. " . $e->getMessage();
+            } catch(BeforeValidException $e) {
+                $error = "Provided JWT is trying to be used before it's eligible as defined by 'nbf'. " . $e->getMessage();
+            } catch(ExpiredException $e) {
+                $error = "Provided JWT has since expired, as defined by the 'exp' claim. " . $e->getMessage();
+            } catch(Exception $e) {
+                $error = $e->getMessage();
+            }
         }
+    } else {
+        $error = "No authorization header provided.";
+        return false;
     }
 }
 

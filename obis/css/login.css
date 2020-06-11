@@ -25,9 +25,6 @@ main .form-container form :nth-child(even) {
 }
 
 main .form-container form [id] {
-    /* min-width: 50ch; */
-    /* width: 100%; */
-    /* padding: 0.05rem; */
     border: 0;
     border-radius: 0.25rem;
     background-color: rgba(41, 77, 115, .075);
@@ -70,7 +67,7 @@ main .register-container a[href*="register"] {
     font-weight: bold;
     font-size: 1.25em;
     text-align: center;
-    text-decoration: none;    
+    text-decoration: none;
     text-transform: uppercase;
 }
 
@@ -81,7 +78,7 @@ main .register-container a[href*="register"] div {
 }
 
 main .register-container a[href*="register"] div:hover {
-    background: rgba(41, 77, 115, 0.75) linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+    background: rgba(41, 77, 115, 0.75) linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
 
 @media screen and (min-width: 450px) {

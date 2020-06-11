@@ -24,7 +24,7 @@ var POSTanswers =
         <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT2">
     </form>`
 
-var PUTanswers = 
+var PUTanswers =
     `<div class="labels">
         <label for="id">ID</label>
         <label for="locationabbr">Location abbreviation</label>
@@ -59,9 +59,9 @@ var DELETEanswers =
     <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
         <input required type="text" id="id" name="ID" placeholder="0">
     </form>`
-   
+
 // LOCATIONS
-var POSTlocations = 
+var POSTlocations =
     `<div class="labels">
         <label for="locationabbr">Location abbreviation</label>
         <label for="location_name">Location name</label>
@@ -73,7 +73,7 @@ var POSTlocations =
     </form>`
 
 var PUTlocations = POSTlocations
-    
+
 var DELETElocations =
     `<div class="labels">
         <label for="locationabbr">Location abbreviation</label>
@@ -106,7 +106,7 @@ var DELETEresponses =
     <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
         <input required type="text" id="response_id" name="response_id" placeholder="RESP039">
     </form>`
-    
+
 // BREAKOUTS
 
 var POSTbreakouts =
@@ -131,9 +131,9 @@ var DELETEbreakouts =
     <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
         <input required type="text" id="break_out_id" name="break_out_id" placeholder="AGE01">
     </form>`
-    
+
 // BREAKOUT_CATEGORIES
-   
+
 var POSTbreakout_categories =
     `<div class="labels">
         <label for="break_out_category_id">Break out category ID</label>
@@ -150,19 +150,21 @@ var PUTbreakout_categories = POSTbreakout_categories
 var DELETEbreakout_categories =
     `<div class="labels">
         <label for="break_out_category_id">Break out category ID</label>
+        <label for="break_out_category">Break out category</label>
     </div>
 
     <form action="#" id="inputs" class="inputs" onsubmit="executeRequest(); return false">
         <input required type="text" id="break_out_category_id" name="break_out_category_id" placeholder="CAT6">
+        <input required type="text" id="break_out_category" name="break_out_category" placeholder="Household Income">
     </form>`
-    
+
 function generateForm() {
     var e = document.getElementById("method");
-    var method = e.options[e.selectedIndex].value; 
+    var method = e.options[e.selectedIndex].value;
 
     e = document.getElementById("collection");
     var collection = e.options[e.selectedIndex].value;
-                      
+
     var form = method.toUpperCase() + collection.toLowerCase();
     document.getElementById("data").innerHTML = window[form];
 }
@@ -171,9 +173,9 @@ function executeRequest() {
     var elements = document.getElementById("inputs").elements;
     var obj = {};
 
-    for(var i = 0 ; i < elements.length ; i++){
+    for (var i = 0; i < elements.length; i++) {
         var item = elements[i];
-        if(item.value != "Submit")
+        if (item.value != "Submit")
             obj[item.name] = item.value;
     }
 
@@ -181,35 +183,35 @@ function executeRequest() {
     var collection = e.options[e.selectedIndex].value;
 
     e = document.getElementById("method");
-    var method = e.options[e.selectedIndex].value; 
+    var method = e.options[e.selectedIndex].value;
 
     var queryParam = "";
 
     switch (collection) {
         case "answers":
-        	queryParam = obj["id"];
+            queryParam = obj["id"];
             break;
         case "locations":
-        	queryParam = obj["locationabbr"];
+            queryParam = obj["locationabbr"];
             break;
         case "responses":
-        	queryParam = obj["response_id"];
+            queryParam = obj["response_id"];
             break;
         case "breakouts":
-        	queryParam = obj["break_out_id"];
+            queryParam = obj["break_out_id"];
             break;
         case "breakout_categories":
-        	queryParam = obj["break_out_category_id"];
+            queryParam = obj["break_out_category_id"];
             break;
-        }
+    }
 
-    
+
     var xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === XMLHttpRequest.DONE) {
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
             var outcome = ""
-            if(xhr.status == 400 || xhr.status == 405) {
+            if (xhr.status == 400 || xhr.status == 405) {
                 outcome = "Failed"
             } else {
                 outcome = "Successful"
@@ -220,15 +222,15 @@ function executeRequest() {
 
     var tmp = window.location.href.split("\/").slice(0, 3).join("\/");
 
-    if(method == "POST") {
-	    xhr.open(method, tmp + "/obis/api/"+ collection, true);
-	    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
-	    xhr.send(JSON.stringify(obj));
-	} else {
-		xhr.open(method, tmp + "/obis/api/"+ collection + '/' + queryParam, true);
-	    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
-	    xhr.send(JSON.stringify(obj));
-	}
+    if (method == "POST") {
+        xhr.open(method, tmp + "/obis/api/" + collection, true);
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+        xhr.send(JSON.stringify(obj));
+    } else {
+        xhr.open(method, tmp + "/obis/api/" + collection + '/' + queryParam, true);
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("JWT"));
+        xhr.send(JSON.stringify(obj));
+    }
 
     return false;
 }

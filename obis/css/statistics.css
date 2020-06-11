@@ -43,11 +43,11 @@ main .separator {
 main .sector {
     display: grid;
     grid-template-areas: "drawspace"
-                         "options"
-                         "export";
+        "options"
+        "export";
 }
 
-main .sector > div {
+main .sector>div {
     margin: 0 auto;
 }
 
@@ -123,7 +123,7 @@ main .sector #mapTitle {
         font-weight: 900;
         font-size: 1.3rem;
     }
-    
+
     main .sector .drawspace {
         grid-area: drawspace;
         width: 85vw;

@@ -1,7 +1,7 @@
 main {
     margin: 2rem 0;
     display: grid;
-    grid-template-areas: "title" "descriptions";
+    grid-template-areas: "title""descriptions";
 }
 
 main .title {
@@ -58,6 +58,7 @@ main section p {
         margin: 0 auto;
         max-width: 1400px;
     }
+
     main .descriptions {
         margin: 0 auto;
         max-width: 70rem;

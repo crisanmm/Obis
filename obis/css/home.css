@@ -2,7 +2,7 @@ main {
     position: relative;
     display: grid;
     grid-template-areas: "main-article"
-                         "aside";
+        "aside";
     padding: 2rem 0 0 0;
 }
 
@@ -135,26 +135,26 @@ main .aside-container ul li a:active {
 }
 
 @media screen and (min-width: 769px) {
-    
+
     main {
         margin: 0 auto;
         max-width: 1400px;
         padding: 4rem 0;
         grid-template-areas: "aside main-article"
-                            ". main-article";
+            ". main-article";
         grid-template-columns: 1fr 3fr;
         column-gap: 3rem;
     }
-    
+
     main article .content {
         max-width: 70rem;
     }
-        
+
     main .aside-container {
         max-height: min-content;
         background-color: white;
     }
-    
+
     main .aside-container .aside-p {
         color: black;
     }
@@ -162,11 +162,11 @@ main .aside-container ul li a:active {
 }
 
 @media screen and (max-width: 1084px) {
-    
+
     main {
         grid-template-areas: "main-article"
-                            "aside";
+            "aside";
         grid-template-columns: 1fr;
     }
-    
+
 }

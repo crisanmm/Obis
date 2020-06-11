@@ -30,9 +30,9 @@ main .sr-only {
 main {
     display: grid;
     grid-template-areas: "header"
-                         "user"
-                         "app-data"
-                         "logout";
+        "user"
+        "app-data"
+        "logout";
     row-gap: 1rem;
 }
 
@@ -87,9 +87,9 @@ main .app-data {
     grid-area: app-data;
     display: grid;
     grid-template-areas: "header header"
-                         "method-collection method-collection"
-                         "data data"
-                         "button button";
+        "method-collection method-collection"
+        "data data"
+        "button button";
 }
 
 main .app-data .header {
@@ -151,7 +151,7 @@ main .app-data button[id*="submit"] {
     grid-area: button;
 }
 
-main .logout  {
+main .logout {
     grid-area: logout;
 }
 
