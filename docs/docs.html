@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Documentation | Obis</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="docs.css">
+</head>
+
+<body>
+    <article resource="#" typeof="schema:ScholarlyArticle">
+        <h2>Table of contents</h2>
+
+        <div role="contentinfo">
+            <ol>
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#proj">Project Requirements</a></li>
+                <li><a href="#tech">Technologies Used</a></li>
+                <li><a href="#valid">Validation</a></li>
+                <li><a href="#user">User Interaction</a></li>
+                <li><a href="#design">UI Design</a></li>
+                <li><a href="#api">Obis REST API</a></li>
+                <li><a href="#res">Web Dev Results</a></li>
+                <li><a href="#prog">Project Progress</a></li>
+                <li><a href="#code">Code Management System</a></li>
+                <li><a href="#arch">Architecture</a></li>
+                <li><a href="#refs">Acknowledgements and References</a></li>
+                <li><a href="#authors">Authors</a></li>
+                <li><a href="#affiliations">Affiliations</a></li>
+            </ol>
+        </div>
+
+        <section typeof="sa:Abstract" id="abstract">
+            <h2>Abstract</h2>
+
+            <p> Obis is an application that let's you view and access statistics about obesity in the United States.
+                Data is
+                collected by telephone surveys, the data is provided by Behavioral Risk Factor Surveillance System
+                (BRFSS).
+                This document goes into detail about the implementation of the application.
+            </p>
+        </section>
+
+        <section id="intro">
+            <h2>Introduction</h2>
+
+            <p>Obesity in the United States is a major health issue resulting in numerous diseases, specifically
+                increased
+                risk
+                of certain types of cancer, coronary artery disease, type 2 diabetes, stroke, as well as significant
+                increases
+                in early mortality and economic costs.
+            </p>
+
+            <p>"Obesity" is defined as a Body Mass Index (BMI) of 30 and over, and the measure of "Adult Obesity" from
+                the
+                BRFSS
+                encapsulates the self-reported prevalence of obesity among adults for the civilian non-institutionalized
+                population 18 years and over</p>
+            <p>In order to make it easy for everyone to see and use the data BRFSS gathered, we offer:
+                <ul>
+                    <li>An API that can be accesed while having an account</li>
+                    <li>Different charts to display the situation in USA</li>
+                    <li>Comparisions between different states</li>
+                    <li>Means to download the charts in 3 different formats</li>
+                </ul>
+            </p>
+            <p>Our goal is to facilitate an easy interaction between the given data and users, using self explanatory,
+                visual
+                charts.</p>
+        </section>
+
+        <section id="proj">
+            <h2>Project Requirements</h2>
+
+            <p> Make a WEB application to visualise BRFSS data with the following specifications: </p>
+            <ul>
+                <li>Use data provided by <a href="https://www.cdc.gov/brfss/annual_data/annual_data.htm">BRFSS</a></li>
+                <li>Create a REST API</li>
+                <li>Comparisions between states</li>
+                <li>3 different charts to display data</li>
+                <li>Facilitate chart export as CSV, WebP and SVG</li>
+            </ul>
+        </section>
+
+        <section id="tech">
+            <h2>Technologies Used</h2>
+
+            <ul>
+                <li>HTML</li>
+                <p> HTML (HyperText Markup Language) is the most basic building block of the Web. It defines the meaning
+                    and
+                    structure of web content.</p>
+                <li>CSS</li>
+                <p>Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document
+                    written
+                    in HTML or XML. CSS describes how elements should be rendered on screen, on paper, in speech, or on
+                    other
+                    media.</p>
+                <li>JavaScript</li>
+                <p>JavaScript is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting
+                    object-oriented, imperative, and declarative styles. We choose JS because this project required a
+                    programming language capable of making dynamic and interactive web pages by implementing custom
+                    client-side
+                    scripts.</p>
+                <li>PHP</li>
+                <p>We choose PHP because is a robust programming language and it has an extensive list of core
+                    functionality
+                    which includes cross-platform adaptability, multi-browser compatibility, secure web apps and so on.
+                    Compared
+                    to other web languages, PHP is an efficient language which supports all major web servers to deliver
+                    high
+                    performance consistently.</p>
+                <li>MariaDB</li>
+                <p>It came with the XAMPP pack, and it is exceptionally quick, regardless of the underlying platform. It
+                    features self-management capabilities like auto restart, space expansion and automatic configuration
+                    changes
+                    for ease of management.</p>
+                <li>Apache</li>
+                <p>Like the database, the Apache server came along with XAMPP. With the tool ngrok, we were able to
+                    redirect
+                    localhost to a public adress. Apache proved to be reliable and secure.</p>
+                <li>AJAX</li>
+                <p>AJAX allows web pages to be updated asynchronously by exchanging small amounts of data with the
+                    server
+                    behind
+                    the scenes. For us to be able to update the charts without refreshing the page we choose to use
+                    AJAX.
+                </p>
+                <li>REST</li>
+                <p>One of the main features of our website is the API we offer. In order to achieve a complete set of
+                    capabilities we created a RESTful API utilising CRUD functionality.</p>
+                <li>CSV</li>
+                <p>CSV files are plain-text files, making them easier for the website developer to create. The data we
+                    got
+                    from
+                    BRSFF was in a csv format, making it simple to upload it to our database.</p>
+                <li>JSON</li>
+                <p>The JSON format is often used for serializing and transmitting structured data over a network
+                    connection.
+                    It
+                    is used primarily to transmit data between a server and web application, serving as an alternative
+                    to
+                    XML.
+                </p>
+                <li>JWT</li>
+                <p>We choose to generate a token for every user in order to acces our API. This keeps the database
+                    secure
+                    and
+                    avoids bloated/spam like requests. (bots)</p>
+            </ul>
+        </section>
+
+        <section id="valid">
+            <h2>Validation</h2>
+
+            <p> For HTML validation we used https://validator.w3.org and we got no errors or warnings.</p>
+            <p> For CSS validation we used https://jigsaw.w3.org/css-validator/ and we got no errors or warnings.</p>
+        </section>
+
+        <section id="user">
+            <h2>User Interaction</h2>
+
+            <p>An average user's interaction with the web application is portrayed in the following diagram:</p>
+            <figure typeof="sa:image">
+                <img src="user-interaction.png" alt="user interaction diagram">
+                <figcaption>User interaction diagram</figcaption>
+            </figure>
+
+            <p>It is important to keep in mind that in order to access the statistics page the user has to be logged in
+                first so a JWT is generated. In all other situations the user is prompted to login.</p>
+        </section>
+
+        <section id="design">
+            <h2>UI Design</h2>
+            <p>A basic user interface has been created in order to support the application. The application has been
+                made usable on every device regardless of the screen size.</p>
+            <p class="alert">PUT PHONE SCREEN RECORDING HERE</p>
+        </section>
+
+        <h2 id="api">Obis REST API</h2>
+
+        <p> Our API has the basic CRUD functionalities and has been documented here:<br /> <a
+                href="OpenAPI_documentation.html">OpenAPI 3.0.3 specification for Obis REST API</a> </p>
+
+        <section id="res">
+            <h2>Web Dev Results</h2>
+            <p><a href="https://web.dev/">Measure @ wev.dev</a> results</p>
+
+            <figure typeof="sa:image">
+                <img src="webdev_home-home.png" alt="Results for /obis/home/home">
+                <figcaption>Results for /obis/home/home</figcaption>
+
+            </figure>
+            <figure typeof="sa:image">
+                <img src="webdev_home-statistics.png" alt="Results for /obis/home/statistics">
+                <figcaption>Results for /obis/home/statistics</figcaption>
+            </figure>
+
+            <figure typeof="sa:image">
+                <img src="webdev_home-home.png" alt="Results for /obis/home/home">
+                <figcaption>Results for /obis/home/home</figcaption>
+            </figure>
+
+            <figure typeof="sa:image">
+                <img src="webdev_home-aboutus.png" alt="Results for /obis/home/aboutus">
+                <figcaption>Results for /obis/home/aboutus</figcaption>
+            </figure>
+
+            <figure typeof="sa:image">
+                <img src="webdev_home-contact.png" alt="Results for /obis/home/contact">
+                <figcaption>Results for /obis/home/contact <br />
+                    The test was run without the google maps iframe</figcaption>
+            </figure>
+
+            <figure typeof="sa:image">
+                <img src="webdev_account-user.png" alt="Results for /obis/account/user">
+                <figcaption>Results for /obis/account/user</figcaption>
+            </figure>
+
+            <figure typeof="sa:image">
+                <img src="webdev_account-register.png" alt="Results for /obis/account/register">
+                <figcaption>Results for /obis/account/register</figcaption>
+            </figure>
+
+        </section>
+
+        <section id="prog">
+            <h2>Project Progress</h2>
+
+            <p>Snippets of GitHub insights</p>
+
+            <figure typeof="sa:image">
+                <img src="github_contributors.png" alt="github commits insights">
+                <figcaption>GitHub commits insights</figcaption>
+            </figure>
+
+            <figure typeof="sa:image">
+                <img src="github_frequency.png" alt="github code frequency">
+                <figcaption>GitHub code frequency</figcaption>
+            </figure>
+
+            <p>The main features of the application were created weeks in advance to ensure that we don't go past the
+                deadline.</p>
+
+            <p>Main features and/or functionalities (to develop) were assigned as follows:</p>
+
+            <h4>Hristodor Minu-Mihail</h4>
+            <ul>
+                <li>
+                    <div>
+                        <span class="bold">Early JS, CSS and HTML for the navbar</span>
+                        <p>At the beginning of the project I created a prototype menu/navigation bar fully responsive
+                            and
+                            working. Later on it got scrapped as we settled on a different task management.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">JavaScript</span>
+                        <p>I had the task of covering everything JavaScript related.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">Charts</span>
+                        <p>Because I took the frontend scripting, I also integrated the charts with the help of Google
+                            Chart API. It was also my job to handle the data and create ways to filter and display
+                            the data given, in as many ways as possible.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">Chart Export</span>
+                        <p>Since I handled all the charts it was also my job to offer the export functionality, in 3
+                            different formats: SVG, CSV, WebP.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">API</span>
+                        <p>Here I worked together with my colleague. I was tasked with the construction of the API,
+                            integrating CRUD operations and basic server-database interaction. Later on some parts were
+                            refactored by my colleague.
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">JWT Integration</span>
+                        <p>We settled on using JWT as means to authentificate and get a token for each user. At first I
+                            made a separate API handling login and register but later on we switch to php registration
+                            through forms. As for JWT generating and checking (validating) it was still done by me. </p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">Documentation</span>
+                        <p>Documentation stucture and the user guide were primarily done by me.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">Application data manipulation within the adminstrator panel</span>
+                        <p>As the panel page was created I was tasked with creating a form for adminstrator users that
+                            allow them to directly interact with the REST API through a user interface.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="bold">Validation and polishing</span>
+                        <p>At the end of the project I ran through all pages and CSS to ensure there are no warnings and
+                            our score is above 90 on measure @ web dev.</p>
+                    </div>
+                </li>
+            </ul>
+
+            <h4>Crisan Mihai</h4>
+            <ul>
+                <li>
+                    <div>
+                        <span class="bold">Filtering the original data</span>
+                    </div>
+                </li>
+            </ul>
+
+        </section>
+
+        <section id="code">
+            <h2>Code Management System</h2>
+
+            For this project we decided we are going to use github. Git is the most commonly used version control
+            system.
+            Git tracks the changes you make to files, so you have a record of what has been done, and you can revert to
+            specific versions should you ever need to. Git also makes collaboration easier, allowing changes by multiple
+            people to all be merged into one source. This proved to be crucial because different changes were added at
+            the
+            same time, as we worked in parallel. We were able to track commit changes and discover where an issue was
+            created, making it easier to solve, without changing large chunks of code.
+
+        </section>
+
+        <section id="arch">
+            <h2>Architecture</h2>
+
+            MVC //scrii tu aci
+
+            <figure typeof="sa:image">
+                <img src="database.png" alt="database uml scheme">
+                <figcaption>Database structure</figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h2 id="refs">Acknowledgements and References</h2>
+            <ol>
+                <li typeof="schema:WebPage" role="doc-biblioentry" resource="https://www.cdc.gov/brfss/index.html"
+                    property="schema:citation" id="cdcgovbrfss">
+                    <cite property="schema:name">
+                        <a href="https://www.cdc.gov/brfss/index.html">Centers for Disease Control and Prevention -
+                            Behavioral Risk Factor Surveillance System</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry" resource="http://semver.org/"
+                    property="schema:citation" id="semver">
+                    <cite property="schema:name">
+                        <a href="http://semver.org/">Semantic Versioning 2.0.0</a>
+                    </cite>, by
+                    <span property="schema:author" typeof="schema:Person">
+                        <span property="schema:givenName">Tom</span>
+                        <span property="schema:familyName">Preston-Werner</span>
+                    </span>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry"
+                    resource="https://en.wikipedia.org/wiki/Obesity_in_the_United_States" property="schema:citation"
+                    id="wikipediaoitus">
+                    <cite property="schema:name">
+                        <a href="https://en.wikipedia.org/wiki/Obesity_in_the_United_States">Obesity in the United
+                            States - Wikipedia</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry"
+                    resource="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2879283/" property="schema:citation"
+                    id="ncbinlm">
+                    <cite property="schema:name">
+                        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2879283/">The Medical Risks of
+                            Obesity</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry"
+                    resource="https://www.cdc.gov/brfss/annual_data/annual_data.htm" property="schema:citation"
+                    id="brfssannual">
+                    <cite property="schema:name">
+                        <a href="https://www.cdc.gov/brfss/annual_data/annual_data.htm">Annual Survey Data -
+                            Behavioral Risk Factor Surveillance System
+                        </a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry" resource="https://www.w3schools.com"
+                    property="schema:citation" id="w3schools">
+                    <cite property="schema:name">
+                        <a href="https://www.w3schools.com">w3schools</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry"
+                    resource="https://stackoverflow.com/questions/12698003/save-a-google-chart-as-svg"
+                    property="schema:citation" id="sogcsvg">
+                    <cite property="schema:name">
+                        <a href="https://stackoverflow.com/questions/12698003/save-a-google-chart-as-svg">Save
+                            google chart as SVG</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry" resource="http://www.csszengarden.com"
+                    property="schema:citation" id="ncbinlm">
+                    <cite property="schema:name">
+                        <a href="http://www.csszengarden.com">CSS Zen Garden</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry"
+                    resource="https://swagger.io/docs/specification/about/" property="schema:citation" id="swaggerdocs">
+                    <cite property="schema:name">
+                        <a href="https://swagger.io/docs/specification/about/">OpenAPI Specification (formerly
+                            Swagger Specification) API description format for REST APIs</a>
+                    </cite>
+                </li>
+
+                <li typeof="schema:WebPage" role="doc-biblioentry" resource="https://developer.mozilla.org/en-US/"
+                    property="schema:citation" id="mdnwebdocs">
+                    <cite property="schema:name">
+                        <a href="https://developer.mozilla.org/en-US/">MDN Web Docs</a>
+                    </cite>
+                </li>
+            </ol>
+
+        </section>
+    </article>
+
+    <section typeof="sa:AuthorsList" id="authors">
+        <h2>
+            Authors of this paper:
+        </h2>
+        <ul>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person" resource="https://en.wikipedia.org/wiki/John_Henry_Holland">
+                    <meta property="schema:givenName" content="Mihai">
+                    <meta property="schema:familyName" content="Crisan">
+                    <span property="schema:name">Crisan Mihai</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="mailto:crisanmihai5537@gmail.com" property="schema:email">crisanmihai5537@gmail.com</a>
+                    </li>
+                </ul>
+            </li>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person" resource="https://en.wikipedia.org/wiki/John_Henry_Holland">
+                    <meta property="schema:givenName" content="Minu-Mihail">
+                    <meta property="schema:familyName" content="Hristodor">
+                    <span property="schema:name">Hristodor Minu-Mihail</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="mhristodor@bitdefender.com" property="schema:email">mhristodor@bitdefender.com</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section typeof="sa:Affiliations" id="affiliations">
+        <h2>Affiliations</h2>
+        <ul>
+            <li id="infoiasi">
+                <span typeof="schema:Organization" resource="https://info.uaic.ro/">
+                    <span property="schema:name">Faculty of Computer Science</span>,
+                    <span property="schema:parentOrganization">
+                        <span typeof="schema:Organization">
+                            <span property="schema:name">University of "Alexandru Ioan Cuza"</span>
+                            <span property="schema:location" typeof="schema:Place">
+                                <span property="schema:address" typeof="schema:PostalAddress">
+                                    <span property="schema:addressLocality">Iasi</span>,
+                                    <span property="schema:addressRegion">Iasi</span>,
+                                    <span property="schema:addressCountry">Romania</span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </li>
+        </ul>
+    </section>
+
+</body>
+
+</html>
