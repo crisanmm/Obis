@@ -41,3 +41,15 @@ img{
     left: 0;
     z-index: 0;
 }
+
+@media screen and (max-width: 700px){
+    body{
+        width:75%;
+    }
+}
+
+@media screen and (max-width: 400px){
+    body{
+        width:100%;
+    }
+}
