@@ -156,8 +156,10 @@
         <section id="valid">
             <h2>Validation</h2>
 
-            <p> For HTML validation we used https://validator.w3.org and we got no errors or warnings.</p>
-            <p> For CSS validation we used https://jigsaw.w3.org/css-validator/ and we got no errors or warnings.</p>
+            <p> For HTML validation we used <a href="https://validator.w3.org">W3C's validator</a> and we got no errors
+                or warnings.</p>
+            <p> For CSS validation we used <a href="https://jigsaw.w3.org/css-validator/">Jigsaw W3C's validator</a> and
+                we got no errors or warnings.</p>
         </section>
 
         <section id="user">
@@ -171,6 +173,19 @@
 
             <p>It is important to keep in mind that in order to access the statistics page the user has to be logged in
                 first so a JWT is generated. In all other situations the user is prompted to login.</p>
+
+            <p>
+                The following flowchart illustrates the possible actions that can be done by the user regarding logging
+                in and registering.
+            </p>
+            <figure typeof="sa:image">
+                <img src="flowchart.png" alt="user flowchart">
+                <figcaption>User login flowchart</figcaption>
+            </figure>
+
+            <p>
+
+            </p>
         </section>
 
         <section id="design">
@@ -328,7 +343,323 @@
             <ul>
                 <li>
                     <div>
-                        <span class="bold">Filtering the original data</span>
+                        <p>
+                            <span class="bold">Filtering the original data</span>
+                            <p>An entry in the initial table looks like this</p>
+                            <table style="margin: 0 auto">
+                                <caption>Data <span class="bold">before</span> filtering</caption>
+                                <tr>
+                                    <th scope="row">Year</th>
+                                    <td>2012</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">LocationID</th>
+                                    <td>45</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Locationabbr</th>
+                                    <td>SC</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Locationdesc</th>
+                                    <td>South Carolina</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">GeoLocation</th>
+                                    <td>(33.998821303, -81.045371207)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ClassId</th>
+                                    <td>CLASS14</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Class</th>
+                                    <td>Overweight and Obesity (BMI)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">TopicId</th>
+                                    <td>Topic09</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Topic</th>
+                                    <td>BMI Categories</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">QuestionID</th>
+                                    <td>_BMI5CAT</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Question</th>
+                                    <td>Weight classification by Body Mass Index (BMI) (variable calculated from one or
+                                        more
+                                        BRFSS questions)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ResponseID</th>
+                                    <td>RESP040</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Response</th>
+                                    <td>Overweight (BMI 25.0-29.9)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">BreakoutID</th>
+                                    <td>AGE05</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Break_Out</th>
+                                    <td>55-64</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">BreakOutCategoryID</th>
+                                    <td>CAT3</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Break_Out_Category</th>
+                                    <td>Age Group</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sample_Size</th>
+                                    <td>1001</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Data_value</th>
+                                    <td>35.1</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Confidence_limit_Low</th>
+                                    <td>32.6</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Confidence_limit_High</th>
+                                    <td>37.6</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Display_order</th>
+                                    <td>2000</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Data_value_unit</th>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Data_value_type</th>
+                                    <td>Crude Prevalence</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Data_Value_Footnote_Symbol</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Data_Value_Footnote</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">DataSource</th>
+                                    <td>BRFSS</td>
+                                </tr>
+                            </table>
+                            <p>After futher analysis of the records I've drawn the following conclusions:</p>
+                            <ul>
+                                <li><span class="bold">DataSource</span> has the same value for every record</li>
+                                <li><span class="bold">Data_Value_Footnote</span> and <span
+                                        class="bold">Data_Value_Footnote_Symbol</span> have no values</li>
+                                <li><span class="bold">Data_value_type</span> always has the value of "Crude
+                                    Prevalence" for BMI related records</li>
+                                <li><span class="bold">Data_value_unit</span> always has the value of "%"</li>
+                                <li><span class="bold">Display_order</span> doesn't have any importance</li>
+                                <li><span class="bold">QuestionID</span> and <span class="bold">Question</span> has
+                                    the same value for BMI related records</li>
+                                <li><span class="bold">TopicID</span> and <span class="bold">Topic</span> has
+                                    the same value for BMI related records</li>
+                                <li><span class="bold">ClassID</span> and <span class="bold">Class</span> has
+                                    the same value for BMI related records</li>
+                                <li><span class="bold">GeoLocation</span> has the same value for each state</li>
+                            </ul>
+                            <p>And as a result of data redudancy, I've decided to delete the above columns. Additionally
+                                I have also got rid of <span class="bold">LocationID</span> because <span
+                                    class="bold">Locationabbr</span> is already unique for every state. Therefore I
+                                ended up with the following table structure:</p>
+                            <table style="margin: 0 auto">
+                                <caption>Data <span class="bold">after</span> filtering</caption>
+                                <tr>
+                                    <th scope="row">Year</th>
+                                    <td>2012</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Locationabbr</th>
+                                    <td>SC</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Locationdesc</th>
+                                    <td>South Carolina</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Response</th>
+                                    <td>Overweight (BMI 25.0-29.9)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Break_Out</th>
+                                    <td>55-64</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Break_Out_Category</th>
+                                    <td>Age Group</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sample_Size</th>
+                                    <td>1001</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Data_value</th>
+                                    <td>35.1</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Confidence_limit_Low</th>
+                                    <td>32.6</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Confidence_limit_High</th>
+                                    <td>37.6</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">BreakoutID</th>
+                                    <td>AGE05</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">BreakOutCategoryID</th>
+                                    <td>CAT3</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ResponseID</th>
+                                    <td>RESP040</td>
+                                </tr>
+                            </table>
+                    </div>
+                </li>
+                <li>
+                    <p>
+                        <span class="bold">Normalizing the database</span>
+                        <p>After normalizing the database I ended up with the following tables:</p>
+                        <div class="horizontal-tables">
+                            <table>
+                                <caption><span class="bold">bmi</span></caption>
+                                <tr>
+                                    <th>ID</th>
+                                </tr>
+                                <tr>
+                                    <th>year_value</th>
+                                </tr>
+                                <tr>
+                                    <th>locationabbr</th>
+                                </tr>
+                                <tr>
+                                    <th>samplesize</th>
+                                </tr>
+                                <tr>
+                                    <th>data_value_percentage</th>
+                                </tr>
+                                <tr>
+                                    <th>confidence_limit_low</th>
+                                </tr>
+                                <tr>
+                                    <th>confidence_limit_high</th>
+                                </tr>
+                                <tr>
+                                    <th>response_id</th>
+                                </tr>
+                                <tr>
+                                    <th>break_out_id</th>
+                                </tr>
+                                <tr>
+                                    <th>break_out_category_id</th>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption><span class="bold">locations</span></caption>
+                                <tr>
+                                    <th>locationabbr</th>
+                                </tr>
+                                <tr>
+                                    <th>location</th>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption><span class="bold">responses</span></caption>
+                                <tr>
+                                    <th>response_id</th>
+                                </tr>
+                                <tr>
+                                    <th>response</th>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption><span class="bold">break_outs</span></caption>
+                                <tr>
+                                    <th>break_out_id</th>
+                                </tr>
+                                <tr>
+                                    <th>break_out</th>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption><span class="bold">break_out_category</span></caption>
+                                <tr>
+                                    <th>break_out_category_id</th>
+                                </tr>
+                                <tr>
+                                    <th>break_out_category</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </p>
+                </li>
+                <li>
+                    <div>
+                        <span class="bold">Inserting data into the database</span>
+                        <p>I wrote the script <span class="bold">create_filtered_data.php</span> that filters the
+                            original csv file, thus creating a new csv file <span
+                                class="bold">brfss_filtered.csv</span>. Afterwards I created the database initialisation
+                            script <span class="bold">init.sql</span> that creates the tables and associated
+                            constraints, finally I wrote the <span class="bold">insert_filtered_data.php</span> script
+                            that inserts the filtered data into the database.</p>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <span class="bold">Entire HTML & CSS</span>
+                    <p>I have thought out and wrote every page as well as styling them and making them responsive.
+                        Additionally I have made the header and footer portions modular by dynamically including them on
+                        every page. A similar level of modularity has been applied to CSS as well.</p>
+                </li>
+                <li>
+                    <div>
+                        <span class="bold">REST API specification</span>
+                        <p>I've wrote the OpenAPI specification and asked my colleague for feedback. Thus we went from
+                            version 1.0.0 to version 1.1.0 as a result of a minor modification to the API specification.
+                            Minor patches brought the version from version 1.1.0 to 1.1.7, the final version.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="bold">REST API</span>
+                        <p>My colleague implemented the API according to the specification, after which I made small
+                            contributions to the code as well as refactoring it. Additionally I have implemented HATEOAS
+                            (?) and a caching mechanism for quickly creating JSON responses from multiple tables.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="bold">MVC pattern & directory structure & main application</span>
+                        <p>I have thought out the directory structure, created a very large percentage of the current
+                            classes and also implemented a class autoloading mechanism.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="bold">JWT Integration</span>
+                        <p>My colleague has had a bigger part in doing this but I had given him advice on how to
+                            implement it so it can be used seamlessly.</p>
                     </div>
                 </li>
             </ul>
@@ -346,14 +677,18 @@
             the
             same time, as we worked in parallel. We were able to track commit changes and discover where an issue was
             created, making it easier to solve, without changing large chunks of code.
-
         </section>
 
         <section id="arch">
             <h2>Architecture</h2>
 
-            MVC //scrii tu aci
+            <p>The MVC design pattern can be seen in the UML class diagram pictured below:</p>
+            <figure typeof="sa:image">
+                <img src="umlclass.png" alt="uml class diagram">
+                <figcaption>UML class diagram</figcaption>
+            </figure>
 
+            <p>The database structure is illustraled in the figure below:</p>
             <figure typeof="sa:image">
                 <img src="database.png" alt="database uml scheme">
                 <figcaption>Database structure</figcaption>
