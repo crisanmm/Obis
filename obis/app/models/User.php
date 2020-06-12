@@ -43,15 +43,19 @@ class User {
      * Create user (add user to database) 
      */
     public function create() {
-        $query = "INSERT INTO users(firstname, lastname, email, password)
-                  VALUES(:firstname, :lastname, :email, :password)";
-    
-        $statement = Database::getConnection()->prepare($query);
+        if($this->getFirstname() === "" || $this->getLastname() === "" || $this->getEmail() === "" || $this->getPassword() === "") {
+            return false;
+        } else {
+            $query = "INSERT INTO users(firstname, lastname, email, password)
+                      VALUES(:firstname, :lastname, :email, :password)";
+        
+            $statement = Database::getConnection()->prepare($query);
 
-        return $statement->execute(["firstname" => $this->firstname,
-                                "lastname" => $this->lastname,
-                                "email" => $this->email,
-                                "password" => $this->password]);
+            return $statement->execute(["firstname" => $this->firstname,
+                                    "lastname" => $this->lastname,
+                                    "email" => $this->email,
+                                    "password" => $this->password]);
+        }
     }
     
     /**
@@ -79,24 +83,28 @@ class User {
      */
     public static function login($email, $password) {
         // email uniquely identifies a user
-        $query = "SELECT firstname, lastname, email, password
-                  FROM users
-                  WHERE email = :email";
-
-        $statement = Database::getConnection()->prepare($query);
-        $statement->execute(["email" => $email]);
-
-        if($statement->rowCount() != 0) {
-            $row = $statement->fetch();
-            if(password_verify($password, $row['password']))
-                return new User($row['firstname'],
-                                $row['lastname'],
-                                $row['email'],
-                                $row['password']);
-            else
-                return false; // failed password authentication
+        if($email === "" || $password === "") {
+            return false;
         } else {
-            return false; // user with specified does not exist
+            $query = "SELECT firstname, lastname, email, password
+                      FROM users
+                      WHERE email = :email";
+
+            $statement = Database::getConnection()->prepare($query);
+            $statement->execute(["email" => $email]);
+
+            if($statement->rowCount() != 0) {
+                $row = $statement->fetch();
+                if(password_verify($password, $row['password']))
+                    return new User($row['firstname'],
+                                    $row['lastname'],
+                                    $row['email'],
+                                    $row['password']);
+                else
+                    return false; // failed password authentication
+            } else {
+                return false; // user with specified does not exist
+            }
         }
     }
 
@@ -114,25 +122,29 @@ class User {
      *              `True` otherwise
      */
     public static function updateData(&$oldFirstname, &$oldLastname, &$oldEmail, $newFirstname, $newLastname, $newEmail) {
-        $newFirstname = strip_tags($newFirstname);
-        $newLastname = strip_tags($newLastname);
-        $newEmail = strip_tags($newEmail);
+        $newFirstname = htmlspecialchars(strip_tags($newFirstname));
+        $newLastname = htmlspecialchars(strip_tags($newLastname));
+        $newEmail = htmlspecialchars(strip_tags($newEmail));
         
-        $query = "UPDATE users
-                  SET firstname = :newFirstname, lastname = :newLastname, email = :newEmail
-                  WHERE email = :oldEmail";
-
-        $statement = Database::getConnection()->prepare($query);
-        if($statement->execute(['newFirstname' => $newFirstname,
-                                    'newLastname' => $newLastname,
-                                    'newEmail' => $newEmail,
-                                    'oldEmail' => $oldEmail])) {
-            $oldFirstname = $newFirstname;
-            $oldLastname = $newLastname;
-            $oldEmail = $newEmail;
-            return true;
-        } else {
+        if($newFirstname === "" || $newLastname === "" || $newEmail === "") {
             return false;
+        } else {
+            $query = "UPDATE users
+                      SET firstname = :newFirstname, lastname = :newLastname, email = :newEmail
+                      WHERE email = :oldEmail";
+
+            $statement = Database::getConnection()->prepare($query);
+            if($statement->execute(['newFirstname' => $newFirstname,
+                                        'newLastname' => $newLastname,
+                                        'newEmail' => $newEmail,
+                                        'oldEmail' => $oldEmail])) {
+                $oldFirstname = $newFirstname;
+                $oldLastname = $newLastname;
+                $oldEmail = $newEmail;
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -155,7 +167,7 @@ class User {
     }
     
     public function setFirstname($firstname) {
-        $this->firstname = strip_tags($firstname);
+        $this->firstname = htmlspecialchars(strip_tags($firstname));
     }
 
     public function getFirstname() {
@@ -163,7 +175,7 @@ class User {
     }
     
     public function setLastname($lastname) {
-        $this->lastname = strip_tags($lastname);
+        $this->lastname = htmlspecialchars(strip_tags($lastname));
     }
 
     public function getLastname() {
@@ -171,7 +183,7 @@ class User {
     }
 
     public function setEmail($email) {
-        $this->email = strip_tags($email);
+        $this->email = htmlspecialchars(strip_tags($email));
     }
     
     public function getEmail() {
@@ -179,7 +191,7 @@ class User {
     }
     
     public function setPassword($password) {
-        $this->password = password_hash(strip_tags($password), PASSWORD_DEFAULT);
+        $this->password = password_hash(htmlspecialchars(strip_tags($password)), PASSWORD_DEFAULT);
     }
     
     public function getPassword() {
