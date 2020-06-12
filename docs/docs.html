@@ -61,9 +61,9 @@
                 population 18 years and over</p>
             <p>In order to make it easy for everyone to see and use the data BRFSS gathered, we offer:
                 <ul>
-                    <li>An API that can be accessed while having an account</li>
+                    <li>An API that can be accesed while having an account</li>
                     <li>Different charts to display the situation in USA</li>
-                    <li>Comparisons between different states</li>
+                    <li>Comparisions between different states</li>
                     <li>Means to download the charts in 3 different formats</li>
                 </ul>
             </p>
@@ -79,7 +79,7 @@
             <ul>
                 <li>Use data provided by <a href="https://www.cdc.gov/brfss/annual_data/annual_data.htm">BRFSS</a></li>
                 <li>Create a REST API</li>
-                <li>Comparisons between states</li>
+                <li>Comparisions between states</li>
                 <li>3 different charts to display data</li>
                 <li>Facilitate chart export as CSV, WebP and SVG</li>
             </ul>
@@ -121,7 +121,7 @@
                 <li>Apache</li>
                 <p>Like the database, the Apache server came along with XAMPP. With the tool ngrok, we were able to
                     redirect
-                    localhost to a public address. Apache proved to be reliable and secure.</p>
+                    localhost to a public adress. Apache proved to be reliable and secure.</p>
                 <li>AJAX</li>
                 <p>AJAX allows web pages to be updated asynchronously by exchanging small amounts of data with the
                     server
@@ -146,7 +146,7 @@
                     XML.
                 </p>
                 <li>JWT</li>
-                <p>We choose to generate a token for every user in order to access our API. This keeps the database
+                <p>We choose to generate a token for every user in order to acces our API. This keeps the database
                     secure
                     and
                     avoids bloated/spam like requests. (bots)</p>
@@ -191,8 +191,11 @@
         <section id="design">
             <h2>UI Design</h2>
             <p>A basic user interface has been created in order to support the application. The application has been
-                made usable on every device regardless of the screen size.</p>
-            <p class="alert">PUT PHONE SCREEN RECORDING HERE</p>
+                made usable on every device regardless of the screen size. Effort has been put into making the UI
+                available on most browsers.</p>
+            <video controls width="360" style="display: block; margin: 0 auto">
+                <source src="UI-responsive.mp4">
+            </video>
         </section>
 
         <h2 id="api">Obis REST API</h2>
@@ -318,14 +321,14 @@
                 <li>
                     <div>
                         <span class="bold">Documentation</span>
-                        <p>Documentation structure and the user guide were primarily done by me, including UMLs and FLowCharts.</p>
+                        <p>Documentation stucture and the user guide were primarily done by me.</p>
                     </div>
                 </li>
 
                 <li>
                     <div>
-                        <span class="bold">Application data manipulation within the administrator panel</span>
-                        <p>As the panel page was created I was tasked with creating a form for administrator users that
+                        <span class="bold">Application data manipulation within the adminstrator panel</span>
+                        <p>As the panel page was created I was tasked with creating a form for adminstrator users that
                             allow them to directly interact with the REST API through a user interface.</p>
                     </div>
                 </li>
@@ -476,7 +479,7 @@
                                     the same value for BMI related records</li>
                                 <li><span class="bold">GeoLocation</span> has the same value for each state</li>
                             </ul>
-                            <p>And as a result of data redundancy, I've decided to delete the above columns. Additionally
+                            <p>And as a result of data redudancy, I've decided to delete the above columns. Additionally
                                 I have also got rid of <span class="bold">LocationID</span> because <span
                                     class="bold">Locationabbr</span> is already unique for every state. Therefore I
                                 ended up with the following table structure:</p>
