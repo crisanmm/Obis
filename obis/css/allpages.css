@@ -34,7 +34,7 @@ ul {
 }
 
 html {
-    font-size: 10px;
+    font-size: 12px;
 }
 
 body {
@@ -209,6 +209,7 @@ footer .copyright {
 
 footer .language {
     grid-area: language;
+    padding: 1rem;
     margin: 0 auto;
 }
 
@@ -233,7 +234,7 @@ iframe {
 @media screen and (min-width: 769px) {
 
     html {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     header nav ul {

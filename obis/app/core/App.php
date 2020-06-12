@@ -2,7 +2,7 @@
 
 /**
  * The following structure is used:
- * obis/{controller}/{method}?{params}
+ * obis/{controller}/{method}/{params}
  */
 class App {
 
