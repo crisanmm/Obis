@@ -3,7 +3,7 @@ google.charts.load('current', {
 });
 google.charts.load('current', {
     'packages': ['geochart'],
-    'mapsApiKey': 'AIzaSyARMHx13VGLtwkevK7g5IXaqzSxVGuRN00'
+    'mapsApiKey': 'no'
 });
 
 google.charts.setOnLoadCallback(drawChart);
